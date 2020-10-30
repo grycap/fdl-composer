@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/grycap/fdl-composer/static/css/main.ab7136cd.chunk.css",
+    "main.js": "/grycap/fdl-composer/static/js/main.c8c23216.chunk.js",
+    "main.js.map": "/grycap/fdl-composer/static/js/main.c8c23216.chunk.js.map",
+    "runtime-main.js": "/grycap/fdl-composer/static/js/runtime-main.093f565d.js",
+    "runtime-main.js.map": "/grycap/fdl-composer/static/js/runtime-main.093f565d.js.map",
+    "static/js/2.9338daa5.chunk.js": "/grycap/fdl-composer/static/js/2.9338daa5.chunk.js",
+    "static/js/2.9338daa5.chunk.js.map": "/grycap/fdl-composer/static/js/2.9338daa5.chunk.js.map",
+    "static/js/3.04ebe8cd.chunk.js": "/grycap/fdl-composer/static/js/3.04ebe8cd.chunk.js",
+    "static/js/3.04ebe8cd.chunk.js.map": "/grycap/fdl-composer/static/js/3.04ebe8cd.chunk.js.map",
+    "index.html": "/grycap/fdl-composer/index.html",
+    "static/css/main.ab7136cd.chunk.css.map": "/grycap/fdl-composer/static/css/main.ab7136cd.chunk.css.map",
+    "static/js/2.9338daa5.chunk.js.LICENSE.txt": "/grycap/fdl-composer/static/js/2.9338daa5.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.093f565d.js",
+    "static/js/2.9338daa5.chunk.js",
+    "static/css/main.ab7136cd.chunk.css",
+    "static/js/main.c8c23216.chunk.js"
+  ]
+}

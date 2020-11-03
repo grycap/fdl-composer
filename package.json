@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "http://grycap.github.io/fdl-composer",
   "dependencies": {
+    "@ant-design/icons": "^4.2.2",
     "@mrblenny/react-flow-chart": "0.0.14",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.0",
@@ -14,6 +15,7 @@
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
     "@types/styled-components": "^5.1.4",
+    "antd": "^4.7.3",
     "js-yaml": "^3.14.0",
     "lodash": "^4.17.20",
     "react": "^17.0.1",
@@ -26,6 +28,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

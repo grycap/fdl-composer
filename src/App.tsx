@@ -10,9 +10,21 @@ import {
 import { initialState } from "./misc/chartScheme";
 import styled from "styled-components";
 import { Button, Modal, Layout, Menu } from "antd";
+import {
+  DownloadOutlined,
+  ExportOutlined,
+  UploadOutlined,
+} from "@ant-design/icons";
+import { saveAs } from "file-saver";
+import yaml from "js-yaml";
+
 const { Header, Content } = Layout;
 const Outer = styled.div`
   padding: 30px;
+`;
+
+const StyledButton = styled(Button)`
+  margin-right: 1rem;
 `;
 
 const Input = styled.input`
@@ -26,8 +38,6 @@ const Input = styled.input`
  * Make sure it has the same prop signature
  */
 const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
-  console.log(node.properties);
-
   const [visible, setVisible] = React.useState(false);
   switch (node.type) {
     case "function-input":
@@ -36,14 +46,14 @@ const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
     case "one-data-storage":
       return (
         <Outer>
-          <p>{node.properties?.display || node.type}</p>
+          <p>{node.properties?.name || node.type}</p>
         </Outer>
       );
     default:
       return (
         <Outer onDoubleClick={() => setVisible(true)}>
           <Modal
-            title={node.properties?.display || node.type}
+            title={node.properties?.name || node.type}
             visible={visible}
             onOk={() => {
               node.properties = { ...node.properties, test: "test" };
@@ -53,7 +63,7 @@ const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
             okButtonProps={{ disabled: false }}
             cancelButtonProps={{ disabled: false }}
           ></Modal>
-          <p>{node.properties?.display || node.type}</p>
+          <p>{node.properties?.name || node.type}</p>
         </Outer>
       );
   }
@@ -62,19 +72,97 @@ const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
 export class App extends React.Component {
   public state = cloneDeep(initialState);
 
+  public exportToYaml() {
+    const nodeValues = Object.values(this.state.nodes);
+    const oscarFxs = nodeValues
+      .filter((x: any) => x.type === "oscar-fx")
+      .map((node) => node.properties);
+    const awsFxs = nodeValues
+      .filter((x: any) => x.type === "aws-fx")
+      .map((node) => node.properties);
+    const oneDataStorage = nodeValues
+      .filter((x: any) => x.type === "one-data-storage")
+      .map((node) => node.properties);
+    const s3Storage = nodeValues
+      .filter((x: any) => x.type === "s3-storage")
+      .map((node) => node.properties);
+
+    const linkValues = Object.values(this.state.links);
+    console.log(linkValues);
+
+    const output = yaml.dump({
+      functions: { oscar: oscarFxs, aws: awsFxs },
+      storage_providers: {
+        s3: s3Storage,
+        onedata: oneDataStorage,
+      },
+    });
+    const blob = new Blob([output], {
+      type: "text/plain;charset=utf-8",
+    });
+    saveAs(blob, "workflow.yaml");
+  }
+
+  public exportState() {
+    const stateStringified = JSON.stringify(this.state);
+    const blob = new Blob([stateStringified], {
+      type: "text/plain;charset=utf-8",
+    });
+    saveAs(blob, "state.json");
+  }
+
+  public importState() {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.onchange = (e: any) => {
+      // var file = e!.target!.files[0];
+      console.log(e);
+      const fr = new FileReader();
+      fr.onload = async (e) => {
+        console.log(e!.target!.result);
+        e?.target?.result &&
+          this.setState(JSON.parse(e!.target!.result as string));
+      };
+
+      fr.readAsText(input.files![0]);
+    };
+    input.click();
+  }
+
   public render() {
     const chart = this.state;
     const stateActions = mapValues(actions, (func: any) => (...args: any) =>
       this.setState(func(...args))
     ) as typeof actions;
+
     return (
       <div className="App">
         <Layout className="layout">
           <Header>
             <Menu theme="dark" mode="horizontal">
-              <Button ghost onClick={() => console.log(this.state)}>
-                Log state
-              </Button>
+              <StyledButton
+                ghost
+                icon={<DownloadOutlined />}
+                onClick={() => this.exportState()}
+              >
+                Download state
+              </StyledButton>
+              <StyledButton
+                ghost
+                icon={<UploadOutlined />}
+                onClick={() => this.importState()}
+              >
+                Load state
+              </StyledButton>
+              <StyledButton
+                ghost
+                icon={<ExportOutlined />}
+                onClick={() => {
+                  this.exportToYaml();
+                }}
+              >
+                Export yaml
+              </StyledButton>
             </Menu>
           </Header>
           <PageContent>
@@ -94,28 +182,28 @@ export class App extends React.Component {
                     id: "port1",
                     type: "top",
                     properties: {
-                      custom: "property",
+                      path: "",
                     },
                   },
                   port2: {
                     id: "port2",
                     type: "right",
                     properties: {
-                      custom: "property",
+                      path: "",
                     },
                   },
                   port3: {
                     id: "port3",
                     type: "bottom",
                     properties: {
-                      custom: "property",
+                      path: "",
                     },
                   },
                   port4: {
                     id: "port4",
                     type: "left",
                     properties: {
-                      custom: "property",
+                      path: "",
                     },
                   },
                 }}
@@ -127,28 +215,28 @@ export class App extends React.Component {
                     id: "port1",
                     type: "top",
                     properties: {
-                      custom: "property",
+                      path: "",
                     },
                   },
                   port2: {
                     id: "port2",
                     type: "right",
                     properties: {
-                      custom: "property",
+                      path: "",
                     },
                   },
                   port3: {
                     id: "port3",
                     type: "bottom",
                     properties: {
-                      custom: "property",
+                      path: "",
                     },
                   },
                   port4: {
                     id: "port4",
                     type: "left",
                     properties: {
-                      custom: "property",
+                      path: "",
                     },
                   },
                 }}
@@ -160,33 +248,30 @@ export class App extends React.Component {
                     id: "port1",
                     type: "top",
                     properties: {
-                      custom: "property",
+                      path: "",
                     },
                   },
                   port2: {
                     id: "port2",
                     type: "right",
                     properties: {
-                      custom: "property",
+                      path: "",
                     },
                   },
                   port3: {
                     id: "port3",
                     type: "bottom",
                     properties: {
-                      custom: "property",
+                      path: "",
                     },
                   },
                   port4: {
                     id: "port4",
                     type: "left",
                     properties: {
-                      custom: "property",
+                      path: "",
                     },
                   },
-                }}
-                properties={{
-                  custom: "property",
                 }}
               />
               <SidebarItem
@@ -196,101 +281,98 @@ export class App extends React.Component {
                     id: "port1",
                     type: "top",
                     properties: {
-                      custom: "property",
+                      path: "",
                     },
                   },
                   port2: {
                     id: "port2",
                     type: "right",
                     properties: {
-                      custom: "property",
+                      path: "",
                     },
                   },
                   port3: {
                     id: "port3",
                     type: "bottom",
                     properties: {
-                      custom: "property",
+                      path: "",
                     },
                   },
                   port4: {
                     id: "port4",
                     type: "left",
                     properties: {
-                      custom: "property",
-                    },
-                  },
-                }}
-                properties={{
-                  custom: "property",
-                }}
-              />
-              <SidebarItem
-                properties={{
-                  display: "oscar fx",
-                }}
-                type="Function"
-                ports={{
-                  port1: {
-                    id: "port1",
-                    type: "top",
-                    properties: {
-                      custom: "property",
-                    },
-                  },
-                  port2: {
-                    id: "port2",
-                    type: "right",
-                    properties: {
-                      custom: "property",
-                    },
-                  },
-                  port3: {
-                    id: "port3",
-                    type: "bottom",
-                    properties: {
-                      custom: "property",
-                    },
-                  },
-                  port4: {
-                    id: "port4",
-                    type: "left",
-                    properties: {
-                      custom: "property",
+                      path: "",
                     },
                   },
                 }}
               />
               <SidebarItem
-                type="aws-function"
-                properties={{ display: "aws fx" }}
+                properties={{
+                  name: "oscar fx",
+                }}
+                type="oscar-fx"
                 ports={{
                   port1: {
                     id: "port1",
                     type: "top",
                     properties: {
-                      custom: "property",
+                      path: "",
                     },
                   },
                   port2: {
                     id: "port2",
                     type: "right",
                     properties: {
-                      custom: "property",
+                      path: "",
                     },
                   },
                   port3: {
                     id: "port3",
                     type: "bottom",
                     properties: {
-                      custom: "property",
+                      path: "",
                     },
                   },
                   port4: {
                     id: "port4",
                     type: "left",
                     properties: {
-                      custom: "property",
+                      path: "",
+                    },
+                  },
+                }}
+              />
+              <SidebarItem
+                type="aws-fx"
+                properties={{ name: "aws fx" }}
+                ports={{
+                  port1: {
+                    id: "port1",
+                    type: "top",
+                    properties: {
+                      path: "",
+                    },
+                  },
+                  port2: {
+                    id: "port2",
+                    type: "right",
+                    properties: {
+                      path: "",
+                    },
+                  },
+                  port3: {
+                    id: "port3",
+                    type: "bottom",
+                    properties: {
+                      path: "",
+                    },
+                  },
+                  port4: {
+                    id: "port4",
+                    type: "left",
+                    properties: {
+                      path: "",
                     },
                   },
                 }}

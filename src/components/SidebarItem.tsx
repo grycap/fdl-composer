@@ -29,7 +29,7 @@ export const SidebarItem = ({ type, ports, properties }: ISidebarItemProps) => {
         );
       }}
     >
-      {properties?.display || type}
+      {type}
     </Outer>
   );
 };

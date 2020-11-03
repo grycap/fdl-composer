@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/fdl-composer/static/css/main.31a62795.chunk.css",
-    "main.js": "/fdl-composer/static/js/main.ac2ee72e.chunk.js",
-    "main.js.map": "/fdl-composer/static/js/main.ac2ee72e.chunk.js.map",
+    "main.js": "/fdl-composer/static/js/main.dfb074bd.chunk.js",
+    "main.js.map": "/fdl-composer/static/js/main.dfb074bd.chunk.js.map",
     "runtime-main.js": "/fdl-composer/static/js/runtime-main.63d9d8b9.js",
     "runtime-main.js.map": "/fdl-composer/static/js/runtime-main.63d9d8b9.js.map",
     "static/css/2.8ddd9e3d.chunk.css": "/fdl-composer/static/css/2.8ddd9e3d.chunk.css",
@@ -20,6 +20,6 @@
     "static/css/2.8ddd9e3d.chunk.css",
     "static/js/2.7614f754.chunk.js",
     "static/css/main.31a62795.chunk.css",
-    "static/js/main.ac2ee72e.chunk.js"
+    "static/js/main.dfb074bd.chunk.js"
   ]
 }

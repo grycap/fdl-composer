@@ -3,7 +3,7 @@ export interface IVisible {
   modalVisible: boolean;
 }
 
-export const chartScheme: IChart & IVisible = {
+export const initialState: IChart & IVisible = {
   offset: {
     x: 0,
     y: 0,

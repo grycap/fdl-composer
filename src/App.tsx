@@ -7,7 +7,7 @@ import {
   FlowChart,
   INodeInnerDefaultProps,
 } from "@mrblenny/react-flow-chart";
-import { chartScheme } from "./misc/chartScheme";
+import { initialState } from "./misc/chartScheme";
 import styled from "styled-components";
 import { Button, Modal, Layout, Menu } from "antd";
 const { Header, Content } = Layout;
@@ -60,7 +60,7 @@ const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
 };
 
 export class App extends React.Component {
-  public state = cloneDeep(chartScheme);
+  public state = cloneDeep(initialState);
 
   public render() {
     const chart = this.state;

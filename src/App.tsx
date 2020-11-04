@@ -26,30 +26,124 @@ const { Header } = Layout;
 const StyledButton = styled(Button)`
   margin-right: 1rem;
 `;
+
 export class App extends React.Component {
   public state = cloneDeep(initialState);
 
   public exportToYaml() {
     const nodeValues = Object.values(this.state.nodes);
+    const linkValues = Object.values(this.state.links);
+    const inputValues = nodeValues.filter((x) => x.type === "function-input");
+    const outputValues = nodeValues.filter((x) => x.type === "function-output");
+
     const oscarFxs = nodeValues
       .filter((x: any) => x.type === "oscar-fx")
-      .map((node) => node.properties);
+      .map((node) => {
+        const nodeLinks = linkValues.filter(
+          (lv) => lv.to.nodeId === node.id || lv.from.nodeId === node.id
+        );
+
+        const inputNode = inputValues.find((x) =>
+          nodeLinks.some((y) => y.from.nodeId === x.id || y.to.nodeId === x.id)
+        );
+
+        const outputNode = outputValues.find((x) =>
+          nodeLinks.some((y) => y.from.nodeId === x.id || y.to.nodeId === x.id)
+        );
+
+        return {
+          ...node.properties,
+          input: [
+            inputNode?.properties.suffix
+              ? {
+                  ...inputNode?.properties,
+                  suffix: inputNode.properties.suffix.split(","),
+                }
+              : {
+                  ...inputNode?.properties,
+                },
+          ],
+          output: [
+            outputNode?.properties.suffix
+              ? {
+                  ...outputNode?.properties,
+                  suffix: outputNode.properties.suffix.split(","),
+                }
+              : {
+                  ...outputNode?.properties,
+                },
+          ],
+        };
+      });
     const awsFxs = nodeValues
       .filter((x: any) => x.type === "aws-fx")
-      .map((node) => node.properties);
+      .map((node) => {
+        const nodeLinks = linkValues.filter(
+          (lv) => lv.to.nodeId === node.id || lv.from.nodeId === node.id
+        );
+
+        const inputNode = inputValues.find((x: any) =>
+          nodeLinks.some((y) => y.from.nodeId === x.id || y.to.nodeId === x.id)
+        );
+
+        const outputNode = outputValues.find((x: any) =>
+          nodeLinks.some((y) => y.from.nodeId === x.id || y.to.nodeId === x.id)
+        );
+
+        return {
+          ...node.properties,
+          input: [
+            inputNode?.properties.suffix
+              ? {
+                  ...inputNode?.properties,
+                  suffix: inputNode.properties.suffix.split(","),
+                }
+              : {
+                  ...inputNode?.properties,
+                },
+          ],
+          output: [
+            outputNode?.properties.suffix
+              ? {
+                  ...outputNode?.properties,
+                  suffix: outputNode.properties.suffix.split(","),
+                }
+              : {
+                  ...outputNode?.properties,
+                },
+          ],
+        };
+      });
     const oneDataStorage = nodeValues
       .filter((x: any) => x.type === "one-data-storage")
       .map((node) => node.properties);
+
     const s3Storage = nodeValues
       .filter((x: any) => x.type === "s3-storage")
       .map((node) => node.properties);
-
-    const linkValues = Object.values(this.state.links);
+    const s3Names = new Set<string>(s3Storage.map((x) => x.name));
+    const s3WithoutDuplicates = Array.from(s3Names).map((x) => {
+      return JSON.parse(
+        `{ "${x}": ${JSON.stringify(s3Storage.find((y) => y.name === x))} }`
+      );
+    });
 
     const output = yaml.dump({
-      functions: { oscar: oscarFxs, aws: awsFxs },
+      functions: {
+        oscar: oscarFxs.map((x) =>
+          JSON.parse(`{ "${x.name}": ${JSON.stringify(x)} }`)
+        ),
+        aws: awsFxs.map((x) =>
+          JSON.parse(`{ "${x.name}": ${JSON.stringify(x)} }`)
+        ),
+      },
       storage_providers: {
-        s3: s3Storage,
+        s3:
+          s3WithoutDuplicates.length > 1
+            ? s3WithoutDuplicates
+            : s3WithoutDuplicates.length > 0
+            ? s3WithoutDuplicates[0]
+            : {},
         onedata: oneDataStorage,
       },
     });

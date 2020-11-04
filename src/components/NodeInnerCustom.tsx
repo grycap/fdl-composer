@@ -96,10 +96,13 @@ export const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
                 placeholder="png"
                 value={currentProperties.suffix}
                 onChange={(e) => {
-                  setCurrentProperties({
-                    ...currentProperties,
-                    suffix: e.target.value,
-                  });
+                  const { value } = e.target;
+                  !!value
+                    ? setCurrentProperties({
+                        ...currentProperties,
+                        suffix: e.target.value,
+                      })
+                    : setCurrentProperties({ path: currentProperties.path });
                 }}
               />
             </Row>
@@ -156,7 +159,7 @@ export const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
                 onChange={(e) => {
                   setCurrentProperties({
                     ...currentProperties,
-                    suffix: e.target.value,
+                    suffix: [e.target.value],
                   });
                 }}
               />
@@ -183,6 +186,23 @@ export const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
             okButtonProps={{ disabled: false }}
             cancelButtonProps={{ disabled: false }}
           >
+            <Row>
+              <Label>Name:</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="my-s3"
+                value={currentProperties.name}
+                onChange={(e) => {
+                  setCurrentProperties({
+                    ...currentProperties,
+                    name: e.target.value,
+                  });
+                }}
+              />
+            </Row>
             <Row>
               <Label>Access Key:</Label>
               <Input
@@ -256,6 +276,23 @@ export const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
             okButtonProps={{ disabled: false }}
             cancelButtonProps={{ disabled: false }}
           >
+            <Row>
+              <Label>Name:</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="my-onedata"
+                value={currentProperties.name}
+                onChange={(e) => {
+                  setCurrentProperties({
+                    ...currentProperties,
+                    name: e.target.value,
+                  });
+                }}
+              />
+            </Row>
             <Row>
               <Label>One Provider Host:</Label>
               <Input
@@ -497,7 +534,6 @@ export const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
           color={color.color}
           background={color.background}
           onDoubleClick={() => {
-            console.log(node.type);
             setVisible(true);
           }}
         >

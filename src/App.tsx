@@ -1,15 +1,17 @@
 import React from "react";
 import "./App.css";
 import { cloneDeep, mapValues } from "lodash";
-import { Message, PageContent, Sidebar, SidebarItem } from "./components";
 import {
-  actions,
-  FlowChart,
-  INodeInnerDefaultProps,
-} from "@mrblenny/react-flow-chart";
+  Message,
+  PageContent,
+  Sidebar,
+  SidebarItem,
+  PortCustom,
+} from "./components";
+import { actions, FlowChart } from "@mrblenny/react-flow-chart";
 import { initialState } from "./misc/chartScheme";
 import styled from "styled-components";
-import { Button, Modal, Layout, Menu } from "antd";
+import { Button, Layout, Menu } from "antd";
 import {
   DownloadOutlined,
   ExportOutlined,
@@ -17,58 +19,13 @@ import {
 } from "@ant-design/icons";
 import { saveAs } from "file-saver";
 import yaml from "js-yaml";
+import { NodeInnerCustom } from "./components/NodeInnerCustom";
 
-const { Header, Content } = Layout;
-const Outer = styled.div`
-  padding: 30px;
-`;
+const { Header } = Layout;
 
 const StyledButton = styled(Button)`
   margin-right: 1rem;
 `;
-
-const Input = styled.input`
-  padding: 10px;
-  border: 1px solid cornflowerblue;
-  width: 100%;
-`;
-
-/**
- * Create the custom component,
- * Make sure it has the same prop signature
- */
-const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
-  const [visible, setVisible] = React.useState(false);
-  switch (node.type) {
-    case "function-input":
-    case "function-output":
-    case "s3-storage":
-    case "one-data-storage":
-      return (
-        <Outer>
-          <p>{node.properties?.name || node.type}</p>
-        </Outer>
-      );
-    default:
-      return (
-        <Outer onDoubleClick={() => setVisible(true)}>
-          <Modal
-            title={node.properties?.name || node.type}
-            visible={visible}
-            onOk={() => {
-              node.properties = { ...node.properties, test: "test" };
-              setVisible(false);
-            }}
-            onCancel={() => setVisible(false)}
-            okButtonProps={{ disabled: false }}
-            cancelButtonProps={{ disabled: false }}
-          ></Modal>
-          <p>{node.properties?.name || node.type}</p>
-        </Outer>
-      );
-  }
-};
-
 export class App extends React.Component {
   public state = cloneDeep(initialState);
 
@@ -88,7 +45,6 @@ export class App extends React.Component {
       .map((node) => node.properties);
 
     const linkValues = Object.values(this.state.links);
-    console.log(linkValues);
 
     const output = yaml.dump({
       functions: { oscar: oscarFxs, aws: awsFxs },
@@ -116,10 +72,8 @@ export class App extends React.Component {
     input.type = "file";
     input.onchange = (e: any) => {
       // var file = e!.target!.files[0];
-      console.log(e);
       const fr = new FileReader();
       fr.onload = async (e) => {
-        console.log(e!.target!.result);
         e?.target?.result &&
           this.setState(JSON.parse(e!.target!.result as string));
       };
@@ -131,8 +85,17 @@ export class App extends React.Component {
 
   public render() {
     const chart = this.state;
-    const stateActions = mapValues(actions, (func: any) => (...args: any) =>
-      this.setState(func(...args))
+
+    const stateActions = mapValues(
+      {
+        ...actions,
+        onNodeDoubleClick: () => {
+          return { ...this.state, selected: {} };
+        },
+      },
+      (func: any) => (...args: any) => {
+        this.setState(func(...args));
+      }
     ) as typeof actions;
 
     return (
@@ -171,6 +134,7 @@ export class App extends React.Component {
               callbacks={stateActions}
               Components={{
                 NodeInner: NodeInnerCustom,
+                Port: PortCustom,
               }}
             />
             <Sidebar>

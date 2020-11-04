@@ -93,7 +93,7 @@ export const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
                 onMouseUp={(e) => e.stopPropagation()}
                 onMouseDown={(e) => e.stopPropagation()}
                 onKeyDown={(e) => e.stopPropagation()}
-                placeholder="png"
+                placeholder="png, jpg, xls"
                 value={currentProperties.suffix}
                 onChange={(e) => {
                   const { value } = e.target;
@@ -154,12 +154,12 @@ export const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
                 onMouseUp={(e) => e.stopPropagation()}
                 onMouseDown={(e) => e.stopPropagation()}
                 onKeyDown={(e) => e.stopPropagation()}
-                placeholder="png"
+                placeholder="png, jpg, xls"
                 value={currentProperties.suffix}
                 onChange={(e) => {
                   setCurrentProperties({
                     ...currentProperties,
-                    suffix: [e.target.value],
+                    suffix: e.target.value,
                   });
                 }}
               />

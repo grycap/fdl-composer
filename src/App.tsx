@@ -272,9 +272,6 @@ export class App extends React.Component {
                 }}
               />
               <SidebarItem
-                properties={{
-                  name: "oscar fx",
-                }}
                 type="oscar-fx"
                 ports={{
                   port1: {
@@ -309,7 +306,6 @@ export class App extends React.Component {
               />
               <SidebarItem
                 type="aws-fx"
-                properties={{ name: "aws fx" }}
                 ports={{
                   port1: {
                     id: "port1",

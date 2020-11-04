@@ -1,10 +1,24 @@
 import { INodeInnerDefaultProps } from "@mrblenny/react-flow-chart";
 import { Modal } from "antd";
 import React from "react";
-import styled from "styled-components";
-
-const Outer = styled.div`
+import styled, { css } from "styled-components";
+import { getColor } from "./SidebarItem";
+interface IOuterProps {
+  background?: string;
+  color?: string;
+}
+const Outer = styled.div<IOuterProps>`
   padding: 30px;
+  ${(props) =>
+    props.color &&
+    css`
+      color: ${props.color};
+    `}
+  ${(props) =>
+    props.background &&
+    css`
+      background: ${props.background};
+    `};
 `;
 
 const Input = styled.input`
@@ -33,14 +47,14 @@ export const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
   const [currentProperties, setCurrentProperties] = React.useState<
     any | undefined
   >(node.properties || {});
+  const color = getColor(node.type);
   switch (node.type) {
     case "function-input":
-    case "function-output":
       return (
         <Outer
+          color={color.color}
+          background={color.background}
           onDoubleClick={(e) => {
-            config = { ...config, selectable: false };
-
             setVisible(true);
           }}
         >
@@ -90,12 +104,74 @@ export const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
               />
             </Row>
           </Modal>
-          <p>{node.properties?.name || node.type}</p>
+          <p>{`${node.type} ${node.properties?.name || ""}`}</p>
+        </Outer>
+      );
+    case "function-output":
+      return (
+        <Outer
+          color={color.color}
+          background={color.background}
+          onDoubleClick={(e) => {
+            setVisible(true);
+          }}
+        >
+          <Modal
+            title={node.properties?.name || node.type}
+            visible={visible}
+            onOk={() => {
+              node.properties = currentProperties;
+              setVisible(false);
+            }}
+            onCancel={() => setVisible(false)}
+            okButtonProps={{ disabled: false }}
+            cancelButtonProps={{ disabled: false }}
+          >
+            <Row>
+              <Label>Path:</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="darknet-workflow/input"
+                value={currentProperties.path}
+                onChange={(e) => {
+                  setCurrentProperties({
+                    ...currentProperties,
+                    path: e.target.value,
+                  });
+                }}
+              />
+            </Row>
+            <Row>
+              <Label>Suffix</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="png"
+                value={currentProperties.suffix}
+                onChange={(e) => {
+                  setCurrentProperties({
+                    ...currentProperties,
+                    suffix: e.target.value,
+                  });
+                }}
+              />
+            </Row>
+          </Modal>
+          <p>{`${node.type} ${node.properties?.name || ""}`}</p>
         </Outer>
       );
     case "s3-storage":
       return (
-        <Outer onDoubleClick={(e) => setVisible(true)}>
+        <Outer
+          color={color.color}
+          background={color.background}
+          onDoubleClick={(e) => setVisible(true)}
+        >
           <Modal
             title={node.properties?.name || node.type}
             visible={visible}
@@ -159,12 +235,16 @@ export const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
               />
             </Row>
           </Modal>
-          <p>{node.properties?.name || node.type}</p>
+          <p>{`${node.type} ${node.properties?.name || ""}`}</p>
         </Outer>
       );
     case "one-data-storage":
       return (
-        <Outer onDoubleClick={() => setVisible(true)}>
+        <Outer
+          color={color.color}
+          background={color.background}
+          onDoubleClick={() => setVisible(true)}
+        >
           <Modal
             title={node.properties?.name || node.type}
             visible={visible}
@@ -228,12 +308,16 @@ export const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
               />
             </Row>
           </Modal>
-          <p>{node.properties?.name || node.type}</p>
+          <p>{`${node.type} ${node.properties?.name || ""}`}</p>
         </Outer>
       );
     case "oscar-fx":
       return (
-        <Outer onDoubleClick={() => setVisible(true)}>
+        <Outer
+          color={color.color}
+          background={color.background}
+          onDoubleClick={() => setVisible(true)}
+        >
           <Modal
             title={node.properties?.name || node.type}
             visible={visible}
@@ -325,18 +409,22 @@ export const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
                 onChange={(e) => {
                   setCurrentProperties({
                     ...currentProperties,
-                    image: e.target.value,
+                    script: e.target.value,
                   });
                 }}
               />
             </Row>
           </Modal>
-          <p>{node.properties?.name || node.type}</p>
+          <p>{`${node.type} ${node.properties?.name || ""}`}</p>
         </Outer>
       );
     case "aws-fx":
       return (
-        <Outer onDoubleClick={() => setVisible(true)}>
+        <Outer
+          color={color.color}
+          background={color.background}
+          onDoubleClick={() => setVisible(true)}
+        >
           <Modal
             title={node.properties?.name || node.type}
             visible={visible}
@@ -355,30 +443,12 @@ export const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
                 onMouseUp={(e) => e.stopPropagation()}
                 onMouseDown={(e) => e.stopPropagation()}
                 onKeyDown={(e) => e.stopPropagation()}
-                placeholder="darknet"
+                placeholder="scar-grayify-workflow"
                 value={currentProperties.name}
                 onChange={(e) => {
                   setCurrentProperties({
                     ...currentProperties,
                     name: e.target.value,
-                  });
-                }}
-              />
-            </Row>
-
-            <Row>
-              <Label>Image:</Label>
-              <Input
-                onClick={(e) => e.stopPropagation()}
-                onMouseUp={(e) => e.stopPropagation()}
-                onMouseDown={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-                placeholder="grycap/darknet"
-                value={currentProperties.image}
-                onChange={(e) => {
-                  setCurrentProperties({
-                    ...currentProperties,
-                    container: { image: e.target.value },
                   });
                 }}
               />
@@ -390,23 +460,47 @@ export const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
                 onMouseUp={(e) => e.stopPropagation()}
                 onMouseDown={(e) => e.stopPropagation()}
                 onKeyDown={(e) => e.stopPropagation()}
-                placeholder="yolo.sh"
-                value={currentProperties.script}
+                placeholder="grayify-image.sh"
+                value={currentProperties.init_script}
                 onChange={(e) => {
                   setCurrentProperties({
                     ...currentProperties,
-                    image: e.target.value,
+                    init_script: e.target.value,
+                  });
+                }}
+              />
+            </Row>
+            <Row>
+              <Label>Image:</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="grycap/imagemagick"
+                value={currentProperties.container?.image}
+                onChange={(e) => {
+                  setCurrentProperties({
+                    ...currentProperties,
+                    container: { image: e.target.value },
                   });
                 }}
               />
             </Row>
           </Modal>
-          <p>{node.properties?.name || node.type}</p>
+          <p>{`${node.type} ${node.properties?.name || ""}`}</p>
         </Outer>
       );
     default:
       return (
-        <Outer onDoubleClick={() => setVisible(true)}>
+        <Outer
+          color={color.color}
+          background={color.background}
+          onDoubleClick={() => {
+            console.log(node.type);
+            setVisible(true);
+          }}
+        >
           <Modal
             title={node.properties?.name || node.type}
             visible={visible}
@@ -418,7 +512,7 @@ export const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
             okButtonProps={{ disabled: false }}
             cancelButtonProps={{ disabled: false }}
           ></Modal>
-          <p>{node.properties?.name || node.type}</p>
+          <p>{`${node.type} ${node.properties?.name || ""}`}</p>
         </Outer>
       );
   }

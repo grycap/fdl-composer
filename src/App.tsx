@@ -120,20 +120,18 @@ export class App extends React.Component {
     const oneDataNames = new Set<string>(oneDataStorage.map((x) => x.name));
 
     const oneDataWithoutDuplicates = Array.from(oneDataNames).map((x) => {
-      return JSON.parse(
-        `{ "${x}": ${JSON.stringify(
-          oneDataStorage.find((y) => y.name === x)
-        )} }`
-      );
+      let res = oneDataStorage.find((y) => y.name === x);
+      delete res.name;
+      return JSON.parse(`{ "${x}": ${JSON.stringify(res)} }`);
     });
     const s3Storage = nodeValues
       .filter((x: any) => x.type === "s3-storage")
       .map((node) => node.properties);
     const s3Names = new Set<string>(s3Storage.map((x) => x.name));
     const s3WithoutDuplicates = Array.from(s3Names).map((x) => {
-      return JSON.parse(
-        `{ "${x}": ${JSON.stringify(s3Storage.find((y) => y.name === x))} }`
-      );
+      let res = s3Storage.find((y) => y.name === x);
+      delete res.name;
+      return JSON.parse(`{ "${x}": ${JSON.stringify(res)} }`);
     });
 
     const output = yaml.dump({

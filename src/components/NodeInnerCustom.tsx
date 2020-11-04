@@ -70,6 +70,23 @@ export const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
             cancelButtonProps={{ disabled: false }}
           >
             <Row>
+              <Label>Storage provider:</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="minio"
+                value={currentProperties.storage_provider}
+                onChange={(e) => {
+                  setCurrentProperties({
+                    ...currentProperties,
+                    storage_provider: e.target.value,
+                  });
+                }}
+              />
+            </Row>
+            <Row>
               <Label>Path:</Label>
               <Input
                 onClick={(e) => e.stopPropagation()}
@@ -130,6 +147,23 @@ export const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
             okButtonProps={{ disabled: false }}
             cancelButtonProps={{ disabled: false }}
           >
+            <Row>
+              <Label>Storage provider:</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="s3.my-aws"
+                value={currentProperties.storage_provider}
+                onChange={(e) => {
+                  setCurrentProperties({
+                    ...currentProperties,
+                    storage_provider: e.target.value,
+                  });
+                }}
+              />
+            </Row>
             <Row>
               <Label>Path:</Label>
               <Input
@@ -541,7 +575,7 @@ export const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
             title={node.properties?.name || node.type}
             visible={visible}
             onOk={() => {
-              node.properties = { ...node.properties, test: "test" };
+              node.properties = currentProperties;
               setVisible(false);
             }}
             onCancel={() => setVisible(false)}

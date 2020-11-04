@@ -117,7 +117,15 @@ export class App extends React.Component {
     const oneDataStorage = nodeValues
       .filter((x: any) => x.type === "one-data-storage")
       .map((node) => node.properties);
+    const oneDataNames = new Set<string>(oneDataStorage.map((x) => x.name));
 
+    const oneDataWithoutDuplicates = Array.from(oneDataNames).map((x) => {
+      return JSON.parse(
+        `{ "${x}": ${JSON.stringify(
+          oneDataStorage.find((y) => y.name === x)
+        )} }`
+      );
+    });
     const s3Storage = nodeValues
       .filter((x: any) => x.type === "s3-storage")
       .map((node) => node.properties);
@@ -144,7 +152,12 @@ export class App extends React.Component {
             : s3WithoutDuplicates.length > 0
             ? s3WithoutDuplicates[0]
             : {},
-        onedata: oneDataStorage,
+        onedata:
+          oneDataWithoutDuplicates.length > 1
+            ? oneDataWithoutDuplicates
+            : oneDataWithoutDuplicates.length > 0
+            ? oneDataWithoutDuplicates[0]
+            : {},
       },
     });
     const blob = new Blob([output], {

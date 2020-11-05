@@ -36,9 +36,10 @@
       "properties": {
         "access_key": "xxxxxxxxxxx",
         "secret_key": "xxxxxxxxxxx",
-        "region": "us-east-1"
+        "region": "us-east-1",
+        "name": "my-s3"
       },
-      "size": { "width": 200, "height": 95 }
+      "size": { "width": 200, "height": 96 }
     },
     "079aa508-ef32-4433-9391-cbe61e404741": {
       "id": "079aa508-ef32-4433-9391-cbe61e404741",
@@ -76,7 +77,7 @@
         "token": "xxxxxxxxxxxxx",
         "space": "my-space"
       },
-      "size": { "width": 200, "height": 95 }
+      "size": { "width": 200, "height": 96 }
     },
     "32528eaa-25dd-473f-8042-e8e6063558bb": {
       "id": "32528eaa-25dd-473f-8042-e8e6063558bb",
@@ -116,7 +117,7 @@
         "image": "grycap/darknet",
         "script": "yolo.sh"
       },
-      "size": { "width": 200, "height": 95 }
+      "size": { "width": 200, "height": 96 }
     },
     "4f43d1d2-b167-4710-a862-a48556bcc4b1": {
       "id": "4f43d1d2-b167-4710-a862-a48556bcc4b1",
@@ -154,7 +155,7 @@
         "container": { "image": "grycap/imagemagick" },
         "init_script": "grayify-image.sh"
       },
-      "size": { "width": 237, "height": 95 }
+      "size": { "width": 237, "height": 96 }
     },
     "4f2c04f4-5658-4973-99b6-42a52f241bed": {
       "id": "4f2c04f4-5658-4973-99b6-42a52f241bed",
@@ -187,7 +188,7 @@
           "position": { "x": -4, "y": 48 }
         }
       },
-      "size": { "width": 200, "height": 95 },
+      "size": { "width": 200, "height": 96 },
       "properties": {
         "storage_provider": "minio",
         "path": "darknet-worflow/input"
@@ -224,7 +225,7 @@
           "position": { "x": -4, "y": 48 }
         }
       },
-      "size": { "width": 200, "height": 95 },
+      "size": { "width": 200, "height": 96 },
       "properties": {
         "storage_provider": "s3.my-aws",
         "path": "scar-grayify-workflow/input",
@@ -262,7 +263,7 @@
           "position": { "x": -4, "y": 48 }
         }
       },
-      "size": { "width": 200, "height": 95 },
+      "size": { "width": 200, "height": 96 },
       "properties": {
         "storage_provider": "s3",
         "path": "scar-grayify-workflow/input"
@@ -299,7 +300,7 @@
           "position": { "x": -4, "y": 48 }
         }
       },
-      "size": { "width": 200, "height": 95 },
+      "size": { "width": 200, "height": 96 },
       "properties": {
         "storage_provider": "onedata.my-onedata",
         "path": "scar-grayify-workflow/output"
@@ -307,7 +308,7 @@
     },
     "522b3939-9739-4d8e-a658-d8fa434e9ad6": {
       "id": "522b3939-9739-4d8e-a658-d8fa434e9ad6",
-      "position": { "x": 436.47196261682245, "y": 53.876782533164345 },
+      "position": { "x": 436.47196261682245, "y": 52.09106824745006 },
       "orientation": 0,
       "type": "s3-storage",
       "ports": {
@@ -342,7 +343,7 @@
         "region": "us-east-1",
         "name": "my-s3"
       },
-      "size": { "width": 200, "height": 95 }
+      "size": { "width": 200, "height": 96 }
     }
   },
   "links": {
@@ -435,7 +436,7 @@
       }
     }
   },
-  "selected": { "type": "node", "id": "079aa508-ef32-4433-9391-cbe61e404741" },
+  "selected": { "type": "node", "id": "522b3939-9739-4d8e-a658-d8fa434e9ad6" },
   "hovered": {},
   "modalVisible": false
 }

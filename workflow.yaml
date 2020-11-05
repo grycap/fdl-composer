@@ -1,0 +1,41 @@
+functions:
+    oscar:
+    - my_oscar:
+        name: darknet
+        memory: 1Gi
+        cpu: '1.0'
+        image: grycap/darknet
+        script: yolo.sh
+        input:
+        - storage_provider: minio
+          path: darknet-workflow/input
+        output:
+        - storage_provider: s3.my-aws
+          path: scar-grayify-workflow/input
+          suffix:
+          - png
+    aws:
+    - lambda:
+        name: scar-grayify-workflow
+        init_script: grayify-image.sh
+        container:
+          image: grycap/imagemagick
+        input:
+        - storage_provider: s3
+          path: scar-grayify-workflow/input
+        output:
+        - storage_provider: onedata.my-onedata
+          path: scar-grayify-workflow/output
+  
+  storage_providers:
+    s3:
+      my-aws:
+        access_key: xxxxxxxxxxxxxxxx
+        secret_key: xxxxxxxxxxxxxxxx
+        region: us-east-1
+    onedata:
+      my-onedata:
+        oneprovider_host: plg-cyfronet-01.datahub.egi.eu
+        token: xxxxxxxxxxxxx
+        space: my-space
+  

@@ -1,9 +1,9 @@
 # fdl-composer
 # Usage
 
-Try our [demo](https://grycap.github.io/fdl-composer/)
-Uploading this [simple state example](https://github.com/grycap/fdl-composer/blob/main/simple_state.json).
-Double clicking on a node allows edition.
+Try our [demo](https://grycap.github.io/fdl-composer/)\
+Uploading this [simple state example](https://github.com/grycap/fdl-composer/blob/main/simple_state.json).\
+Double clicking on a node allows edition.\
 Drag&Drop items from the sidebar to the canvas and connect them.
 ## Available Scripts
 

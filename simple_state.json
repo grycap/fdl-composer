@@ -36,7 +36,8 @@
       "properties": {
         "access_key": "xxxxxxxxxxx",
         "secret_key": "xxxxxxxxxxx",
-        "region": "us-east-1"
+        "region": "us-east-1",
+        "name": "my-s3"
       },
       "size": { "width": 200, "height": 95 }
     },
@@ -74,7 +75,8 @@
       "properties": {
         "oneprovider_host": "plg-cyfronet-01.datahub.egi.eu",
         "token": "xxxxxxxxxxxxx",
-        "space": "my-space"
+        "space": "my-space",
+        "name": "my-onedata"
       },
       "size": { "width": 200, "height": 95 }
     },
@@ -343,6 +345,45 @@
         "name": "my-s3"
       },
       "size": { "width": 200, "height": 95 }
+    },
+    "36c3ca23-efa5-40ea-81d0-d98e40fe56cb": {
+      "id": "36c3ca23-efa5-40ea-81d0-d98e40fe56cb",
+      "position": { "x": 918.625, "y": 311.5866533006941 },
+      "orientation": 0,
+      "type": "s3-storage",
+      "ports": {
+        "port1": {
+          "id": "port1",
+          "type": "top",
+          "properties": { "path": "" },
+          "position": { "x": 109, "y": -1 }
+        },
+        "port2": {
+          "id": "port2",
+          "type": "right",
+          "properties": { "path": "" },
+          "position": { "x": 223, "y": 48 }
+        },
+        "port3": {
+          "id": "port3",
+          "type": "bottom",
+          "properties": { "path": "" },
+          "position": { "x": 109, "y": 97 }
+        },
+        "port4": {
+          "id": "port4",
+          "type": "left",
+          "properties": { "path": "" },
+          "position": { "x": -4, "y": 48 }
+        }
+      },
+      "properties": {
+        "name": "my-s3-unused",
+        "access_key": "xxxxxxxxxxxxx",
+        "secret_key": "xxxxxxxxxxxx",
+        "region": "us-west-1"
+      },
+      "size": { "width": 218, "height": 95 }
     }
   },
   "links": {
@@ -435,7 +476,7 @@
       }
     }
   },
-  "selected": { "type": "node", "id": "079aa508-ef32-4433-9391-cbe61e404741" },
+  "selected": { "type": "node", "id": "36c3ca23-efa5-40ea-81d0-d98e40fe56cb" },
   "hovered": {},
   "modalVisible": false
 }

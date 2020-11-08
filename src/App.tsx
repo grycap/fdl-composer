@@ -119,7 +119,7 @@ export class App extends React.Component {
       .map((node) => node.properties)
       .reduce((a, b) => {
         const copy = cloneDeep(b);
-        delete b.name;
+        delete copy.name;
         return { ...a, [b.name]: copy };
       }, {});
 

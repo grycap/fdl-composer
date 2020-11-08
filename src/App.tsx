@@ -116,24 +116,21 @@ export class App extends React.Component {
       });
     const oneDataStorage = nodeValues
       .filter((x: any) => x.type === "one-data-storage")
-      .map((node) => node.properties);
-    const oneDataNames = new Set<string>(oneDataStorage.map((x) => x.name));
+      .map((node) => node.properties)
+      .reduce((a, b) => {
+        const copy = cloneDeep(b);
+        delete copy.name;
+        return { ...a, [b.name]: copy };
+      }, {});
 
-    const oneDataWithoutDuplicates = Array.from(oneDataNames).map((x) => {
-      let res = oneDataStorage.find((y) => y.name === x);
-      delete res.name;
-      return JSON.parse(`{ "${x}": ${JSON.stringify(res)} }`);
-    });
     const s3Storage = nodeValues
       .filter((x: any) => x.type === "s3-storage")
-      .map((node) => node.properties);
-    const s3Names = new Set<string>(s3Storage.map((x) => x.name));
-    const s3WithoutDuplicates = Array.from(s3Names).map((x) => {
-      let res = s3Storage.find((y) => y.name === x);
-      delete res.name;
-      return JSON.parse(`{ "${x}": ${JSON.stringify(res)} }`);
-    });
-
+      .map((node) => node.properties)
+      .reduce((a, b) => {
+        const copy = cloneDeep(b);
+        delete copy.name;
+        return { ...a, [b.name]: copy };
+      }, {});
     const output = yaml.dump({
       functions: {
         oscar: oscarFxs.map((x) =>
@@ -144,18 +141,8 @@ export class App extends React.Component {
         ),
       },
       storage_providers: {
-        s3:
-          s3WithoutDuplicates.length > 1
-            ? s3WithoutDuplicates
-            : s3WithoutDuplicates.length > 0
-            ? s3WithoutDuplicates[0]
-            : {},
-        onedata:
-          oneDataWithoutDuplicates.length > 1
-            ? oneDataWithoutDuplicates
-            : oneDataWithoutDuplicates.length > 0
-            ? oneDataWithoutDuplicates[0]
-            : {},
+        s3: s3Storage,
+        onedata: oneDataStorage,
       },
     });
     const blob = new Blob([output], {

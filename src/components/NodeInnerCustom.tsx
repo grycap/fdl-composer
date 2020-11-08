@@ -1,6 +1,6 @@
 import { INodeInnerDefaultProps } from "@mrblenny/react-flow-chart";
 import { Modal } from "antd";
-import React from "react";
+import React, { ReactElement } from "react";
 import styled, { css } from "styled-components";
 import { getColor } from "./SidebarItem";
 interface IOuterProps {
@@ -37,6 +37,18 @@ const Label = styled.div`
   width: 20%;
   align-content: center;
 `;
+
+interface ICustomPropertiesProps {
+  updateProperties: (propertyName: string, customProperty: any) => void;
+}
+
+const ModalCustomProperty: React.FC<ICustomPropertiesProps> = ({
+  updateProperties,
+}): ReactElement => {
+  const [visible, setVisible] = React.useState(false);
+
+  return <Row></Row>;
+};
 
 /**
  * Create the custom component,

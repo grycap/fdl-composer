@@ -51,19 +51,19 @@
           "id": "port1",
           "type": "top",
           "properties": { "path": "" },
-          "position": { "x": 100, "y": -1 }
+          "position": { "x": 123, "y": -1 }
         },
         "port2": {
           "id": "port2",
           "type": "right",
           "properties": { "path": "" },
-          "position": { "x": 204, "y": 48 }
+          "position": { "x": 252, "y": 48 }
         },
         "port3": {
           "id": "port3",
           "type": "bottom",
           "properties": { "path": "" },
-          "position": { "x": 100, "y": 97 }
+          "position": { "x": 123, "y": 97 }
         },
         "port4": {
           "id": "port4",
@@ -78,7 +78,7 @@
         "space": "my-space",
         "name": "my-onedata"
       },
-      "size": { "width": 200, "height": 95 }
+      "size": { "width": 247, "height": 95 }
     },
     "32528eaa-25dd-473f-8042-e8e6063558bb": {
       "id": "32528eaa-25dd-473f-8042-e8e6063558bb",
@@ -309,7 +309,7 @@
     },
     "522b3939-9739-4d8e-a658-d8fa434e9ad6": {
       "id": "522b3939-9739-4d8e-a658-d8fa434e9ad6",
-      "position": { "x": 436.47196261682245, "y": 53.876782533164345 },
+      "position": { "x": 436.47196261682245, "y": 52.09106824745006 },
       "orientation": 0,
       "type": "s3-storage",
       "ports": {
@@ -476,7 +476,7 @@
       }
     }
   },
-  "selected": { "type": "node", "id": "36c3ca23-efa5-40ea-81d0-d98e40fe56cb" },
+  "selected": { "type": "node", "id": "079aa508-ef32-4433-9391-cbe61e404741" },
   "hovered": {},
   "modalVisible": false
 }

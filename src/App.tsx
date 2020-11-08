@@ -118,18 +118,18 @@ export class App extends React.Component {
       .filter((x: any) => x.type === "one-data-storage")
       .map((node) => node.properties)
       .reduce((a, b) => {
-        const copy = cloneDeep(b);
-        delete copy.name;
-        return { ...a, [b.name]: copy };
+        const name = b.name;
+        delete b.name;
+        return { ...a, [name]: b };
       }, {});
 
     const s3Storage = nodeValues
       .filter((x: any) => x.type === "s3-storage")
       .map((node) => node.properties)
       .reduce((a, b) => {
-        const copy = cloneDeep(b);
-        delete copy.name;
-        return { ...a, [b.name]: copy };
+        const name = b.name;
+        delete b.name;
+        return { ...a, [name]: b };
       }, {});
     const output = yaml.dump({
       functions: {

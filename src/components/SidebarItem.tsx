@@ -64,6 +64,11 @@ export const getColor = (type: string) => {
         background: "#02005e",
         color: "white",
       };
+    case "minio-storage":
+      return {
+        background: "#f7ed6d",
+        color: "black",
+      };
     default:
       return {
         background: "#FFF",

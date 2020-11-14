@@ -136,9 +136,13 @@ export class App extends React.Component {
         oscar: oscarFxs.map((x) =>
           JSON.parse(`{ "${x.name}": ${JSON.stringify(x)} }`)
         ),
-        aws: awsFxs.map((x) =>
-          JSON.parse(`{ "${x.name}": ${JSON.stringify(x)} }`)
-        ),
+        aws: [
+          awsFxs.reduce((a, b) => {
+            const copy = cloneDeep(b);
+            delete copy.name;
+            return { ...a, [b.name]: copy };
+          }, {}),
+        ],
       },
       storage_providers: {
         s3: s3Storage,
@@ -299,6 +303,39 @@ export class App extends React.Component {
               />
               <SidebarItem
                 type="s3-storage"
+                ports={{
+                  port1: {
+                    id: "port1",
+                    type: "top",
+                    properties: {
+                      path: "",
+                    },
+                  },
+                  port2: {
+                    id: "port2",
+                    type: "right",
+                    properties: {
+                      path: "",
+                    },
+                  },
+                  port3: {
+                    id: "port3",
+                    type: "bottom",
+                    properties: {
+                      path: "",
+                    },
+                  },
+                  port4: {
+                    id: "port4",
+                    type: "left",
+                    properties: {
+                      path: "",
+                    },
+                  },
+                }}
+              />{" "}
+              <SidebarItem
+                type="minio-storage"
                 ports={{
                   port1: {
                     id: "port1",

@@ -1,5 +1,5 @@
 import { INodeInnerDefaultProps } from "@mrblenny/react-flow-chart";
-import { Modal } from "antd";
+import { Checkbox, Modal } from "antd";
 import React, { ReactElement } from "react";
 import styled, { css } from "styled-components";
 import { getColor } from "./SidebarItem";
@@ -131,7 +131,27 @@ export const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
                         ...currentProperties,
                         suffix: e.target.value,
                       })
-                    : setCurrentProperties({ path: currentProperties.path });
+                    : delete currentProperties.suffix;
+                }}
+              />
+            </Row>
+            <Row>
+              <Label>Prefix</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="result-, demo-"
+                value={currentProperties.prefix}
+                onChange={(e) => {
+                  const { value } = e.target;
+                  !!value
+                    ? setCurrentProperties({
+                        ...currentProperties,
+                        prefix: e.target.value,
+                      })
+                    : delete currentProperties.prefix;
                 }}
               />
             </Row>
@@ -203,10 +223,33 @@ export const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
                 placeholder="png, jpg, xls"
                 value={currentProperties.suffix}
                 onChange={(e) => {
-                  setCurrentProperties({
-                    ...currentProperties,
-                    suffix: e.target.value,
-                  });
+                  const { value } = e.target;
+                  !!value
+                    ? setCurrentProperties({
+                        ...currentProperties,
+                        suffix: e.target.value,
+                      })
+                    : delete currentProperties.suffix;
+                }}
+              />
+            </Row>
+            <Row>
+              <Label>Prefix</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="result-, demo-"
+                value={currentProperties.prefix}
+                onChange={(e) => {
+                  const { value } = e.target;
+                  !!value
+                    ? setCurrentProperties({
+                        ...currentProperties,
+                        prefix: e.target.value,
+                      })
+                    : delete currentProperties.prefix;
                 }}
               />
             </Row>
@@ -296,6 +339,127 @@ export const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
                   setCurrentProperties({
                     ...currentProperties,
                     region: e.target.value,
+                  });
+                }}
+              />
+            </Row>
+          </Modal>
+          <p>{`${node.type} ${node.properties?.name || ""}`}</p>
+        </Outer>
+      );
+
+    case "minio-storage":
+      return (
+        <Outer
+          color={color.color}
+          background={color.background}
+          onDoubleClick={(e) => setVisible(true)}
+        >
+          <Modal
+            title={node.properties?.name || node.type}
+            visible={visible}
+            onOk={() => {
+              node.properties = currentProperties;
+              setVisible(false);
+            }}
+            onCancel={() => setVisible(false)}
+            okButtonProps={{ disabled: false }}
+            cancelButtonProps={{ disabled: false }}
+          >
+            <Row>
+              <Label>Name:</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="my_minio"
+                value={currentProperties.name}
+                onChange={(e) => {
+                  setCurrentProperties({
+                    ...currentProperties,
+                    name: e.target.value,
+                  });
+                }}
+              />
+            </Row>
+            <Row>
+              <Label>Endpoint:</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="minio-endpoint"
+                value={currentProperties.endpoint}
+                onChange={(e) => {
+                  setCurrentProperties({
+                    ...currentProperties,
+                    endpoint: e.target.value,
+                  });
+                }}
+              />
+            </Row>
+            <Row>
+              <Label>Verify:</Label>
+              <Checkbox
+                onClick={(e) => e.stopPropagation()}
+                value={currentProperties.verify}
+                onChange={(e) => {
+                  setCurrentProperties({
+                    ...currentProperties,
+                    verify: e.target.checked,
+                  });
+                }}
+              />
+            </Row>
+            <Row>
+              <Label>Region:</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="us-east-1"
+                value={currentProperties.region}
+                onChange={(e) => {
+                  setCurrentProperties({
+                    ...currentProperties,
+                    region: e.target.value,
+                  });
+                }}
+              />
+            </Row>
+            <Row>
+              <Label>Access Key:</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="xxxxxxxxxxxxxxxx"
+                value={currentProperties.access_key}
+                onChange={(e) => {
+                  setCurrentProperties({
+                    ...currentProperties,
+                    access_key: e.target.value,
+                  });
+                }}
+              />
+            </Row>
+            <Row>
+              <Label>Secret Key:</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="xxxxxxxxxxxxxxxx"
+                value={currentProperties.secret_key}
+                onChange={(e) => {
+                  setCurrentProperties({
+                    ...currentProperties,
+                    secret_key: e.target.value,
                   });
                 }}
               />

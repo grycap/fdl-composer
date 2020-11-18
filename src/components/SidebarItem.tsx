@@ -25,6 +25,24 @@ const Outer = styled.div<IOuterProps>`
     `};
 `;
 
+const Circle = styled.div<IOuterProps>`
+  margin-bottom: 1rem;
+  border: 0.5px solid grey;
+  padding: 20px 30px;
+  border-radius: 50%;
+  font-size: 14px;
+  cursor: move;
+  ${(props) =>
+    props.color &&
+    css`
+      color: ${props.color};
+    `}
+  ${(props) =>
+    props.background &&
+    css`
+      background: ${props.background};
+    `};
+`;
 export interface ISidebarItemProps {
   type: string;
   ports: INode["ports"];
@@ -34,14 +52,9 @@ export interface ISidebarItemProps {
 
 export const getColor = (type: string) => {
   switch (type) {
-    case "function-input":
+    case "aws-batch":
       return {
         background: "#4b005e",
-        color: "white",
-      };
-    case "function-output":
-      return {
-        background: "#5e4d00",
         color: "white",
       };
     case "oscar-fx":
@@ -49,7 +62,7 @@ export const getColor = (type: string) => {
         background: "#005e14",
         color: "white",
       };
-    case "aws-fx":
+    case "aws-lambda":
       return {
         background: "#a32a06",
         color: "white",
@@ -66,8 +79,8 @@ export const getColor = (type: string) => {
       };
     case "minio-storage":
       return {
-        background: "#f7ed6d",
-        color: "black",
+        background: "#5e4d00",
+        color: "white",
       };
     default:
       return {
@@ -79,7 +92,21 @@ export const getColor = (type: string) => {
 
 export const SidebarItem = ({ type, ports, properties }: ISidebarItemProps) => {
   const color = getColor(type);
-  return (
+  return type.includes("storage") ? (
+    <Circle
+      background={color.background}
+      color={color.color}
+      draggable={true}
+      onDragStart={(event) => {
+        event.dataTransfer.setData(
+          REACT_FLOW_CHART,
+          JSON.stringify({ type, ports, properties })
+        );
+      }}
+    >
+      {type}
+    </Circle>
+  ) : (
     <Outer
       background={color.background}
       color={color.color}

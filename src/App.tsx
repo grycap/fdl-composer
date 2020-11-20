@@ -25,16 +25,23 @@ export class App extends React.Component {
   public state = cloneDeep(initialState);
 
   public extractIO(node: any) {
-    const input = node.properties.input ? node.properties.input : {};
+    const input = node.properties.lambda?.input
+      ? node.properties.lambda.input
+      : {};
     if (input.prefix) input.prefix = input.prefix.split(",");
     if (input.suffix) input.suffix = input.suffix.split(",");
-    const output = node.properties.output ? node.properties.output : {};
+    const output = node.properties.lambda?.output
+      ? node.properties.lambda.output
+      : {};
     if (output.prefix) output.prefix = output.prefix.split(",");
     if (output.suffix) output.suffix = output.suffix.split(",");
     const withIO = {
       ...node.properties,
-      input: [input],
-      output: [output],
+      lambda: {
+        ...node.properties.lambda,
+        input: [input],
+        output: [output],
+      },
     };
     return withIO;
   }
@@ -45,12 +52,53 @@ export class App extends React.Component {
     const oscarFxs = nodeValues
       .filter((x: any) => x.type === "oscar-fx")
       .map((node) => {
-        return this.extractIO(node);
+        const input = node.properties.input
+          ? cloneDeep(node.properties.input)
+          : {};
+        if (input.prefix)
+          input.prefix = input.prefix.replace(" ", "").split(",");
+        if (input.suffix)
+          input.suffix = input.suffix.replace(" ", "").split(",");
+        const output = node.properties.output
+          ? cloneDeep(node.properties.output)
+          : {};
+        if (output.prefix)
+          output.prefix = output.prefix.replace(" ", "").split(",");
+        if (output.suffix)
+          output.suffix = output.suffix.replace(" ", "").split(",");
+        const withIO = {
+          ...node.properties,
+          input: [input],
+          output: [output],
+        };
+        return withIO;
       });
     const awsFxs = nodeValues
       .filter((x: any) => x.type === "aws-fx")
       .map((node) => {
-        return this.extractIO(node);
+        const input = node.properties.lambda?.input
+          ? cloneDeep(node.properties.lambda.input)
+          : {};
+        if (input.prefix)
+          input.prefix = input.prefix.replace(" ", "").split(",");
+        if (input.suffix)
+          input.suffix = input.suffix.replace(" ", "").split(",");
+        const output = node.properties.lambda?.output
+          ? cloneDeep(node.properties.lambda.output)
+          : {};
+        if (output.prefix)
+          output.prefix = output.prefix.replace(" ", "").split(",");
+        if (output.suffix)
+          output.suffix = output.suffix.replace(" ", "").split(",");
+        const withIO = {
+          ...node.properties,
+          lambda: {
+            ...node.properties.lambda,
+            input: [input],
+            output: [output],
+          },
+        };
+        return withIO;
       });
     const oneDataStorage = nodeValues
       .filter((x: any) => x.type === "one-data-storage")
@@ -74,13 +122,7 @@ export class App extends React.Component {
         oscar: oscarFxs.map((x) =>
           JSON.parse(`{ "${x.name}": ${JSON.stringify(x)} }`)
         ),
-        aws: [
-          awsFxs.reduce((a, b) => {
-            const copy = cloneDeep(b);
-            delete copy.name;
-            return { ...a, [b.name]: copy };
-          }, {}),
-        ],
+        aws: awsFxs,
       },
       storage_providers: {
         s3: s3Storage,

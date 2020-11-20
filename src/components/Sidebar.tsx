@@ -146,40 +146,7 @@ export const SideNav = () => (
       }}
     />
     <SidebarItem
-      type="aws-lambda"
-      ports={{
-        port1: {
-          id: "port1",
-          type: "top",
-          properties: {
-            path: "",
-          },
-        },
-        port2: {
-          id: "port2",
-          type: "right",
-          properties: {
-            path: "",
-          },
-        },
-        port3: {
-          id: "port3",
-          type: "bottom",
-          properties: {
-            path: "",
-          },
-        },
-        port4: {
-          id: "port4",
-          type: "left",
-          properties: {
-            path: "",
-          },
-        },
-      }}
-    />
-    <SidebarItem
-      type="aws-batch"
+      type="aws-fx"
       ports={{
         port1: {
           id: "port1",

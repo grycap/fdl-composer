@@ -24,27 +24,6 @@ const StyledButton = styled(Button)`
 export class App extends React.Component {
   public state = cloneDeep(initialState);
 
-  public extractIO(node: any) {
-    const input = node.properties.lambda?.input
-      ? node.properties.lambda.input
-      : {};
-    if (input.prefix) input.prefix = input.prefix.split(",");
-    if (input.suffix) input.suffix = input.suffix.split(",");
-    const output = node.properties.lambda?.output
-      ? node.properties.lambda.output
-      : {};
-    if (output.prefix) output.prefix = output.prefix.split(",");
-    if (output.suffix) output.suffix = output.suffix.split(",");
-    const withIO = {
-      ...node.properties,
-      lambda: {
-        ...node.properties.lambda,
-        input: [input],
-        output: [output],
-      },
-    };
-    return withIO;
-  }
   public exportToYaml() {
     const nodeValues = Object.values(this.state.nodes);
     const linkValues = Object.values(this.state.links);
@@ -107,10 +86,28 @@ export class App extends React.Component {
             output.suffix = output.suffix.replace(" ", "").split(",");
           copy.lambda.output = output;
         }
-        const environment = copy.lambda?.environment;
-        if (environment) {
+
+        const computeResources = copy.batch?.compute_resources;
+        if (computeResources?.instance_types) {
+          computeResources.instance_types = computeResources.instance_types
+            .replace(" ", "")
+            .split(",");
+        }
+        if (computeResources?.subnets) {
+          computeResources.subnets = computeResources.subnets
+            .replace(" ", "")
+            .split(",");
+        }
+        if (computeResources?.security_group_ids) {
+          computeResources.security_group_ids = computeResources.security_group_ids
+            .replace(" ", "")
+            .split(",");
+        }
+
+        const lambdaEnvironment = copy.lambda?.environment;
+        if (lambdaEnvironment) {
           copy.lambda.environment = {
-            Variables: environment.Variables.replace(" ", "")
+            Variables: lambdaEnvironment.Variables.replace(" ", "")
               .split(",")
               .map((x: string) => {
                 const kvp = x.split("=");
@@ -121,7 +118,20 @@ export class App extends React.Component {
               }),
           };
         }
-
+        const batchEnvironment = copy.batch?.environment;
+        if (batchEnvironment) {
+          copy.batch.environment = {
+            Variables: lambdaEnvironment.Variables.replace(" ", "")
+              .split(",")
+              .map((x: string) => {
+                const kvp = x.split("=");
+                return { [kvp[0].trim()]: kvp[1].trim() };
+              })
+              .reduce((a: any, b: any) => {
+                return { ...a, ...b };
+              }),
+          };
+        }
         const containerEnvironment = copy.lambda?.container?.environment;
 
         if (containerEnvironment) {

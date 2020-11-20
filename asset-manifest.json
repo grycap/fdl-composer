@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/fdl-composer/static/css/main.dd5b6b7c.chunk.css",
-    "main.js": "/fdl-composer/static/js/main.672ecb4b.chunk.js",
-    "main.js.map": "/fdl-composer/static/js/main.672ecb4b.chunk.js.map",
+    "main.js": "/fdl-composer/static/js/main.71e85b08.chunk.js",
+    "main.js.map": "/fdl-composer/static/js/main.71e85b08.chunk.js.map",
     "runtime-main.js": "/fdl-composer/static/js/runtime-main.8524552c.js",
     "runtime-main.js.map": "/fdl-composer/static/js/runtime-main.8524552c.js.map",
     "static/css/2.8ddd9e3d.chunk.css": "/fdl-composer/static/css/2.8ddd9e3d.chunk.css",
-    "static/js/2.c15f5773.chunk.js": "/fdl-composer/static/js/2.c15f5773.chunk.js",
-    "static/js/2.c15f5773.chunk.js.map": "/fdl-composer/static/js/2.c15f5773.chunk.js.map",
+    "static/js/2.22ad3b03.chunk.js": "/fdl-composer/static/js/2.22ad3b03.chunk.js",
+    "static/js/2.22ad3b03.chunk.js.map": "/fdl-composer/static/js/2.22ad3b03.chunk.js.map",
     "static/js/3.fea1516f.chunk.js": "/fdl-composer/static/js/3.fea1516f.chunk.js",
     "static/js/3.fea1516f.chunk.js.map": "/fdl-composer/static/js/3.fea1516f.chunk.js.map",
     "index.html": "/fdl-composer/index.html",
     "static/css/2.8ddd9e3d.chunk.css.map": "/fdl-composer/static/css/2.8ddd9e3d.chunk.css.map",
     "static/css/main.dd5b6b7c.chunk.css.map": "/fdl-composer/static/css/main.dd5b6b7c.chunk.css.map",
-    "static/js/2.c15f5773.chunk.js.LICENSE.txt": "/fdl-composer/static/js/2.c15f5773.chunk.js.LICENSE.txt"
+    "static/js/2.22ad3b03.chunk.js.LICENSE.txt": "/fdl-composer/static/js/2.22ad3b03.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.8524552c.js",
     "static/css/2.8ddd9e3d.chunk.css",
-    "static/js/2.c15f5773.chunk.js",
+    "static/js/2.22ad3b03.chunk.js",
     "static/css/main.dd5b6b7c.chunk.css",
-    "static/js/main.672ecb4b.chunk.js"
+    "static/js/main.71e85b08.chunk.js"
   ]
 }

@@ -485,6 +485,28 @@ export const NodeInnerCustom = ({
                 }}
               />
             </Row>
+            <Row>
+              <Label>Environment variables</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="KEY1=val1, KEY2=val2..."
+                value={currentProperties.environment?.Variables}
+                onChange={(e) => {
+                  const { value } = e.target;
+                  setCurrentProperties({
+                    ...currentProperties,
+                    environment: {
+                      ...currentProperties.environment,
+                      Variables: e.target.value,
+                    },
+                  });
+                  !!!value && delete currentProperties.environment;
+                }}
+              />
+            </Row>
             <Divider>Input</Divider>
             <Row>
               <Label>Storage provider:</Label>
@@ -869,6 +891,32 @@ export const NodeInnerCustom = ({
                     }}
                   />
                 </Row>
+
+                <Row>
+                  <Label>Environment variables</Label>
+                  <Input
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseUp={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                    placeholder="KEY1=val1, KEY2=val2..."
+                    value={currentProperties.lambda?.environment?.Variables}
+                    onChange={(e) => {
+                      const { value } = e.target;
+                      setCurrentProperties({
+                        ...currentProperties,
+                        lambda: {
+                          ...currentProperties.lambda,
+                          environment: {
+                            ...currentProperties.lambda?.environment,
+                            Variables: e.target.value,
+                          },
+                        },
+                      });
+                      !!value && delete currentProperties.lambda.environment;
+                    }}
+                  />
+                </Row>
                 <Divider>Container</Divider>
                 <Row>
                   <Label>Image:</Label>
@@ -915,6 +963,39 @@ export const NodeInnerCustom = ({
                           },
                         },
                       });
+                    }}
+                  />
+                </Row>
+                <Row>
+                  <Label>Environment variables</Label>
+                  <Input
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseUp={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                    placeholder="KEY1=val1, KEY2=val2..."
+                    value={
+                      currentProperties.lambda?.container?.environment
+                        ?.Variables
+                    }
+                    onChange={(e) => {
+                      const { value } = e.target;
+                      setCurrentProperties({
+                        ...currentProperties,
+                        lambda: {
+                          ...currentProperties.lambda,
+                          container: {
+                            ...currentProperties.lambda?.container,
+                            environment: {
+                              ...currentProperties.lambda?.container
+                                .environment,
+                              Variables: e.target.value,
+                            },
+                          },
+                        },
+                      });
+                      !!!value &&
+                        delete currentProperties.lambda.container.environment;
                     }}
                   />
                 </Row>

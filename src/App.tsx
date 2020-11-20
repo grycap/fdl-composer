@@ -52,53 +52,93 @@ export class App extends React.Component {
     const oscarFxs = nodeValues
       .filter((x: any) => x.type === "oscar-fx")
       .map((node) => {
-        const input = node.properties.input
-          ? cloneDeep(node.properties.input)
-          : {};
-        if (input.prefix)
-          input.prefix = input.prefix.replace(" ", "").split(",");
-        if (input.suffix)
-          input.suffix = input.suffix.replace(" ", "").split(",");
-        const output = node.properties.output
-          ? cloneDeep(node.properties.output)
-          : {};
-        if (output.prefix)
-          output.prefix = output.prefix.replace(" ", "").split(",");
-        if (output.suffix)
-          output.suffix = output.suffix.replace(" ", "").split(",");
-        const withIO = {
-          ...node.properties,
-          input: [input],
-          output: [output],
-        };
-        return withIO;
+        const copy = JSON.parse(JSON.stringify(node.properties));
+        const input = copy.input;
+        if (input) {
+          if (input?.prefix)
+            input.prefix = input.prefix.replace(" ", "").split(",");
+          if (input?.suffix)
+            input.suffix = input.suffix.replace(" ", "").split(",");
+          copy.input = [input];
+        }
+        const output = copy.output;
+        if (output) {
+          if (output.prefix)
+            output.prefix = output.prefix.replace(" ", "").split(",");
+          if (output.suffix)
+            output.suffix = output.suffix.replace(" ", "").split(",");
+          copy.output = [output];
+        }
+
+        const environment = copy.environment;
+        if (environment) {
+          copy.environment = {
+            Variables: environment.Variables.replace(" ", "")
+              .split(",")
+              .map((x: string) => {
+                const kvp = x.split("=");
+                return { [kvp[0].trim()]: kvp[1].trim() };
+              })
+              .reduce((a: any, b: any) => {
+                return { ...a, ...b };
+              }),
+          };
+        }
+        return copy;
       });
     const awsFxs = nodeValues
       .filter((x: any) => x.type === "aws-fx")
       .map((node) => {
-        const input = node.properties.lambda?.input
-          ? cloneDeep(node.properties.lambda.input)
-          : {};
-        if (input.prefix)
-          input.prefix = input.prefix.replace(" ", "").split(",");
-        if (input.suffix)
-          input.suffix = input.suffix.replace(" ", "").split(",");
-        const output = node.properties.lambda?.output
-          ? cloneDeep(node.properties.lambda.output)
-          : {};
-        if (output.prefix)
-          output.prefix = output.prefix.replace(" ", "").split(",");
-        if (output.suffix)
-          output.suffix = output.suffix.replace(" ", "").split(",");
-        const withIO = {
-          ...node.properties,
-          lambda: {
-            ...node.properties.lambda,
-            input: [input],
-            output: [output],
-          },
-        };
-        return withIO;
+        const copy = JSON.parse(JSON.stringify(node.properties));
+
+        const input = copy.lambda?.input;
+        if (input) {
+          if (input?.prefix)
+            input.prefix = input.prefix.replace(" ", "").split(",");
+          if (input?.suffix)
+            input.suffix = input.suffix.replace(" ", "").split(",");
+          copy.lambda.input = input;
+        }
+        const output = copy.lambda?.output;
+        if (output) {
+          if (output?.prefix)
+            output.prefix = output.prefix.replace(" ", "").split(",");
+          if (output.suffix)
+            output.suffix = output.suffix.replace(" ", "").split(",");
+          copy.lambda.output = output;
+        }
+        const environment = copy.lambda?.environment;
+        if (environment) {
+          copy.lambda.environment = {
+            Variables: environment.Variables.replace(" ", "")
+              .split(",")
+              .map((x: string) => {
+                const kvp = x.split("=");
+                return { [kvp[0].trim()]: kvp[1].trim() };
+              })
+              .reduce((a: any, b: any) => {
+                return { ...a, ...b };
+              }),
+          };
+        }
+
+        const containerEnvironment = copy.lambda?.container?.environment;
+
+        if (containerEnvironment) {
+          copy.lambda.container.environment = {
+            Variables: containerEnvironment.Variables.replace(" ", "")
+              .split(",")
+              .map((x: string) => {
+                const kvp = x.split("=");
+                return { [kvp[0].trim()]: kvp[1].trim() };
+              })
+              .reduce((a: any, b: any) => {
+                return { ...a, ...b };
+              }),
+          };
+        }
+
+        return copy;
       });
     const oneDataStorage = nodeValues
       .filter((x: any) => x.type === "one-data-storage")

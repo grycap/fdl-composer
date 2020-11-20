@@ -1,6 +1,6 @@
 {
-  "offset": { "x": 15.58, "y": 18.47 },
-  "scale": 0.962,
+  "offset": { "x": 31.27, "y": -63.25 },
+  "scale": 0.732,
   "nodes": {
     "6921d02a-ac8c-4494-9a59-0f871af40547": {
       "id": "6921d02a-ac8c-4494-9a59-0f871af40547",
@@ -127,7 +127,10 @@
         "lambda": {
           "name": "scar-grayify-workflow",
           "init_script": "grayify-image.sh",
-          "container": { "image": "grycap/imagemagick" },
+          "container": {
+            "image": "grycap/imagemagick",
+            "environment": { "Variables": { "key1": "val1", "key2": "val2" } }
+          },
           "input": {
             "path": "scar-grayify-workflow/input",
             "storage_provider": "s3"
@@ -135,7 +138,8 @@
           "output": {
             "path": "scar-grayify-workflow/input",
             "storage_provider": "onedata.my-onedata"
-          }
+          },
+          "environment": { "Variables": "key1=val1, key2=val2" }
         }
       },
       "size": { "width": 200, "height": 96 }
@@ -265,7 +269,7 @@
       }
     }
   },
-  "selected": { "type": "node", "id": "ce46b0f6-e3f9-4bbc-a2db-90a08441b617" },
+  "selected": {},
   "hovered": {},
   "modalVisible": false
 }

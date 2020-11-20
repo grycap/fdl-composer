@@ -52,17 +52,12 @@ export interface ISidebarItemProps {
 
 export const getColor = (type: string) => {
   switch (type) {
-    case "aws-batch":
-      return {
-        background: "#4b005e",
-        color: "white",
-      };
     case "oscar-fx":
       return {
         background: "#005e14",
         color: "white",
       };
-    case "aws-lambda":
+    case "aws-fx":
       return {
         background: "#a32a06",
         color: "white",

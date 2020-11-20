@@ -1,5 +1,5 @@
 import { INodeInnerDefaultProps } from "@mrblenny/react-flow-chart";
-import { Checkbox, Modal, Tabs } from "antd";
+import { Checkbox, Divider, Modal, Tabs } from "antd";
 import React, { ReactElement } from "react";
 import styled, { css } from "styled-components";
 import { getColor } from "./SidebarItem";
@@ -399,276 +399,271 @@ export const NodeInnerCustom = ({
             okButtonProps={{ disabled: false }}
             cancelButtonProps={{ disabled: false }}
           >
-            <Tabs defaultActiveKey="1">
-              <Tabs.TabPane key="1" tab="Function">
-                <Row>
-                  <Label>Name:</Label>
-                  <Input
-                    onClick={(e) => e.stopPropagation()}
-                    onMouseUp={(e) => e.stopPropagation()}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="darknet"
-                    value={currentProperties.name}
-                    onChange={(e) => {
-                      setCurrentProperties({
-                        ...currentProperties,
-                        name: e.target.value,
-                      });
-                    }}
-                  />
-                </Row>
-                <Row>
-                  <Label>Memory:</Label>
-                  <Input
-                    onClick={(e) => e.stopPropagation()}
-                    onMouseUp={(e) => e.stopPropagation()}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="1Gi"
-                    value={currentProperties.memory}
-                    onChange={(e) => {
-                      setCurrentProperties({
-                        ...currentProperties,
-                        memory: e.target.value,
-                      });
-                    }}
-                  />
-                </Row>
-                <Row>
-                  <Label>Cpu:</Label>
-                  <Input
-                    onClick={(e) => e.stopPropagation()}
-                    onMouseUp={(e) => e.stopPropagation()}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="1.0"
-                    value={currentProperties.cpu}
-                    onChange={(e) => {
-                      setCurrentProperties({
-                        ...currentProperties,
-                        cpu: e.target.value,
-                      });
-                    }}
-                  />
-                </Row>
-                <Row>
-                  <Label>Image:</Label>
-                  <Input
-                    onClick={(e) => e.stopPropagation()}
-                    onMouseUp={(e) => e.stopPropagation()}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="grycap/darknet"
-                    value={currentProperties.image}
-                    onChange={(e) => {
-                      setCurrentProperties({
-                        ...currentProperties,
-                        image: e.target.value,
-                      });
-                    }}
-                  />
-                </Row>
-                <Row>
-                  <Label>Script:</Label>
-                  <Input
-                    onClick={(e) => e.stopPropagation()}
-                    onMouseUp={(e) => e.stopPropagation()}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="yolo.sh"
-                    value={currentProperties.script}
-                    onChange={(e) => {
-                      setCurrentProperties({
-                        ...currentProperties,
-                        script: e.target.value,
-                      });
-                    }}
-                  />
-                </Row>
-              </Tabs.TabPane>
-              <Tabs.TabPane key="2" tab="Input">
-                <Row>
-                  <Label>Storage provider:</Label>
-                  <Input
-                    onClick={(e) => e.stopPropagation()}
-                    onMouseUp={(e) => e.stopPropagation()}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="storage provider name"
-                    value={currentProperties.input?.storage_provider}
-                    onChange={(e) => {
-                      setCurrentProperties({
+            <Divider>Setup</Divider>
+            <Row>
+              <Label>Name:</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="darknet"
+                value={currentProperties.name}
+                onChange={(e) => {
+                  setCurrentProperties({
+                    ...currentProperties,
+                    name: e.target.value,
+                  });
+                }}
+              />
+            </Row>
+            <Row>
+              <Label>Memory:</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="1Gi"
+                value={currentProperties.memory}
+                onChange={(e) => {
+                  setCurrentProperties({
+                    ...currentProperties,
+                    memory: e.target.value,
+                  });
+                }}
+              />
+            </Row>
+            <Row>
+              <Label>Cpu:</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="1.0"
+                value={currentProperties.cpu}
+                onChange={(e) => {
+                  setCurrentProperties({
+                    ...currentProperties,
+                    cpu: e.target.value,
+                  });
+                }}
+              />
+            </Row>
+            <Row>
+              <Label>Image:</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="grycap/darknet"
+                value={currentProperties.image}
+                onChange={(e) => {
+                  setCurrentProperties({
+                    ...currentProperties,
+                    image: e.target.value,
+                  });
+                }}
+              />
+            </Row>
+            <Row>
+              <Label>Script:</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="yolo.sh"
+                value={currentProperties.script}
+                onChange={(e) => {
+                  setCurrentProperties({
+                    ...currentProperties,
+                    script: e.target.value,
+                  });
+                }}
+              />
+            </Row>
+            <Divider>Input</Divider>
+            <Row>
+              <Label>Storage provider:</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="storage provider name"
+                value={currentProperties.input?.storage_provider}
+                onChange={(e) => {
+                  setCurrentProperties({
+                    ...currentProperties,
+                    input: {
+                      ...currentProperties.input,
+                      storage_provider: e.target.value,
+                    },
+                  });
+                }}
+              />
+            </Row>
+            <Row>
+              <Label>Path:</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="darknet-workflow/input"
+                value={currentProperties.input?.path}
+                onChange={(e) => {
+                  setCurrentProperties({
+                    ...currentProperties,
+                    input: {
+                      ...currentProperties.input,
+                      path: e.target.value,
+                    },
+                  });
+                }}
+              />
+            </Row>
+            <Row>
+              <Label>Suffix</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="png, jpg, xls"
+                value={currentProperties.input?.suffix}
+                onChange={(e) => {
+                  const { value } = e.target;
+                  !!value
+                    ? setCurrentProperties({
                         ...currentProperties,
                         input: {
                           ...currentProperties.input,
-                          storage_provider: e.target.value,
+                          suffix: e.target.value,
                         },
-                      });
-                    }}
-                  />
-                </Row>
-                <Row>
-                  <Label>Path:</Label>
-                  <Input
-                    onClick={(e) => e.stopPropagation()}
-                    onMouseUp={(e) => e.stopPropagation()}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="darknet-workflow/input"
-                    value={currentProperties.input?.path}
-                    onChange={(e) => {
-                      setCurrentProperties({
+                      })
+                    : delete currentProperties.suffix;
+                }}
+              />
+            </Row>
+            <Row>
+              <Label>Prefix</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="result-, demo-"
+                value={currentProperties.input?.prefix}
+                onChange={(e) => {
+                  const { value } = e.target;
+                  !!value
+                    ? setCurrentProperties({
                         ...currentProperties,
                         input: {
                           ...currentProperties.input,
-                          path: e.target.value,
+                          prefix: e.target.value,
                         },
-                      });
-                    }}
-                  />
-                </Row>
-                <Row>
-                  <Label>Suffix</Label>
-                  <Input
-                    onClick={(e) => e.stopPropagation()}
-                    onMouseUp={(e) => e.stopPropagation()}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="png, jpg, xls"
-                    value={currentProperties.input?.suffix}
-                    onChange={(e) => {
-                      const { value } = e.target;
-                      !!value
-                        ? setCurrentProperties({
-                            ...currentProperties,
-                            input: {
-                              ...currentProperties.input,
-                              suffix: e.target.value,
-                            },
-                          })
-                        : delete currentProperties.suffix;
-                    }}
-                  />
-                </Row>
-                <Row>
-                  <Label>Prefix</Label>
-                  <Input
-                    onClick={(e) => e.stopPropagation()}
-                    onMouseUp={(e) => e.stopPropagation()}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="result-, demo-"
-                    value={currentProperties.input?.prefix}
-                    onChange={(e) => {
-                      const { value } = e.target;
-                      !!value
-                        ? setCurrentProperties({
-                            ...currentProperties,
-                            input: {
-                              ...currentProperties.input,
-                              prefix: e.target.value,
-                            },
-                          })
-                        : delete currentProperties.prefix;
-                    }}
-                  />
-                </Row>
-              </Tabs.TabPane>
-              <Tabs.TabPane key="3" tab="Output">
-                <Row>
-                  <Label>Storage provider:</Label>
-                  <Input
-                    onClick={(e) => e.stopPropagation()}
-                    onMouseUp={(e) => e.stopPropagation()}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="storage provider name"
-                    value={currentProperties.output?.storage_provider}
-                    onChange={(e) => {
-                      setCurrentProperties({
+                      })
+                    : delete currentProperties.prefix;
+                }}
+              />
+            </Row>
+            <Divider>Output</Divider>
+            <Row>
+              <Label>Storage provider:</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="storage provider name"
+                value={currentProperties.output?.storage_provider}
+                onChange={(e) => {
+                  setCurrentProperties({
+                    ...currentProperties,
+                    output: {
+                      ...currentProperties.output,
+                      storage_provider: e.target.value,
+                    },
+                  });
+                }}
+              />
+            </Row>
+            <Row>
+              <Label>Path:</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="darknet-workflow/output"
+                value={currentProperties.output?.path}
+                onChange={(e) => {
+                  setCurrentProperties({
+                    ...currentProperties,
+                    output: {
+                      ...currentProperties.output,
+                      path: e.target.value,
+                    },
+                  });
+                }}
+              />
+            </Row>
+            <Row>
+              <Label>Suffix</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="png, jpg, xls"
+                value={currentProperties.output?.suffix}
+                onChange={(e) => {
+                  const { value } = e.target;
+                  !!value
+                    ? setCurrentProperties({
                         ...currentProperties,
                         output: {
                           ...currentProperties.output,
-                          storage_provider: e.target.value,
+                          suffix: e.target.value,
                         },
-                      });
-                    }}
-                  />
-                </Row>
-                <Row>
-                  <Label>Path:</Label>
-                  <Input
-                    onClick={(e) => e.stopPropagation()}
-                    onMouseUp={(e) => e.stopPropagation()}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="darknet-workflow/output"
-                    value={currentProperties.output?.path}
-                    onChange={(e) => {
-                      setCurrentProperties({
+                      })
+                    : delete currentProperties.suffix;
+                }}
+              />
+            </Row>
+            <Row>
+              <Label>Prefix</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="result-, demo-"
+                value={currentProperties.output?.prefix}
+                onChange={(e) => {
+                  const { value } = e.target;
+                  !!value
+                    ? setCurrentProperties({
                         ...currentProperties,
                         output: {
                           ...currentProperties.output,
-                          path: e.target.value,
+                          prefix: e.target.value,
                         },
-                      });
-                    }}
-                  />
-                </Row>
-                <Row>
-                  <Label>Suffix</Label>
-                  <Input
-                    onClick={(e) => e.stopPropagation()}
-                    onMouseUp={(e) => e.stopPropagation()}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="png, jpg, xls"
-                    value={currentProperties.output?.suffix}
-                    onChange={(e) => {
-                      const { value } = e.target;
-                      !!value
-                        ? setCurrentProperties({
-                            ...currentProperties,
-                            output: {
-                              ...currentProperties.output,
-                              suffix: e.target.value,
-                            },
-                          })
-                        : delete currentProperties.suffix;
-                    }}
-                  />
-                </Row>
-                <Row>
-                  <Label>Prefix</Label>
-                  <Input
-                    onClick={(e) => e.stopPropagation()}
-                    onMouseUp={(e) => e.stopPropagation()}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="result-, demo-"
-                    value={currentProperties.output?.prefix}
-                    onChange={(e) => {
-                      const { value } = e.target;
-                      !!value
-                        ? setCurrentProperties({
-                            ...currentProperties,
-                            output: {
-                              ...currentProperties.output,
-                              prefix: e.target.value,
-                            },
-                          })
-                        : delete currentProperties.prefix;
-                    }}
-                  />
-                </Row>
-              </Tabs.TabPane>
-            </Tabs>
+                      })
+                    : delete currentProperties.prefix;
+                }}
+              />
+            </Row>
           </Modal>
           <p>{`${node.type} ${node.properties?.name || ""}`}</p>
         </Outer>
       );
-    case "aws-lambda":
+    case "aws-fx":
       return (
         <Outer
           color={color.color}
@@ -687,7 +682,9 @@ export const NodeInnerCustom = ({
             cancelButtonProps={{ disabled: false }}
           >
             <Tabs defaultActiveKey="1">
-              <Tabs.TabPane key="1" tab="Function">
+              <Tabs.TabPane key="1" tab="Lambda">
+                <Divider>Setup</Divider>
+
                 <Row>
                   <Label>Name:</Label>
                   <Input
@@ -696,11 +693,56 @@ export const NodeInnerCustom = ({
                     onMouseDown={(e) => e.stopPropagation()}
                     onKeyDown={(e) => e.stopPropagation()}
                     placeholder="darknet"
-                    value={currentProperties.name}
+                    value={currentProperties.lambda?.name}
                     onChange={(e) => {
                       setCurrentProperties({
                         ...currentProperties,
-                        name: e.target.value,
+                        lambda: {
+                          ...currentProperties.lambda,
+                          name: e.target.value,
+                        },
+                      });
+                    }}
+                  />
+                </Row>
+
+                <Row>
+                  <Label>Region:</Label>
+                  <Input
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseUp={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                    placeholder="us-east-1"
+                    value={currentProperties.lambda?.region}
+                    onChange={(e) => {
+                      setCurrentProperties({
+                        ...currentProperties,
+                        lambda: {
+                          ...currentProperties.lambda,
+                          region: e.target.value,
+                        },
+                      });
+                    }}
+                  />
+                </Row>
+
+                <Row>
+                  <Label>Boto profile:</Label>
+                  <Input
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseUp={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                    placeholder="default"
+                    value={currentProperties.lambda?.boto_profile}
+                    onChange={(e) => {
+                      setCurrentProperties({
+                        ...currentProperties,
+                        lambda: {
+                          ...currentProperties.lambda,
+                          boto_profile: e.target.value,
+                        },
                       });
                     }}
                   />
@@ -712,12 +754,15 @@ export const NodeInnerCustom = ({
                     onMouseUp={(e) => e.stopPropagation()}
                     onMouseDown={(e) => e.stopPropagation()}
                     onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="1Gi"
-                    value={currentProperties.memory}
+                    placeholder="1024"
+                    value={currentProperties.lambda?.memory}
                     onChange={(e) => {
                       setCurrentProperties({
                         ...currentProperties,
-                        memory: e.target.value,
+                        lambda: {
+                          ...currentProperties.lambda,
+                          memory: e.target.value,
+                        },
                       });
                     }}
                   />
@@ -730,15 +775,101 @@ export const NodeInnerCustom = ({
                     onMouseDown={(e) => e.stopPropagation()}
                     onKeyDown={(e) => e.stopPropagation()}
                     placeholder="1.0"
-                    value={currentProperties.cpu}
+                    value={currentProperties.lambda?.cpu}
                     onChange={(e) => {
                       setCurrentProperties({
                         ...currentProperties,
-                        cpu: e.target.value,
+                        lambda: {
+                          ...currentProperties.lambda,
+                          cpu: e.target.value,
+                        },
                       });
                     }}
                   />
                 </Row>
+                <Row>
+                  <Label>Init script:</Label>
+                  <Input
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseUp={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                    placeholder="yolo.sh"
+                    value={currentProperties.lambda?.init_script}
+                    onChange={(e) => {
+                      setCurrentProperties({
+                        ...currentProperties,
+                        lambda: {
+                          ...currentProperties.lambda,
+                          init_script: e.target.value,
+                        },
+                      });
+                    }}
+                  />
+                </Row>
+
+                <Row>
+                  <Label>Timeout:</Label>
+                  <Input
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseUp={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                    placeholder="300"
+                    value={currentProperties.lambda?.timeout}
+                    onChange={(e) => {
+                      setCurrentProperties({
+                        ...currentProperties,
+                        lambda: {
+                          ...currentProperties.lambda,
+                          timeout: e.target.value,
+                        },
+                      });
+                    }}
+                  />
+                </Row>
+
+                <Row>
+                  <Label>Log level:</Label>
+                  <Input
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseUp={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                    placeholder="INFO | DEBUG | ERROR | WARNING"
+                    value={currentProperties.lambda?.log_level}
+                    onChange={(e) => {
+                      setCurrentProperties({
+                        ...currentProperties,
+                        lambda: {
+                          ...currentProperties.lambda,
+                          log_level: e.target.value,
+                        },
+                      });
+                    }}
+                  />
+                </Row>
+                <Row>
+                  <Label>Execution mode:</Label>
+                  <Input
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseUp={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                    placeholder="lambda | lambda-batch | batch"
+                    value={currentProperties.lambda?.execution_mode}
+                    onChange={(e) => {
+                      setCurrentProperties({
+                        ...currentProperties,
+                        lambda: {
+                          ...currentProperties.lambda,
+                          execution_mode: e.target.value,
+                        },
+                      });
+                    }}
+                  />
+                </Row>
+                <Divider>Container</Divider>
                 <Row>
                   <Label>Image:</Label>
                   <Input
@@ -747,34 +878,47 @@ export const NodeInnerCustom = ({
                     onMouseDown={(e) => e.stopPropagation()}
                     onKeyDown={(e) => e.stopPropagation()}
                     placeholder="grycap/darknet"
-                    value={currentProperties.image}
+                    value={currentProperties.lambda?.container?.image}
                     onChange={(e) => {
                       setCurrentProperties({
                         ...currentProperties,
-                        image: e.target.value,
+                        lambda: {
+                          ...currentProperties.lambda,
+                          container: {
+                            ...currentProperties.lambda?.container,
+                            image: e.target.value,
+                          },
+                        },
                       });
                     }}
                   />
                 </Row>
                 <Row>
-                  <Label>Script:</Label>
+                  <Label>Timeout threshold</Label>
                   <Input
                     onClick={(e) => e.stopPropagation()}
                     onMouseUp={(e) => e.stopPropagation()}
                     onMouseDown={(e) => e.stopPropagation()}
                     onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="yolo.sh"
-                    value={currentProperties.script}
+                    placeholder="grycap/darknet"
+                    value={
+                      currentProperties.lambda?.container?.timeout_threshold
+                    }
                     onChange={(e) => {
                       setCurrentProperties({
                         ...currentProperties,
-                        script: e.target.value,
+                        lambda: {
+                          ...currentProperties.lambda,
+                          container: {
+                            ...currentProperties.lambda?.container,
+                            timeout_threshold: e.target.value,
+                          },
+                        },
                       });
                     }}
                   />
                 </Row>
-              </Tabs.TabPane>
-              <Tabs.TabPane key="2" tab="Input">
+                <Divider>Input</Divider>
                 <Row>
                   <Label>Storage provider:</Label>
                   <Input
@@ -783,13 +927,16 @@ export const NodeInnerCustom = ({
                     onMouseDown={(e) => e.stopPropagation()}
                     onKeyDown={(e) => e.stopPropagation()}
                     placeholder="storage provider name"
-                    value={currentProperties.input?.storage_provider}
+                    value={currentProperties.lambda?.input?.storage_provider}
                     onChange={(e) => {
                       setCurrentProperties({
                         ...currentProperties,
-                        input: {
-                          ...currentProperties.input,
-                          storage_provider: e.target.value,
+                        lambda: {
+                          ...currentProperties.lambda,
+                          input: {
+                            ...currentProperties.lambda?.input,
+                            storage_provider: e.target.value,
+                          },
                         },
                       });
                     }}
@@ -803,13 +950,16 @@ export const NodeInnerCustom = ({
                     onMouseDown={(e) => e.stopPropagation()}
                     onKeyDown={(e) => e.stopPropagation()}
                     placeholder="darknet-workflow/input"
-                    value={currentProperties.input?.path}
+                    value={currentProperties.lambda?.input?.path}
                     onChange={(e) => {
                       setCurrentProperties({
                         ...currentProperties,
-                        input: {
-                          ...currentProperties.input,
-                          path: e.target.value,
+                        lambda: {
+                          ...currentProperties.lambda,
+                          input: {
+                            ...currentProperties.lambda?.input,
+                            path: e.target.value,
+                          },
                         },
                       });
                     }}
@@ -823,18 +973,21 @@ export const NodeInnerCustom = ({
                     onMouseDown={(e) => e.stopPropagation()}
                     onKeyDown={(e) => e.stopPropagation()}
                     placeholder="png, jpg, xls"
-                    value={currentProperties.input?.suffix}
+                    value={currentProperties.lambda?.input?.suffix}
                     onChange={(e) => {
                       const { value } = e.target;
                       !!value
                         ? setCurrentProperties({
                             ...currentProperties,
-                            input: {
-                              ...currentProperties.input,
-                              suffix: e.target.value,
+                            lambda: {
+                              ...currentProperties.lambda,
+                              input: {
+                                ...currentProperties.lambda?.input,
+                                suffix: e.target.value,
+                              },
                             },
                           })
-                        : delete currentProperties.suffix;
+                        : delete currentProperties.lambda.input.suffix;
                     }}
                   />
                 </Row>
@@ -846,23 +999,25 @@ export const NodeInnerCustom = ({
                     onMouseDown={(e) => e.stopPropagation()}
                     onKeyDown={(e) => e.stopPropagation()}
                     placeholder="result-, demo-"
-                    value={currentProperties.input?.prefix}
+                    value={currentProperties.lambda?.input?.prefix}
                     onChange={(e) => {
                       const { value } = e.target;
                       !!value
                         ? setCurrentProperties({
                             ...currentProperties,
-                            input: {
-                              ...currentProperties.input,
-                              prefix: e.target.value,
+                            lambda: {
+                              ...currentProperties.lambda,
+                              input: {
+                                ...currentProperties.lambda?.input,
+                                prefix: e.target.value,
+                              },
                             },
                           })
-                        : delete currentProperties.prefix;
+                        : delete currentProperties.lambda.input.prefix;
                     }}
                   />
                 </Row>
-              </Tabs.TabPane>
-              <Tabs.TabPane key="3" tab="Output">
+                <Divider>Output</Divider>
                 <Row>
                   <Label>Storage provider:</Label>
                   <Input
@@ -871,13 +1026,16 @@ export const NodeInnerCustom = ({
                     onMouseDown={(e) => e.stopPropagation()}
                     onKeyDown={(e) => e.stopPropagation()}
                     placeholder="storage provider name"
-                    value={currentProperties.output?.storage_provider}
+                    value={currentProperties.lambda?.output?.storage_provider}
                     onChange={(e) => {
                       setCurrentProperties({
                         ...currentProperties,
-                        output: {
-                          ...currentProperties.output,
-                          storage_provider: e.target.value,
+                        lambda: {
+                          ...currentProperties.lambda,
+                          output: {
+                            ...currentProperties.lambda?.input,
+                            storage_provider: e.target.value,
+                          },
                         },
                       });
                     }}
@@ -891,13 +1049,16 @@ export const NodeInnerCustom = ({
                     onMouseDown={(e) => e.stopPropagation()}
                     onKeyDown={(e) => e.stopPropagation()}
                     placeholder="darknet-workflow/output"
-                    value={currentProperties.output?.path}
+                    value={currentProperties.lambda?.output?.path}
                     onChange={(e) => {
                       setCurrentProperties({
                         ...currentProperties,
-                        output: {
-                          ...currentProperties.output,
-                          path: e.target.value,
+                        lambda: {
+                          ...currentProperties.lambda,
+                          output: {
+                            ...currentProperties.lambda?.input,
+                            path: e.target.value,
+                          },
                         },
                       });
                     }}
@@ -911,18 +1072,21 @@ export const NodeInnerCustom = ({
                     onMouseDown={(e) => e.stopPropagation()}
                     onKeyDown={(e) => e.stopPropagation()}
                     placeholder="png, jpg, xls"
-                    value={currentProperties.output?.suffix}
+                    value={currentProperties.lambda?.output?.suffix}
                     onChange={(e) => {
                       const { value } = e.target;
                       !!value
                         ? setCurrentProperties({
                             ...currentProperties,
-                            output: {
-                              ...currentProperties.output,
-                              suffix: e.target.value,
+                            lambda: {
+                              ...currentProperties.lambda,
+                              output: {
+                                ...currentProperties.lambda?.input,
+                                suffix: e.target.value,
+                              },
                             },
                           })
-                        : delete currentProperties.suffix;
+                        : delete currentProperties.lambda.output.suffix;
                     }}
                   />
                 </Row>
@@ -934,15 +1098,19 @@ export const NodeInnerCustom = ({
                     onMouseDown={(e) => e.stopPropagation()}
                     onKeyDown={(e) => e.stopPropagation()}
                     placeholder="result-, demo-"
-                    value={currentProperties.output?.prefix}
+                    value={currentProperties.lambda?.output?.prefix}
                     onChange={(e) => {
                       const { value } = e.target;
                       !!value
                         ? setCurrentProperties({
                             ...currentProperties,
-                            output: {
-                              ...currentProperties.output,
-                              prefix: e.target.value,
+
+                            lambda: {
+                              ...currentProperties.lambda,
+                              output: {
+                                ...currentProperties.lambda?.input,
+                                prefix: e.target.value,
+                              },
                             },
                           })
                         : delete currentProperties.prefix;
@@ -950,258 +1118,106 @@ export const NodeInnerCustom = ({
                   />
                 </Row>
               </Tabs.TabPane>
-            </Tabs>
-          </Modal>
-          <p>{`${node.type} ${node.properties?.name || ""}`}</p>
-        </Outer>
-      );
-    case "aws-batch":
-      return (
-        <Outer
-          color={color.color}
-          background={color.background}
-          onDoubleClick={() => setVisible(true)}
-        >
-          <Modal
-            title={node.properties?.name || node.type}
-            visible={visible}
-            onOk={() => {
-              node.properties = currentProperties;
-              setVisible(false);
-            }}
-            onCancel={() => setVisible(false)}
-            okButtonProps={{ disabled: false }}
-            cancelButtonProps={{ disabled: false }}
-          >
-            <Tabs>
-              <Tabs.TabPane key="1" tab="Function">
+              <Tabs.TabPane key="2" tab="Batch">
+                <Divider>Setup</Divider>
                 <Row>
-                  <Label>Name:</Label>
+                  <Label>Region:</Label>
                   <Input
                     onClick={(e) => e.stopPropagation()}
                     onMouseUp={(e) => e.stopPropagation()}
                     onMouseDown={(e) => e.stopPropagation()}
                     onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="scar-grayify-workflow"
-                    value={currentProperties.name}
+                    placeholder="us-east-1"
+                    value={currentProperties.batch?.region}
                     onChange={(e) => {
                       setCurrentProperties({
                         ...currentProperties,
-                        name: e.target.value,
+                        batch: {
+                          ...currentProperties.batch,
+                          region: e.target.value,
+                        },
                       });
                     }}
                   />
                 </Row>
+
                 <Row>
-                  <Label>Script:</Label>
+                  <Label>Boto profile:</Label>
                   <Input
                     onClick={(e) => e.stopPropagation()}
                     onMouseUp={(e) => e.stopPropagation()}
                     onMouseDown={(e) => e.stopPropagation()}
                     onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="grayify-image.sh"
-                    value={currentProperties.init_script}
+                    placeholder="default"
+                    value={currentProperties.batch?.boto_profile}
                     onChange={(e) => {
                       setCurrentProperties({
                         ...currentProperties,
-                        init_script: e.target.value,
-                      });
-                    }}
-                  />
-                </Row>
-                <Row>
-                  <Label>Image:</Label>
-                  <Input
-                    onClick={(e) => e.stopPropagation()}
-                    onMouseUp={(e) => e.stopPropagation()}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="grycap/imagemagick"
-                    value={currentProperties.container?.image}
-                    onChange={(e) => {
-                      setCurrentProperties({
-                        ...currentProperties,
-                        container: { image: e.target.value },
-                      });
-                    }}
-                  />
-                </Row>
-              </Tabs.TabPane>
-              <Tabs.TabPane key="2" tab="Input">
-                <Row>
-                  <Label>Storage provider:</Label>
-                  <Input
-                    onClick={(e) => e.stopPropagation()}
-                    onMouseUp={(e) => e.stopPropagation()}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="storage provider name"
-                    value={currentProperties.input?.storage_provider}
-                    onChange={(e) => {
-                      setCurrentProperties({
-                        ...currentProperties,
-                        input: {
-                          ...currentProperties.input,
-                          storage_provider: e.target.value,
+                        batch: {
+                          ...currentProperties.batch,
+                          boto_profile: e.target.value,
                         },
                       });
                     }}
                   />
                 </Row>
                 <Row>
-                  <Label>Path:</Label>
+                  <Label>Memory:</Label>
                   <Input
                     onClick={(e) => e.stopPropagation()}
                     onMouseUp={(e) => e.stopPropagation()}
                     onMouseDown={(e) => e.stopPropagation()}
                     onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="darknet-workflow/input"
-                    value={currentProperties.input?.path}
+                    placeholder="1024"
+                    value={currentProperties.batch?.memory}
                     onChange={(e) => {
                       setCurrentProperties({
                         ...currentProperties,
-                        input: {
-                          ...currentProperties.input,
-                          path: e.target.value,
+                        batch: {
+                          ...currentProperties.batch,
+                          memory: e.target.value,
                         },
                       });
                     }}
                   />
                 </Row>
                 <Row>
-                  <Label>Suffix</Label>
+                  <Label>vCpu:</Label>
                   <Input
                     onClick={(e) => e.stopPropagation()}
                     onMouseUp={(e) => e.stopPropagation()}
                     onMouseDown={(e) => e.stopPropagation()}
                     onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="png, jpg, xls"
-                    value={currentProperties.input?.suffix}
-                    onChange={(e) => {
-                      const { value } = e.target;
-                      !!value
-                        ? setCurrentProperties({
-                            ...currentProperties,
-                            input: {
-                              ...currentProperties.input,
-                              suffix: e.target.value,
-                            },
-                          })
-                        : delete currentProperties.suffix;
-                    }}
-                  />
-                </Row>
-                <Row>
-                  <Label>Prefix</Label>
-                  <Input
-                    onClick={(e) => e.stopPropagation()}
-                    onMouseUp={(e) => e.stopPropagation()}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="result-, demo-"
-                    value={currentProperties.input?.prefix}
-                    onChange={(e) => {
-                      const { value } = e.target;
-                      !!value
-                        ? setCurrentProperties({
-                            ...currentProperties,
-                            input: {
-                              ...currentProperties.input,
-                              prefix: e.target.value,
-                            },
-                          })
-                        : delete currentProperties.prefix;
-                    }}
-                  />
-                </Row>
-              </Tabs.TabPane>
-              <Tabs.TabPane key="3" tab="Output">
-                <Row>
-                  <Label>Storage provider:</Label>
-                  <Input
-                    onClick={(e) => e.stopPropagation()}
-                    onMouseUp={(e) => e.stopPropagation()}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="storage provider name"
-                    value={currentProperties.output?.storage_provider}
+                    placeholder="1.0"
+                    value={currentProperties.vcpus}
                     onChange={(e) => {
                       setCurrentProperties({
                         ...currentProperties,
-                        output: {
-                          ...currentProperties.output,
-                          storage_provider: e.target.value,
+                        batch: {
+                          ...currentProperties.batch,
+                          cpu: e.target.value,
                         },
                       });
                     }}
                   />
                 </Row>
                 <Row>
-                  <Label>Path:</Label>
-                  <Input
+                  <Label>Enable gpu:</Label>
+                  <Checkbox
                     onClick={(e) => e.stopPropagation()}
-                    onMouseUp={(e) => e.stopPropagation()}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="darknet-workflow/output"
-                    value={currentProperties.output?.path}
+                    value={currentProperties.enable_gpu}
                     onChange={(e) => {
                       setCurrentProperties({
                         ...currentProperties,
-                        output: {
-                          ...currentProperties.output,
-                          path: e.target.value,
+                        batch: {
+                          ...currentProperties.batch,
+                          enable_gpu: e.target.checked,
                         },
                       });
                     }}
                   />
                 </Row>
-                <Row>
-                  <Label>Suffix</Label>
-                  <Input
-                    onClick={(e) => e.stopPropagation()}
-                    onMouseUp={(e) => e.stopPropagation()}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="png, jpg, xls"
-                    value={currentProperties.output?.suffix}
-                    onChange={(e) => {
-                      const { value } = e.target;
-                      !!value
-                        ? setCurrentProperties({
-                            ...currentProperties,
-                            output: {
-                              ...currentProperties.output,
-                              suffix: e.target.value,
-                            },
-                          })
-                        : delete currentProperties.suffix;
-                    }}
-                  />
-                </Row>
-                <Row>
-                  <Label>Prefix</Label>
-                  <Input
-                    onClick={(e) => e.stopPropagation()}
-                    onMouseUp={(e) => e.stopPropagation()}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="result-, demo-"
-                    value={currentProperties.output?.prefix}
-                    onChange={(e) => {
-                      const { value } = e.target;
-                      !!value
-                        ? setCurrentProperties({
-                            ...currentProperties,
-                            output: {
-                              ...currentProperties.output,
-                              prefix: e.target.value,
-                            },
-                          })
-                        : delete currentProperties.prefix;
-                    }}
-                  />
-                </Row>
+                <Divider>Compute resources</Divider>
               </Tabs.TabPane>
             </Tabs>
           </Modal>

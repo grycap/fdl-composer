@@ -1,30 +1,30 @@
 {
-  "offset": { "x": 184.57, "y": 13.52 },
-  "scale": 0.56,
+  "offset": { "x": 15.58, "y": 18.47 },
+  "scale": 0.962,
   "nodes": {
-    "c710f16f-200e-4822-8035-1d6a4d1e613e": {
-      "id": "c710f16f-200e-4822-8035-1d6a4d1e613e",
-      "position": { "x": 41.78185745140385, "y": 55.61916063808329 },
+    "6921d02a-ac8c-4494-9a59-0f871af40547": {
+      "id": "6921d02a-ac8c-4494-9a59-0f871af40547",
+      "position": { "x": 134, "y": 50.96049896049896 },
       "orientation": 0,
-      "type": "s3-storage",
+      "type": "minio-storage",
       "ports": {
         "port1": {
           "id": "port1",
           "type": "top",
           "properties": { "path": "" },
-          "position": { "x": 100, "y": -1 }
+          "position": { "x": 105, "y": -1 }
         },
         "port2": {
           "id": "port2",
           "type": "right",
           "properties": { "path": "" },
-          "position": { "x": 204, "y": 48 }
+          "position": { "x": 214, "y": 48 }
         },
         "port3": {
           "id": "port3",
           "type": "bottom",
           "properties": { "path": "" },
-          "position": { "x": 100, "y": 97 }
+          "position": { "x": 105, "y": 97 }
         },
         "port4": {
           "id": "port4",
@@ -34,55 +34,18 @@
         }
       },
       "properties": {
-        "access_key": "xxxxxxxxxxx",
-        "secret_key": "xxxxxxxxxxx",
+        "name": "my_minio",
+        "endpoint": "minio-endpoint",
+        "verify": true,
         "region": "us-east-1",
-        "name": "my-s3"
+        "access_key": "xxxxxxxxxxxxxx",
+        "secret_key": "xxxxxxxxxxxxxx"
       },
-      "size": { "width": 200, "height": 95 }
+      "size": { "width": 210, "height": 96 }
     },
-    "079aa508-ef32-4433-9391-cbe61e404741": {
-      "id": "079aa508-ef32-4433-9391-cbe61e404741",
-      "position": { "x": 519.0061694930895, "y": 788.1688236877364 },
-      "orientation": 0,
-      "type": "one-data-storage",
-      "ports": {
-        "port1": {
-          "id": "port1",
-          "type": "top",
-          "properties": { "path": "" },
-          "position": { "x": 123, "y": -1 }
-        },
-        "port2": {
-          "id": "port2",
-          "type": "right",
-          "properties": { "path": "" },
-          "position": { "x": 252, "y": 48 }
-        },
-        "port3": {
-          "id": "port3",
-          "type": "bottom",
-          "properties": { "path": "" },
-          "position": { "x": 123, "y": 97 }
-        },
-        "port4": {
-          "id": "port4",
-          "type": "left",
-          "properties": { "path": "" },
-          "position": { "x": -4, "y": 48 }
-        }
-      },
-      "properties": {
-        "oneprovider_host": "plg-cyfronet-01.datahub.egi.eu",
-        "token": "xxxxxxxxxxxxx",
-        "space": "my-space",
-        "name": "my-onedata"
-      },
-      "size": { "width": 247, "height": 95 }
-    },
-    "32528eaa-25dd-473f-8042-e8e6063558bb": {
-      "id": "32528eaa-25dd-473f-8042-e8e6063558bb",
-      "position": { "x": 74.17926565874714, "y": 436.54286164186897 },
+    "ce46b0f6-e3f9-4bbc-a2db-90a08441b617": {
+      "id": "ce46b0f6-e3f9-4bbc-a2db-90a08441b617",
+      "position": { "x": 188, "y": 239 },
       "orientation": 0,
       "type": "oscar-fx",
       "ports": {
@@ -112,17 +75,26 @@
         }
       },
       "properties": {
+        "input": {
+          "storage_provider": "minio",
+          "path": "darknet-workflow/input"
+        },
+        "output": {
+          "storage_provider": "s3.my-aws",
+          "path": "scar-grayify-workflow/input",
+          "suffix": "png, jpg"
+        },
         "name": "darknet",
         "memory": "1Gi",
         "cpu": "1.0",
         "image": "grycap/darknet",
         "script": "yolo.sh"
       },
-      "size": { "width": 200, "height": 95 }
+      "size": { "width": 200, "height": 96 }
     },
-    "4f43d1d2-b167-4710-a862-a48556bcc4b1": {
-      "id": "4f43d1d2-b167-4710-a862-a48556bcc4b1",
-      "position": { "x": 438.99735293903854, "y": 414.3082767722955 },
+    "24cc2de8-335e-4faf-aa67-ed974cc9990a": {
+      "id": "24cc2de8-335e-4faf-aa67-ed974cc9990a",
+      "position": { "x": 335.3555093555093, "y": 565.2099792099793 },
       "orientation": 0,
       "type": "aws-fx",
       "ports": {
@@ -130,44 +102,6 @@
           "id": "port1",
           "type": "top",
           "properties": { "path": "" },
-          "position": { "x": 118, "y": -1 }
-        },
-        "port2": {
-          "id": "port2",
-          "type": "right",
-          "properties": { "path": "" },
-          "position": { "x": 241, "y": 48 }
-        },
-        "port3": {
-          "id": "port3",
-          "type": "bottom",
-          "properties": { "path": "" },
-          "position": { "x": 118, "y": 97 }
-        },
-        "port4": {
-          "id": "port4",
-          "type": "left",
-          "properties": { "path": "" },
-          "position": { "x": -4, "y": 48 }
-        }
-      },
-      "properties": {
-        "name": "scar-grayify-workflow",
-        "container": { "image": "grycap/imagemagick" },
-        "init_script": "grayify-image.sh"
-      },
-      "size": { "width": 237, "height": 95 }
-    },
-    "4f2c04f4-5658-4973-99b6-42a52f241bed": {
-      "id": "4f2c04f4-5658-4973-99b6-42a52f241bed",
-      "position": { "x": 82.81857451403889, "y": 236.75884436325168 },
-      "orientation": 0,
-      "type": "function-input",
-      "ports": {
-        "port1": {
-          "id": "port1",
-          "type": "top",
-          "properties": { "path": "" },
           "position": { "x": 100, "y": -1 }
         },
         "port2": {
@@ -189,127 +123,26 @@
           "position": { "x": -4, "y": 48 }
         }
       },
-      "size": { "width": 200, "height": 95 },
       "properties": {
-        "storage_provider": "minio",
-        "path": "darknet-worflow/input"
-      }
-    },
-    "ebe639e9-fdc6-4dd2-b5ac-a1d3f0ca12d7": {
-      "id": "ebe639e9-fdc6-4dd2-b5ac-a1d3f0ca12d7",
-      "position": { "x": 91.45788336933049, "y": 644.9661877757785 },
-      "orientation": 0,
-      "type": "function-output",
-      "ports": {
-        "port1": {
-          "id": "port1",
-          "type": "top",
-          "properties": { "path": "" },
-          "position": { "x": 100, "y": -1 }
-        },
-        "port2": {
-          "id": "port2",
-          "type": "right",
-          "properties": { "path": "" },
-          "position": { "x": 204, "y": 48 }
-        },
-        "port3": {
-          "id": "port3",
-          "type": "bottom",
-          "properties": { "path": "" },
-          "position": { "x": 100, "y": 97 }
-        },
-        "port4": {
-          "id": "port4",
-          "type": "left",
-          "properties": { "path": "" },
-          "position": { "x": -4, "y": 48 }
+        "lambda": {
+          "name": "scar-grayify-workflow",
+          "init_script": "grayify-image.sh",
+          "container": { "image": "grycap/imagemagick" },
+          "input": {
+            "path": "scar-grayify-workflow/input",
+            "storage_provider": "s3"
+          },
+          "output": {
+            "path": "scar-grayify-workflow/input",
+            "storage_provider": "onedata.my-onedata"
+          }
         }
       },
-      "size": { "width": 200, "height": 95 },
-      "properties": {
-        "storage_provider": "s3.my-aws",
-        "path": "scar-grayify-workflow/input",
-        "suffix": "png"
-      }
+      "size": { "width": 200, "height": 96 }
     },
-    "448e82ba-3f4f-4f54-b86d-62282b09e6a0": {
-      "id": "448e82ba-3f4f-4f54-b86d-62282b09e6a0",
-      "position": { "x": 446.8699135503296, "y": 233.91695623415373 },
-      "orientation": 0,
-      "type": "function-input",
-      "ports": {
-        "port1": {
-          "id": "port1",
-          "type": "top",
-          "properties": { "path": "" },
-          "position": { "x": 100, "y": -1 }
-        },
-        "port2": {
-          "id": "port2",
-          "type": "right",
-          "properties": { "path": "" },
-          "position": { "x": 204, "y": 48 }
-        },
-        "port3": {
-          "id": "port3",
-          "type": "bottom",
-          "properties": { "path": "" },
-          "position": { "x": 100, "y": 97 }
-        },
-        "port4": {
-          "id": "port4",
-          "type": "left",
-          "properties": { "path": "" },
-          "position": { "x": -4, "y": 48 }
-        }
-      },
-      "size": { "width": 200, "height": 95 },
-      "properties": {
-        "storage_provider": "s3",
-        "path": "scar-grayify-workflow/input"
-      }
-    },
-    "845a7179-452e-4bfb-a2c9-a611b972ccca": {
-      "id": "845a7179-452e-4bfb-a2c9-a611b972ccca",
-      "position": { "x": 481.3066954643629, "y": 597.4499890716747 },
-      "orientation": 0,
-      "type": "function-output",
-      "ports": {
-        "port1": {
-          "id": "port1",
-          "type": "top",
-          "properties": { "path": "" },
-          "position": { "x": 100, "y": -1 }
-        },
-        "port2": {
-          "id": "port2",
-          "type": "right",
-          "properties": { "path": "" },
-          "position": { "x": 204, "y": 48 }
-        },
-        "port3": {
-          "id": "port3",
-          "type": "bottom",
-          "properties": { "path": "" },
-          "position": { "x": 100, "y": 97 }
-        },
-        "port4": {
-          "id": "port4",
-          "type": "left",
-          "properties": { "path": "" },
-          "position": { "x": -4, "y": 48 }
-        }
-      },
-      "size": { "width": 200, "height": 95 },
-      "properties": {
-        "storage_provider": "onedata.my-onedata",
-        "path": "scar-grayify-workflow/output"
-      }
-    },
-    "522b3939-9739-4d8e-a658-d8fa434e9ad6": {
-      "id": "522b3939-9739-4d8e-a658-d8fa434e9ad6",
-      "position": { "x": 436.47196261682245, "y": 52.09106824745006 },
+    "341bb3e3-3546-48ed-8310-c9aad35e114d": {
+      "id": "341bb3e3-3546-48ed-8310-c9aad35e114d",
+      "position": { "x": 260, "y": 410 },
       "orientation": 0,
       "type": "s3-storage",
       "ports": {
@@ -339,144 +172,100 @@
         }
       },
       "properties": {
-        "access_key": "xxxxxxxxxxxxxxxx",
-        "secret_key": "xxxxxxxxxxxxxxxx",
-        "region": "us-east-1",
-        "name": "my-s3"
-      },
-      "size": { "width": 200, "height": 95 }
-    },
-    "36c3ca23-efa5-40ea-81d0-d98e40fe56cb": {
-      "id": "36c3ca23-efa5-40ea-81d0-d98e40fe56cb",
-      "position": { "x": 918.625, "y": 311.5866533006941 },
-      "orientation": 0,
-      "type": "s3-storage",
-      "ports": {
-        "port1": {
-          "id": "port1",
-          "type": "top",
-          "properties": { "path": "" },
-          "position": { "x": 109, "y": -1 }
-        },
-        "port2": {
-          "id": "port2",
-          "type": "right",
-          "properties": { "path": "" },
-          "position": { "x": 223, "y": 48 }
-        },
-        "port3": {
-          "id": "port3",
-          "type": "bottom",
-          "properties": { "path": "" },
-          "position": { "x": 109, "y": 97 }
-        },
-        "port4": {
-          "id": "port4",
-          "type": "left",
-          "properties": { "path": "" },
-          "position": { "x": -4, "y": 48 }
-        }
-      },
-      "properties": {
-        "name": "my-s3-unused",
+        "name": "my-aws",
         "access_key": "xxxxxxxxxxxxx",
         "secret_key": "xxxxxxxxxxxx",
-        "region": "us-west-1"
+        "region": "us-east-1"
       },
-      "size": { "width": 218, "height": 95 }
+      "size": { "width": 200, "height": 96 }
+    },
+    "4b528dbc-a5bb-48db-b9d1-f89cb0fcc5a6": {
+      "id": "4b528dbc-a5bb-48db-b9d1-f89cb0fcc5a6",
+      "position": { "x": 412.079002079002, "y": 741.7151767151765 },
+      "orientation": 0,
+      "type": "one-data-storage",
+      "ports": {
+        "port1": {
+          "id": "port1",
+          "type": "top",
+          "properties": { "path": "" },
+          "position": { "x": 124, "y": -1 }
+        },
+        "port2": {
+          "id": "port2",
+          "type": "right",
+          "properties": { "path": "" },
+          "position": { "x": 251, "y": 48 }
+        },
+        "port3": {
+          "id": "port3",
+          "type": "bottom",
+          "properties": { "path": "" },
+          "position": { "x": 124, "y": 97 }
+        },
+        "port4": {
+          "id": "port4",
+          "type": "left",
+          "properties": { "path": "" },
+          "position": { "x": -4, "y": 48 }
+        }
+      },
+      "properties": {
+        "name": "my-onedata",
+        "oneprovider_host": "plg-cyfronet-01.datahub.egi.eu",
+        "token": "xxxxxxxxxxx",
+        "space": "my-space"
+      },
+      "size": { "width": 247, "height": 96 }
     }
   },
   "links": {
-    "1ec7ad40-5ab2-407f-be3b-27cbf0d3f9c3": {
-      "id": "1ec7ad40-5ab2-407f-be3b-27cbf0d3f9c3",
+    "6739a8c8-a8bf-4337-9894-27f838a448d7": {
+      "id": "6739a8c8-a8bf-4337-9894-27f838a448d7",
       "from": {
-        "nodeId": "c710f16f-200e-4822-8035-1d6a4d1e613e",
+        "nodeId": "6921d02a-ac8c-4494-9a59-0f871af40547",
         "portId": "port3"
       },
       "to": {
-        "nodeId": "4f2c04f4-5658-4973-99b6-42a52f241bed",
+        "nodeId": "ce46b0f6-e3f9-4bbc-a2db-90a08441b617",
         "portId": "port1"
       }
     },
-    "166f26a5-cb39-4813-927b-37ff42d591bd": {
-      "id": "166f26a5-cb39-4813-927b-37ff42d591bd",
+    "f93d82a5-92d0-4a87-a17e-7638051b60fa": {
+      "id": "f93d82a5-92d0-4a87-a17e-7638051b60fa",
       "from": {
-        "nodeId": "4f2c04f4-5658-4973-99b6-42a52f241bed",
+        "nodeId": "ce46b0f6-e3f9-4bbc-a2db-90a08441b617",
         "portId": "port3"
       },
       "to": {
-        "nodeId": "32528eaa-25dd-473f-8042-e8e6063558bb",
+        "nodeId": "341bb3e3-3546-48ed-8310-c9aad35e114d",
         "portId": "port1"
       }
     },
-    "54a69a0a-7a66-4aa0-b9b7-ee43222f646b": {
-      "id": "54a69a0a-7a66-4aa0-b9b7-ee43222f646b",
+    "3aae1b6c-17e4-4b95-aa4d-3160262496ce": {
+      "id": "3aae1b6c-17e4-4b95-aa4d-3160262496ce",
       "from": {
-        "nodeId": "32528eaa-25dd-473f-8042-e8e6063558bb",
+        "nodeId": "341bb3e3-3546-48ed-8310-c9aad35e114d",
         "portId": "port3"
       },
       "to": {
-        "nodeId": "ebe639e9-fdc6-4dd2-b5ac-a1d3f0ca12d7",
+        "nodeId": "24cc2de8-335e-4faf-aa67-ed974cc9990a",
         "portId": "port1"
       }
     },
-    "886af0f4-73c7-4eef-8649-44ca4ff0345a": {
-      "id": "886af0f4-73c7-4eef-8649-44ca4ff0345a",
+    "f60dac70-0ee7-4266-8218-6eca1aed45cf": {
+      "id": "f60dac70-0ee7-4266-8218-6eca1aed45cf",
       "from": {
-        "nodeId": "448e82ba-3f4f-4f54-b86d-62282b09e6a0",
+        "nodeId": "24cc2de8-335e-4faf-aa67-ed974cc9990a",
         "portId": "port3"
       },
       "to": {
-        "nodeId": "4f43d1d2-b167-4710-a862-a48556bcc4b1",
-        "portId": "port1"
-      }
-    },
-    "80c8de01-9870-44d7-9ee1-a731817aadf1": {
-      "id": "80c8de01-9870-44d7-9ee1-a731817aadf1",
-      "from": {
-        "nodeId": "4f43d1d2-b167-4710-a862-a48556bcc4b1",
-        "portId": "port3"
-      },
-      "to": {
-        "nodeId": "845a7179-452e-4bfb-a2c9-a611b972ccca",
-        "portId": "port1"
-      }
-    },
-    "45d8e113-5cbb-445c-8d77-8dabad3e34bb": {
-      "id": "45d8e113-5cbb-445c-8d77-8dabad3e34bb",
-      "from": {
-        "nodeId": "845a7179-452e-4bfb-a2c9-a611b972ccca",
-        "portId": "port3"
-      },
-      "to": {
-        "nodeId": "079aa508-ef32-4433-9391-cbe61e404741",
-        "portId": "port1"
-      }
-    },
-    "b01aff7f-b0c7-4576-8bf0-5ad3fe07e935": {
-      "id": "b01aff7f-b0c7-4576-8bf0-5ad3fe07e935",
-      "from": {
-        "nodeId": "ebe639e9-fdc6-4dd2-b5ac-a1d3f0ca12d7",
-        "portId": "port2"
-      },
-      "to": {
-        "nodeId": "522b3939-9739-4d8e-a658-d8fa434e9ad6",
-        "portId": "port4"
-      }
-    },
-    "65c73285-250d-4b1f-9c0d-a95762e106f5": {
-      "id": "65c73285-250d-4b1f-9c0d-a95762e106f5",
-      "from": {
-        "nodeId": "522b3939-9739-4d8e-a658-d8fa434e9ad6",
-        "portId": "port3"
-      },
-      "to": {
-        "nodeId": "448e82ba-3f4f-4f54-b86d-62282b09e6a0",
+        "nodeId": "4b528dbc-a5bb-48db-b9d1-f89cb0fcc5a6",
         "portId": "port1"
       }
     }
   },
-  "selected": { "type": "node", "id": "079aa508-ef32-4433-9391-cbe61e404741" },
+  "selected": { "type": "node", "id": "ce46b0f6-e3f9-4bbc-a2db-90a08441b617" },
   "hovered": {},
   "modalVisible": false
 }

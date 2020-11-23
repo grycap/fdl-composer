@@ -1,10 +1,10 @@
 {
-  "offset": { "x": 15.58, "y": 18.47 },
-  "scale": 0.962,
+  "offset": { "x": 31.27, "y": -63.25 },
+  "scale": 0.732,
   "nodes": {
     "6921d02a-ac8c-4494-9a59-0f871af40547": {
       "id": "6921d02a-ac8c-4494-9a59-0f871af40547",
-      "position": { "x": 134, "y": 50.96049896049896 },
+      "position": { "x": 138.0983606557377, "y": 106.97142792224757 },
       "orientation": 0,
       "type": "minio-storage",
       "ports": {
@@ -45,7 +45,7 @@
     },
     "ce46b0f6-e3f9-4bbc-a2db-90a08441b617": {
       "id": "ce46b0f6-e3f9-4bbc-a2db-90a08441b617",
-      "position": { "x": 188, "y": 239 },
+      "position": { "x": 198.92896174863387, "y": 243.0983606557377 },
       "orientation": 0,
       "type": "oscar-fx",
       "ports": {
@@ -88,7 +88,8 @@
         "memory": "1Gi",
         "cpu": "1.0",
         "image": "grycap/darknet",
-        "script": "yolo.sh"
+        "script": "yolo.sh",
+        "environment": { "Variables": "key1=val1, key2=val2" }
       },
       "size": { "width": 200, "height": 96 }
     },
@@ -127,7 +128,10 @@
         "lambda": {
           "name": "scar-grayify-workflow",
           "init_script": "grayify-image.sh",
-          "container": { "image": "grycap/imagemagick" },
+          "container": {
+            "image": "grycap/imagemagick",
+            "environment": { "Variables": "key1=val1, key2=val2" }
+          },
           "input": {
             "path": "scar-grayify-workflow/input",
             "storage_provider": "s3"
@@ -135,7 +139,8 @@
           "output": {
             "path": "scar-grayify-workflow/input",
             "storage_provider": "onedata.my-onedata"
-          }
+          },
+          "environment": { "Variables": "key1=val1, key2=val2" }
         }
       },
       "size": { "width": 200, "height": 96 }
@@ -265,7 +270,7 @@
       }
     }
   },
-  "selected": { "type": "node", "id": "ce46b0f6-e3f9-4bbc-a2db-90a08441b617" },
+  "selected": {},
   "hovered": {},
   "modalVisible": false
 }

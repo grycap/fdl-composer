@@ -485,6 +485,28 @@ export const NodeInnerCustom = ({
                 }}
               />
             </Row>
+            <Row>
+              <Label>Environment variables</Label>
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+                placeholder="KEY1=val1, KEY2=val2..."
+                value={currentProperties.environment?.Variables}
+                onChange={(e) => {
+                  const { value } = e.target;
+                  setCurrentProperties({
+                    ...currentProperties,
+                    environment: {
+                      ...currentProperties.environment,
+                      Variables: e.target.value,
+                    },
+                  });
+                  !!!value && delete currentProperties.environment;
+                }}
+              />
+            </Row>
             <Divider>Input</Divider>
             <Row>
               <Label>Storage provider:</Label>
@@ -869,6 +891,32 @@ export const NodeInnerCustom = ({
                     }}
                   />
                 </Row>
+
+                <Row>
+                  <Label>Environment variables</Label>
+                  <Input
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseUp={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                    placeholder="KEY1=val1, KEY2=val2..."
+                    value={currentProperties.lambda?.environment?.Variables}
+                    onChange={(e) => {
+                      const { value } = e.target;
+                      setCurrentProperties({
+                        ...currentProperties,
+                        lambda: {
+                          ...currentProperties.lambda,
+                          environment: {
+                            ...currentProperties.lambda?.environment,
+                            Variables: e.target.value,
+                          },
+                        },
+                      });
+                      !!value && delete currentProperties.lambda.environment;
+                    }}
+                  />
+                </Row>
                 <Divider>Container</Divider>
                 <Row>
                   <Label>Image:</Label>
@@ -915,6 +963,39 @@ export const NodeInnerCustom = ({
                           },
                         },
                       });
+                    }}
+                  />
+                </Row>
+                <Row>
+                  <Label>Environment variables</Label>
+                  <Input
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseUp={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                    placeholder="KEY1=val1, KEY2=val2..."
+                    value={
+                      currentProperties.lambda?.container?.environment
+                        ?.Variables
+                    }
+                    onChange={(e) => {
+                      const { value } = e.target;
+                      setCurrentProperties({
+                        ...currentProperties,
+                        lambda: {
+                          ...currentProperties.lambda,
+                          container: {
+                            ...currentProperties.lambda?.container,
+                            environment: {
+                              ...currentProperties.lambda?.container
+                                .environment,
+                              Variables: e.target.value,
+                            },
+                          },
+                        },
+                      });
+                      !!!value &&
+                        delete currentProperties.lambda.container.environment;
                     }}
                   />
                 </Row>
@@ -1217,7 +1298,250 @@ export const NodeInnerCustom = ({
                     }}
                   />
                 </Row>
+
+                <Row>
+                  <Label>Service role:</Label>
+                  <Input
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseUp={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                    placeholder="aren:..."
+                    value={currentProperties.service_role}
+                    onChange={(e) => {
+                      setCurrentProperties({
+                        ...currentProperties,
+                        batch: {
+                          ...currentProperties.batch,
+                          service_role: e.target.value,
+                        },
+                      });
+                    }}
+                  />
+                </Row>
+                <Row>
+                  <Label>Environment variables</Label>
+                  <Input
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseUp={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                    placeholder="KEY1=val1, KEY2=val2..."
+                    value={currentProperties.batch?.environment?.Variables}
+                    onChange={(e) => {
+                      const { value } = e.target;
+                      setCurrentProperties({
+                        ...currentProperties,
+                        batch: {
+                          ...currentProperties.batch,
+                          environment: {
+                            ...currentProperties.batch?.environment,
+                            Variables: e.target.value,
+                          },
+                        },
+                      });
+                      !!value && delete currentProperties.batch.environment;
+                    }}
+                  />
+                </Row>
                 <Divider>Compute resources</Divider>
+                <Row>
+                  <Label>Desired vCpus</Label>
+                  <Input
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseUp={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                    placeholder="0"
+                    value={
+                      currentProperties.batch?.compute_resources?.desired_v_cpus
+                    }
+                    onChange={(e) => {
+                      setCurrentProperties({
+                        ...currentProperties,
+                        batch: {
+                          ...currentProperties.batch,
+                          compute_resources: {
+                            ...currentProperties.batch?.compute_resources,
+                            desired_v_cpus: e.target.value,
+                          },
+                        },
+                      });
+                    }}
+                  />
+                </Row>
+                <Row>
+                  <Label>Min vCpus</Label>
+                  <Input
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseUp={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                    placeholder="0"
+                    value={
+                      currentProperties.batch?.compute_resources?.min_v_cpus
+                    }
+                    onChange={(e) => {
+                      setCurrentProperties({
+                        ...currentProperties,
+                        batch: {
+                          ...currentProperties.batch,
+                          compute_resources: {
+                            ...currentProperties.batch?.compute_resources,
+                            min_v_cpus: e.target.value,
+                          },
+                        },
+                      });
+                    }}
+                  />
+                </Row>
+                <Row>
+                  <Label>Max vCpus</Label>
+                  <Input
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseUp={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                    placeholder="2"
+                    value={
+                      currentProperties.batch?.compute_resources?.max_v_cpus
+                    }
+                    onChange={(e) => {
+                      setCurrentProperties({
+                        ...currentProperties,
+                        batch: {
+                          ...currentProperties.batch,
+                          compute_resources: {
+                            ...currentProperties.batch?.compute_resources,
+                            max_v_cpus: e.target.value,
+                          },
+                        },
+                      });
+                    }}
+                  />
+                </Row>
+                <Row>
+                  <Label>Max vCpus</Label>
+                  <Input
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseUp={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                    placeholder="2"
+                    value={
+                      currentProperties.batch?.compute_resources?.max_v_cpus
+                    }
+                    onChange={(e) => {
+                      setCurrentProperties({
+                        ...currentProperties,
+                        batch: {
+                          ...currentProperties.batch,
+                          compute_resources: {
+                            ...currentProperties.batch?.compute_resources,
+                            max_v_cpus: e.target.value,
+                          },
+                        },
+                      });
+                    }}
+                  />
+                </Row>
+                <Row>
+                  <Label>Instance role</Label>
+                  <Input
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseUp={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                    placeholder="arn:..."
+                    value={
+                      currentProperties.batch?.compute_resources?.instance_role
+                    }
+                    onChange={(e) => {
+                      setCurrentProperties({
+                        ...currentProperties,
+                        batch: {
+                          ...currentProperties.batch,
+                          compute_resources: {
+                            ...currentProperties.batch?.compute_resources,
+                            instance_role: e.target.value,
+                          },
+                        },
+                      });
+                    }}
+                  />
+                </Row>
+                <Row>
+                  <Label>Security group ids</Label>
+                  <Input
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseUp={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                    placeholder="sg-12345678, sg-12345679..."
+                    value={
+                      currentProperties.batch?.security_group_ids
+                        ?.security_group_ids
+                    }
+                    onChange={(e) => {
+                      setCurrentProperties({
+                        ...currentProperties,
+                        batch: {
+                          ...currentProperties.batch,
+                          compute_resources: {
+                            ...currentProperties.batch?.compute_resources,
+                            security_group_ids: e.target.value,
+                          },
+                        },
+                      });
+                    }}
+                  />
+                </Row>
+                <Row>
+                  <Label>Subnets</Label>
+                  <Input
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseUp={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                    placeholder="subnet-12345, subnet-67891..."
+                    value={currentProperties.batch?.subnets?.subnets}
+                    onChange={(e) => {
+                      setCurrentProperties({
+                        ...currentProperties,
+                        batch: {
+                          ...currentProperties.batch,
+                          compute_resources: {
+                            ...currentProperties.batch?.compute_resources,
+                            subnets: e.target.value,
+                          },
+                        },
+                      });
+                    }}
+                  />
+                </Row>
+                <Row>
+                  <Label>Instance types</Label>
+                  <Input
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseUp={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                    placeholder="m3.medium, m3.large..."
+                    value={currentProperties.batch?.subnets?.instance_types}
+                    onChange={(e) => {
+                      setCurrentProperties({
+                        ...currentProperties,
+                        batch: {
+                          ...currentProperties.batch,
+                          compute_resources: {
+                            ...currentProperties.batch?.compute_resources,
+                            instance_types: e.target.value,
+                          },
+                        },
+                      });
+                    }}
+                  />
+                </Row>
               </Tabs.TabPane>
             </Tabs>
           </Modal>

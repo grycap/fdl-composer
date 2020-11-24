@@ -14,7 +14,7 @@ export const SideNav = () => (
   <Sidebar>
     <Message>Drag and drop these items onto the canvas.</Message>
     <SidebarItem
-      type="s3-storage"
+      type="s3"
       ports={{
         port1: {
           id: "port1",
@@ -47,7 +47,7 @@ export const SideNav = () => (
       }}
     />{" "}
     <SidebarItem
-      type="minio-storage"
+      type="minio"
       ports={{
         port1: {
           id: "port1",
@@ -80,7 +80,7 @@ export const SideNav = () => (
       }}
     />
     <SidebarItem
-      type="one-data-storage"
+      type="onedata"
       ports={{
         port1: {
           id: "port1",

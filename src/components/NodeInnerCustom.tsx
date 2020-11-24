@@ -80,7 +80,7 @@ export const NodeInnerCustom = ({
   >(node.properties || {});
   const color = getColor(node.type);
   switch (node.type) {
-    case "s3-storage":
+    case "s3":
       return (
         <Circle
           {...otherProps}
@@ -171,7 +171,7 @@ export const NodeInnerCustom = ({
           <p>{`${node.type} ${node.properties?.name || ""}`}</p>
         </Circle>
       );
-    case "minio-storage":
+    case "minio":
       return (
         <Circle
           color={color.color}
@@ -291,7 +291,7 @@ export const NodeInnerCustom = ({
           <p>{`${node.type} ${node.properties?.name || ""}`}</p>
         </Circle>
       );
-    case "one-data-storage":
+    case "onedata":
       return (
         <Circle
           color={color.color}
@@ -508,7 +508,7 @@ export const NodeInnerCustom = ({
               />
             </Row>
             <Divider>Input</Divider>
-            <Row>
+            {/* <Row>
               <Label>Storage provider:</Label>
               <Input
                 onClick={(e) => e.stopPropagation()}
@@ -527,7 +527,7 @@ export const NodeInnerCustom = ({
                   });
                 }}
               />
-            </Row>
+            </Row> */}
             <Row>
               <Label>Path:</Label>
               <Input
@@ -595,7 +595,7 @@ export const NodeInnerCustom = ({
               />
             </Row>
             <Divider>Output</Divider>
-            <Row>
+            {/* <Row>
               <Label>Storage provider:</Label>
               <Input
                 onClick={(e) => e.stopPropagation()}
@@ -614,7 +614,7 @@ export const NodeInnerCustom = ({
                   });
                 }}
               />
-            </Row>
+            </Row> */}
             <Row>
               <Label>Path:</Label>
               <Input
@@ -1000,7 +1000,7 @@ export const NodeInnerCustom = ({
                   />
                 </Row>
                 <Divider>Input</Divider>
-                <Row>
+                {/* <Row>
                   <Label>Storage provider:</Label>
                   <Input
                     onClick={(e) => e.stopPropagation()}
@@ -1022,7 +1022,7 @@ export const NodeInnerCustom = ({
                       });
                     }}
                   />
-                </Row>
+                </Row> */}
                 <Row>
                   <Label>Path:</Label>
                   <Input
@@ -1099,7 +1099,7 @@ export const NodeInnerCustom = ({
                   />
                 </Row>
                 <Divider>Output</Divider>
-                <Row>
+                {/* <Row>
                   <Label>Storage provider:</Label>
                   <Input
                     onClick={(e) => e.stopPropagation()}
@@ -1121,7 +1121,7 @@ export const NodeInnerCustom = ({
                       });
                     }}
                   />
-                </Row>
+                </Row> */}
                 <Row>
                   <Label>Path:</Label>
                   <Input

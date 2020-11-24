@@ -62,17 +62,17 @@ export const getColor = (type: string) => {
         background: "#a32a06",
         color: "white",
       };
-    case "s3-storage":
+    case "s3":
       return {
         background: "#aa5237",
         color: "white",
       };
-    case "one-data-storage":
+    case "onedata":
       return {
         background: "#02005e",
         color: "white",
       };
-    case "minio-storage":
+    case "minio":
       return {
         background: "#5e4d00",
         color: "white",
@@ -87,7 +87,8 @@ export const getColor = (type: string) => {
 
 export const SidebarItem = ({ type, ports, properties }: ISidebarItemProps) => {
   const color = getColor(type);
-  return type.includes("storage") ? (
+  const storage = ["s3", "onedata", "minio"];
+  return storage.includes(type) ? (
     <Circle
       background={color.background}
       color={color.color}

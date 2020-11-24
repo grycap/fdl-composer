@@ -27,14 +27,50 @@ export class App extends React.Component {
   public exportToYaml() {
     const nodeValues = Object.values(this.state.nodes);
     const linkValues = Object.values(this.state.links);
+    console.log(linkValues);
 
+    const storages = nodeValues.filter(
+      (x) => x.type === "s3" || x.type === "onedata" || x.type === "minio"
+    );
     const oscarFxs = nodeValues
       .filter((x: any) => x.type === "oscar-fx")
       .map((node) => {
+        console.log(node);
+        const nodeInputLinks = linkValues.filter(
+          (lv) =>
+            (lv.to.nodeId === node.id &&
+              (lv.to.portId === "port1" || lv.to.portId === "port4")) ||
+            (lv.from.nodeId === node.id &&
+              (lv.from.portId === "port1" || lv.from.portId === "port4"))
+        );
+
+        const nodeOutputLinks = linkValues.filter(
+          (lv) =>
+            (lv.to.nodeId === node.id &&
+              (lv.to.portId === "port2" || lv.to.portId === "port3")) ||
+            (lv.from.nodeId === node.id &&
+              (lv.from.portId === "port2" || lv.from.portId === "port3"))
+        );
+
+        const inputNode = storages.find((x) =>
+          nodeInputLinks.some(
+            (y) => y.from.nodeId === x.id || y.to.nodeId === x.id
+          )
+        );
+
+        const outputNode = storages.find((x) =>
+          nodeOutputLinks.some(
+            (y) => y.from.nodeId === x.id || y.to.nodeId === x.id
+          )
+        );
+        console.log(inputNode);
+        console.log(outputNode);
+
         const copy = JSON.parse(JSON.stringify(node.properties));
         const input = copy.input;
         if (input) {
-          if (input?.prefix)
+          input.storage_provider = `${inputNode?.type}.${inputNode?.properties.name}`;
+          if (input.prefix)
             input.prefix = input.prefix.replace(" ", "").split(",");
           if (input?.suffix)
             input.suffix = input.suffix.replace(" ", "").split(",");
@@ -42,6 +78,7 @@ export class App extends React.Component {
         }
         const output = copy.output;
         if (output) {
+          output.storage_provider = `${outputNode?.type}.${outputNode?.properties.name}`;
           if (output.prefix)
             output.prefix = output.prefix.replace(" ", "").split(",");
           if (output.suffix)
@@ -151,19 +188,27 @@ export class App extends React.Component {
         return copy;
       });
     const oneDataStorage = nodeValues
-      .filter((x: any) => x.type === "one-data-storage")
+      .filter((x: any) => x.type === "onedata")
       .map((node) => node.properties)
       .reduce((a, b) => {
-        const copy = cloneDeep(b);
-        delete copy.name;
+        const copy = JSON.parse(JSON.stringify(b));
         return { ...a, [b.name]: copy };
       }, {});
 
     const s3Storage = nodeValues
-      .filter((x: any) => x.type === "s3-storage")
+      .filter((x: any) => x.type === "s3")
       .map((node) => node.properties)
       .reduce((a, b) => {
-        const copy = cloneDeep(b);
+        const copy = JSON.parse(JSON.stringify(b));
+        delete copy.name;
+        return { ...a, [b.name]: copy };
+      }, {});
+
+    const minio = nodeValues
+      .filter((x: any) => x.type === "minio")
+      .map((node) => node.properties)
+      .reduce((a, b) => {
+        const copy = JSON.parse(JSON.stringify(b));
         delete copy.name;
         return { ...a, [b.name]: copy };
       }, {});
@@ -177,6 +222,7 @@ export class App extends React.Component {
       storage_providers: {
         s3: s3Storage,
         onedata: oneDataStorage,
+        minio: minio,
       },
     });
     const blob = new Blob([output], {

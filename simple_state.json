@@ -6,7 +6,7 @@
       "id": "6921d02a-ac8c-4494-9a59-0f871af40547",
       "position": { "x": 138.0983606557377, "y": 106.97142792224757 },
       "orientation": 0,
-      "type": "minio-storage",
+      "type": "minio",
       "ports": {
         "port1": {
           "id": "port1",
@@ -149,7 +149,7 @@
       "id": "341bb3e3-3546-48ed-8310-c9aad35e114d",
       "position": { "x": 260, "y": 410 },
       "orientation": 0,
-      "type": "s3-storage",
+      "type": "s3",
       "ports": {
         "port1": {
           "id": "port1",
@@ -188,7 +188,7 @@
       "id": "4b528dbc-a5bb-48db-b9d1-f89cb0fcc5a6",
       "position": { "x": 412.079002079002, "y": 741.7151767151765 },
       "orientation": 0,
-      "type": "one-data-storage",
+      "type": "onedata",
       "ports": {
         "port1": {
           "id": "port1",

@@ -11,7 +11,7 @@ const Outer = styled.div<IOuterProps>`
   border: 0.5px solid grey;
   padding: 20px 30px;
   font-size: 14px;
-  background: white;
+  background: black;
   cursor: move;
   ${(props) =>
     props.color &&
@@ -28,7 +28,8 @@ const Outer = styled.div<IOuterProps>`
 const Circle = styled.div<IOuterProps>`
   margin-bottom: 1rem;
   border: 0.5px solid grey;
-  padding: 20px 30px;
+  padding: 30px;
+  min-height: 100px;
   border-radius: 50%;
   font-size: 14px;
   cursor: move;
@@ -54,28 +55,28 @@ export const getColor = (type: string) => {
   switch (type) {
     case "oscar-fx":
       return {
-        background: "#005e14",
-        color: "white",
+        background: "#fff",
+        color: "black",
       };
     case "aws-fx":
       return {
-        background: "#a32a06",
+        background: "#080301",
         color: "white",
       };
-    case "s3-storage":
+    case "s3":
       return {
-        background: "#aa5237",
-        color: "white",
+        background: "#ebe4c0",
+        color: "black",
       };
-    case "one-data-storage":
+    case "onedata":
       return {
-        background: "#02005e",
-        color: "white",
+        background: "#c2d4ad",
+        color: "black",
       };
-    case "minio-storage":
+    case "minio":
       return {
-        background: "#5e4d00",
-        color: "white",
+        background: "#c47878",
+        color: "black",
       };
     default:
       return {
@@ -85,9 +86,55 @@ export const getColor = (type: string) => {
   }
 };
 
+export const getIcon = (type: string) => {
+  switch (type) {
+    case "oscar-fx":
+      return (
+        <img
+          alt="oscar logo"
+          src="https://github.com/grycap/oscar/blob/master/docs/source/images/oscar3.png?raw=true"
+          width="96px"
+        />
+      );
+    case "aws-fx":
+      return (
+        <img
+          alt="aws logo"
+          src="https://d1.awsstatic.com/Digital%20Marketing/House/PAC/2up/PAC-Q4_House-Ads_Lambda_2up.62dc7e19b7b2e0a2c06821594c31f1ce00a6bdda.png"
+          height="32px"
+        />
+      );
+    case "s3":
+      return (
+        <img
+          alt="s3 logo"
+          src="https://servmask.com/img/products/s3.png"
+          height="48px"
+        />
+      );
+    case "onedata":
+      return (
+        <img
+          alt="aws logo"
+          src="https://www.ebi.ac.uk/about/technology/wp-content/uploads/2019/10/onedata-logo.png"
+          height="24px"
+        />
+      );
+    case "minio":
+      return (
+        <img
+          alt="aws logo"
+          src="https://suarapapua.com/wp-content/plugins/ilab-media-tools-premium/public/img/wizard-icon-minio.png"
+          height="36px"
+        />
+      );
+  }
+};
+
 export const SidebarItem = ({ type, ports, properties }: ISidebarItemProps) => {
   const color = getColor(type);
-  return type.includes("storage") ? (
+  const storage = ["s3", "onedata", "minio"];
+  return storage.includes(type) ? (
     <Circle
       background={color.background}
       color={color.color}
@@ -99,7 +146,7 @@ export const SidebarItem = ({ type, ports, properties }: ISidebarItemProps) => {
         );
       }}
     >
-      {type}
+      {getIcon(type)}
     </Circle>
   ) : (
     <Outer
@@ -113,7 +160,7 @@ export const SidebarItem = ({ type, ports, properties }: ISidebarItemProps) => {
         );
       }}
     >
-      {type}
+      {getIcon(type)}
     </Outer>
   );
 };

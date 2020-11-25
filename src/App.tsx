@@ -102,9 +102,36 @@ export class App extends React.Component {
       .filter((x: any) => x.type === "aws-fx")
       .map((node) => {
         const copy = JSON.parse(JSON.stringify(node.properties));
+        const nodeInputLinks = linkValues.filter(
+          (lv) =>
+            (lv.to.nodeId === node.id &&
+              (lv.to.portId === "port1" || lv.to.portId === "port4")) ||
+            (lv.from.nodeId === node.id &&
+              (lv.from.portId === "port1" || lv.from.portId === "port4"))
+        );
 
+        const nodeOutputLinks = linkValues.filter(
+          (lv) =>
+            (lv.to.nodeId === node.id &&
+              (lv.to.portId === "port2" || lv.to.portId === "port3")) ||
+            (lv.from.nodeId === node.id &&
+              (lv.from.portId === "port2" || lv.from.portId === "port3"))
+        );
+
+        const inputNode = storages.find((x) =>
+          nodeInputLinks.some(
+            (y) => y.from.nodeId === x.id || y.to.nodeId === x.id
+          )
+        );
+
+        const outputNode = storages.find((x) =>
+          nodeOutputLinks.some(
+            (y) => y.from.nodeId === x.id || y.to.nodeId === x.id
+          )
+        );
         const input = copy.lambda?.input;
         if (input) {
+          input.storage_provider = `${inputNode?.type}.${inputNode?.properties.name}`;
           if (input?.prefix)
             input.prefix = input.prefix.replace(" ", "").split(",");
           if (input?.suffix)
@@ -113,6 +140,7 @@ export class App extends React.Component {
         }
         const output = copy.lambda?.output;
         if (output) {
+          output.storage_provider = `${outputNode?.type}.${outputNode?.properties.name}`;
           if (output?.prefix)
             output.prefix = output.prefix.replace(" ", "").split(",");
           if (output.suffix)

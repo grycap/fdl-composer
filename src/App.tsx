@@ -27,7 +27,6 @@ export class App extends React.Component {
   public exportToYaml() {
     const nodeValues = Object.values(this.state.nodes);
     const linkValues = Object.values(this.state.links);
-    console.log(linkValues);
 
     const storages = nodeValues.filter(
       (x) => x.type === "s3" || x.type === "onedata" || x.type === "minio"
@@ -35,7 +34,6 @@ export class App extends React.Component {
     const oscarFxs = nodeValues
       .filter((x: any) => x.type === "oscar-fx")
       .map((node) => {
-        console.log(node);
         const nodeInputLinks = linkValues.filter(
           (lv) =>
             (lv.to.nodeId === node.id &&
@@ -63,8 +61,6 @@ export class App extends React.Component {
             (y) => y.from.nodeId === x.id || y.to.nodeId === x.id
           )
         );
-        console.log(inputNode);
-        console.log(outputNode);
 
         const copy = JSON.parse(JSON.stringify(node.properties));
         const input = copy.input;

@@ -76,11 +76,9 @@
       },
       "properties": {
         "input": {
-          "storage_provider": "minio",
           "path": "darknet-workflow/input"
         },
         "output": {
-          "storage_provider": "s3.my-aws",
           "path": "scar-grayify-workflow/input",
           "suffix": "png, jpg"
         },
@@ -133,12 +131,10 @@
             "environment": { "Variables": "key1=val1, key2=val2" }
           },
           "input": {
-            "path": "scar-grayify-workflow/input",
-            "storage_provider": "s3"
+            "path": "scar-grayify-workflow/input"
           },
           "output": {
-            "path": "scar-grayify-workflow/input",
-            "storage_provider": "onedata.my-onedata"
+            "path": "scar-grayify-workflow/input"
           },
           "environment": { "Variables": "key1=val1, key2=val2" }
         }

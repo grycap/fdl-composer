@@ -2,7 +2,7 @@ import { INodeInnerDefaultProps } from "@mrblenny/react-flow-chart";
 import { Checkbox, Divider, Modal, Tabs } from "antd";
 import React, { ReactElement } from "react";
 import styled, { css } from "styled-components";
-import { getColor } from "./SidebarItem";
+import { getColor, getIcon } from "./SidebarItem";
 interface IOuterProps {
   background?: string;
   color?: string;
@@ -168,7 +168,8 @@ export const NodeInnerCustom = ({
               />
             </Row>
           </Modal>
-          <p>{`${node.type} ${node.properties?.name || ""}`}</p>
+          <div>{getIcon(node.type)}</div>
+          <div>{`${node.properties?.name || ""}`}</div>
         </Circle>
       );
     case "minio":
@@ -288,7 +289,8 @@ export const NodeInnerCustom = ({
               />
             </Row>
           </Modal>
-          <p>{`${node.type} ${node.properties?.name || ""}`}</p>
+          <div>{getIcon(node.type)}</div>
+          <div>{`${node.properties?.name || ""}`}</div>
         </Circle>
       );
     case "onedata":
@@ -378,7 +380,8 @@ export const NodeInnerCustom = ({
               />
             </Row>
           </Modal>
-          <p>{`${node.type} ${node.properties?.name || ""}`}</p>
+          <div>{getIcon(node.type)}</div>
+          <div>{`${node.properties?.name || ""}`}</div>
         </Circle>
       );
     case "oscar-fx":
@@ -682,7 +685,8 @@ export const NodeInnerCustom = ({
               />
             </Row>
           </Modal>
-          <p>{`${node.type} ${node.properties?.name || ""}`}</p>
+          <div>{getIcon(node.type)}</div>
+          <div>{`${node.properties?.name || ""}`}</div>
         </Outer>
       );
     case "aws-fx":
@@ -1545,7 +1549,8 @@ export const NodeInnerCustom = ({
               </Tabs.TabPane>
             </Tabs>
           </Modal>
-          <p>{`${node.type} ${node.properties?.name || ""}`}</p>
+          <div>{getIcon(node.type)}</div>
+          <div>{`${node.properties?.lambda.name || ""}`}</div>
         </Outer>
       );
     default:
@@ -1568,7 +1573,8 @@ export const NodeInnerCustom = ({
             okButtonProps={{ disabled: false }}
             cancelButtonProps={{ disabled: false }}
           ></Modal>
-          <p>{`${node.type} ${node.properties?.name || ""}`}</p>
+          <div>{getIcon(node.type)}</div>
+          <div>{`${node.properties?.name || ""}`}</div>
         </Outer>
       );
   }

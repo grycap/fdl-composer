@@ -6,9 +6,11 @@ import { actions, FlowChart } from "@mrblenny/react-flow-chart";
 import { initialState } from "./misc/chartScheme";
 import styled from "styled-components";
 import { Button, Layout, Menu } from "antd";
+
 import {
   DownloadOutlined,
   ExportOutlined,
+  SettingOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
 import { saveAs } from "file-saver";
@@ -16,6 +18,7 @@ import yaml from "js-yaml";
 import { NodeInnerCustom } from "./components/NodeInnerCustom";
 
 const { Header } = Layout;
+const { SubMenu } = Menu;
 
 const StyledButton = styled(Button)`
   margin-right: 1rem;
@@ -322,6 +325,21 @@ export class App extends React.Component {
               >
                 Export yaml
               </StyledButton>
+              <SubMenu
+                key="SubMenu"
+                icon={<SettingOutlined />}
+                title="Storage providers"
+              >
+                <Menu.Item key="storage:s3" onClick={() => {}}>
+                  S3
+                </Menu.Item>
+                <Menu.Item key="storage:minio" onClick={() => {}}>
+                  Minio
+                </Menu.Item>
+                <Menu.Item key="storage:onedata" onClick={() => {}}>
+                  One data
+                </Menu.Item>
+              </SubMenu>
             </Menu>
           </Header>
           <PageContent>

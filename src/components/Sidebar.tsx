@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Message, SidebarItem } from ".";
+import { ISidebarItemProps } from "./SidebarItem";
 
 export const Sidebar = styled.div`
   width: 200px;
@@ -10,9 +11,15 @@ export const Sidebar = styled.div`
   flex-shrink: 0;
 `;
 
-export const SideNav = () => (
+export interface ISidebarProps {
+  storageProviders?: ISidebarItemProps[];
+}
+export const SideNav: React.FC<ISidebarProps> = ({ storageProviders }) => (
   <Sidebar>
     <Message>Drag and drop these items onto the canvas.</Message>
+    {storageProviders?.map((sidebarItem) => (
+      <SidebarItem {...sidebarItem} />
+    ))}
     <SidebarItem
       type="s3"
       ports={{

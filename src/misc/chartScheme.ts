@@ -1,9 +1,14 @@
 import { IChart } from "@mrblenny/react-flow-chart";
+import { ISidebarItemProps } from "../components";
 export interface IVisible {
   modalVisible: boolean;
 }
 
-export const initialState: IChart & IVisible = {
+export interface IStorageProvider {
+  storageProviders: ISidebarItemProps[]
+}
+
+export const initialState: IChart & IVisible & IStorageProvider = {
   offset: {
     x: 0,
     y: 0,
@@ -14,4 +19,5 @@ export const initialState: IChart & IVisible = {
   selected: {},
   hovered: {},
   modalVisible: false,
+  storageProviders: []
 }

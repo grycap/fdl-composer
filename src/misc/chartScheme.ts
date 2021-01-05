@@ -1,11 +1,14 @@
 import { IChart } from "@mrblenny/react-flow-chart";
-import { ISidebarItemProps } from "../components";
+import { ISidebarItemProps } from "../components/types";
 export interface IVisible {
   modalVisible: boolean;
 }
 
 export interface IStorageProvider {
-  storageProviders: ISidebarItemProps[]
+  storageProviders: ISidebarItemProps[];
+  s3ModalVisible: boolean;
+  oneDataModalVisible: boolean;
+  minioModalVisible: boolean;
 }
 
 export const initialState: IChart & IVisible & IStorageProvider = {
@@ -19,5 +22,8 @@ export const initialState: IChart & IVisible & IStorageProvider = {
   selected: {},
   hovered: {},
   modalVisible: false,
-  storageProviders: []
+  storageProviders: [],
+  s3ModalVisible: false,
+  oneDataModalVisible: false,
+  minioModalVisible: false,
 }

@@ -36,19 +36,19 @@ const Circle = styled.div<IOuterProps>`
     `};
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
   padding: 10px;
   border: 1px solid cornflowerblue;
   margin-bottom: 0.5rem;
   width: 80%;
 `;
 
-const Row = styled.div`
+export const Row = styled.div`
   display: flex;
   flex-direction: row;
 `;
 
-const Label = styled.div`
+export const Label = styled.div`
   width: 20%;
   align-content: center;
 `;

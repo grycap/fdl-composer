@@ -15,7 +15,14 @@ import {
 } from "@ant-design/icons";
 import { saveAs } from "file-saver";
 import yaml from "js-yaml";
-import { NodeInnerCustom } from "./components/NodeInnerCustom";
+import {
+  Input,
+  Label,
+  NodeInnerCustom,
+  Row,
+} from "./components/NodeInnerCustom";
+import Modal from "antd/lib/modal/Modal";
+import { ModalS3Provider } from "./components/ModalS3Provider";
 
 const { Header } = Layout;
 const { SubMenu } = Menu;
@@ -26,6 +33,14 @@ const StyledButton = styled(Button)`
 
 export class App extends React.Component {
   public state = cloneDeep(initialState);
+
+  /**
+   *
+   */
+  constructor(props: any) {
+    super(props);
+    this.removeStorageProvider = this.removeStorageProvider.bind(this);
+  }
 
   public exportToYaml() {
     const nodeValues = Object.values(this.state.nodes);
@@ -282,6 +297,65 @@ export class App extends React.Component {
     input.click();
   }
 
+  public removeStorageProvider(type: string, name: string) {
+    console.log(`removing ${type} ${name}`);
+    console.log(this.state.storageProviders);
+
+    const index = this.state.storageProviders.findIndex(
+      (x) => x.type === type && x.properties.name === name
+    );
+    const storageProviders = [...this.state.storageProviders];
+    storageProviders.splice(index, 1);
+
+    this.setState({ ...this.state, storageProviders: storageProviders });
+  }
+  public addStorageProvider(type: string, sidebarItemProps: any) {
+    const storageProviders = [
+      ...this.state.storageProviders,
+      {
+        type: type,
+        ports: {
+          port1: {
+            id: "port1",
+            type: "top",
+            properties: {
+              path: "",
+            },
+          },
+          port2: {
+            id: "port2",
+            type: "right",
+            properties: {
+              path: "",
+            },
+          },
+          port3: {
+            id: "port3",
+            type: "bottom",
+            properties: {
+              path: "",
+            },
+          },
+          port4: {
+            id: "port4",
+            type: "left",
+            properties: {
+              path: "",
+            },
+          },
+        },
+        properties: sidebarItemProps,
+      },
+    ];
+    this.setState({
+      ...this.state,
+      storageProviders: storageProviders,
+      s3ModalVisible: false,
+      oneDataModalVisible: false,
+      minioModalVisible: false,
+    });
+  }
+
   public render() {
     const chart = this.state;
 
@@ -300,6 +374,30 @@ export class App extends React.Component {
     return (
       <div className="App">
         <Layout className="layout">
+          <ModalS3Provider
+            visible={this.state.s3ModalVisible}
+            onCancel={() =>
+              this.setState({ ...this.state, s3ModalVisible: false })
+            }
+            onOk={(sidebarItemProps) => {
+              this.addStorageProvider("s3", sidebarItemProps);
+            }}
+          />
+          <Modal
+            title="One-data Storage Provider"
+            visible={this.state.oneDataModalVisible}
+            onCancel={() =>
+              this.setState({ ...this.state, oneDataModalVisible: false })
+            }
+          ></Modal>
+
+          <Modal
+            title="Minio Storage Provider"
+            visible={this.state.minioModalVisible}
+            onCancel={() =>
+              this.setState({ ...this.state, minioModalVisible: false })
+            }
+          ></Modal>
           <Header>
             <Menu theme="dark" mode="horizontal">
               <StyledButton
@@ -330,13 +428,28 @@ export class App extends React.Component {
                 icon={<SettingOutlined />}
                 title="Storage providers"
               >
-                <Menu.Item key="storage:s3" onClick={() => {}}>
+                <Menu.Item
+                  key="storage:s3"
+                  onClick={() => {
+                    this.setState({ ...this.state, s3ModalVisible: true });
+                  }}
+                >
                   S3
                 </Menu.Item>
-                <Menu.Item key="storage:minio" onClick={() => {}}>
+                <Menu.Item
+                  key="storage:minio"
+                  onClick={() => {
+                    this.setState({ ...this.state, minioModalVisible: true });
+                  }}
+                >
                   Minio
                 </Menu.Item>
-                <Menu.Item key="storage:onedata" onClick={() => {}}>
+                <Menu.Item
+                  key="storage:onedata"
+                  onClick={() => {
+                    this.setState({ ...this.state, oneDataModalVisible: true });
+                  }}
+                >
                   One data
                 </Menu.Item>
               </SubMenu>
@@ -351,7 +464,10 @@ export class App extends React.Component {
                 Port: PortCustom,
               }}
             />
-            <SideNav></SideNav>
+            <SideNav
+              removeStorageProvider={this.removeStorageProvider}
+              storageProviders={this.state.storageProviders}
+            ></SideNav>
           </PageContent>
         </Layout>
       </div>

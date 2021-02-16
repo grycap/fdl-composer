@@ -6,16 +6,22 @@ import { actions, FlowChart } from "@mrblenny/react-flow-chart";
 import { initialState } from "./misc/chartScheme";
 import styled from "styled-components";
 import { Button, Layout, Menu } from "antd";
+
 import {
   DownloadOutlined,
   ExportOutlined,
+  SettingOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
 import { saveAs } from "file-saver";
 import yaml from "js-yaml";
 import { NodeInnerCustom } from "./components/NodeInnerCustom";
+import { ModalS3Provider } from "./components/ModalS3Provider";
+import { ModalOneDataProvider } from "./components/ModalOneDataProvider";
+import { ModalMinioProvider } from "./components/ModalMinioProvider";
 
 const { Header } = Layout;
+const { SubMenu } = Menu;
 
 const StyledButton = styled(Button)`
   margin-right: 1rem;
@@ -23,6 +29,15 @@ const StyledButton = styled(Button)`
 
 export class App extends React.Component {
   public state = cloneDeep(initialState);
+
+  /**
+   *
+   */
+  constructor(props: any) {
+    super(props);
+    this.removeStorageProvider = this.removeStorageProvider.bind(this);
+    this.editStorageProvider = this.editStorageProvider.bind(this);
+  }
 
   public exportToYaml() {
     const nodeValues = Object.values(this.state.nodes);
@@ -55,6 +70,7 @@ export class App extends React.Component {
             (y) => y.from.nodeId === x.id || y.to.nodeId === x.id
           )
         );
+        console.log("Input node", inputNode);
 
         const outputNode = storages.find((x) =>
           nodeOutputLinks.some(
@@ -62,10 +78,13 @@ export class App extends React.Component {
           )
         );
 
+        console.log("Output node", outputNode);
+
         const copy = JSON.parse(JSON.stringify(node.properties));
         const input = copy.input;
         if (input) {
           input.storage_provider = `${inputNode?.type}.${inputNode?.properties.name}`;
+          input.path = inputNode?.properties.path;
           if (input.prefix)
             input.prefix = input.prefix.replace(" ", "").split(",");
           if (input?.suffix)
@@ -75,6 +94,7 @@ export class App extends React.Component {
         const output = copy.output;
         if (output) {
           output.storage_provider = `${outputNode?.type}.${outputNode?.properties.name}`;
+          output.path = outputNode?.properties.path;
           if (output.prefix)
             output.prefix = output.prefix.replace(" ", "").split(",");
           if (output.suffix)
@@ -216,6 +236,8 @@ export class App extends React.Component {
       .map((node) => node.properties)
       .reduce((a, b) => {
         const copy = JSON.parse(JSON.stringify(b));
+        delete copy.path;
+
         return { ...a, [b.name]: copy };
       }, {});
 
@@ -225,6 +247,7 @@ export class App extends React.Component {
       .reduce((a, b) => {
         const copy = JSON.parse(JSON.stringify(b));
         delete copy.name;
+        delete copy.path;
         return { ...a, [b.name]: copy };
       }, {});
 
@@ -234,6 +257,8 @@ export class App extends React.Component {
       .reduce((a, b) => {
         const copy = JSON.parse(JSON.stringify(b));
         delete copy.name;
+        delete copy.path;
+
         return { ...a, [b.name]: copy };
       }, {});
     const output = yaml.dump({
@@ -279,6 +304,99 @@ export class App extends React.Component {
     input.click();
   }
 
+  public editStorageProvider(type: string, name: string) {
+    console.log(`editing ${type} ${name}`);
+    console.log(this.state.storageProviders);
+
+    const storageProvider = this.state.storageProviders.find(
+      (x) => x.type === type && x.properties.name === name
+    );
+
+    switch (type) {
+      case "s3":
+        this.setState({
+          ...this.state,
+          s3DefaultValue: storageProvider?.properties,
+          s3ModalVisible: true,
+        });
+        break;
+      case "onedata":
+        this.setState({
+          ...this.state,
+          oneDataDefaultValue: storageProvider?.properties,
+          oneDataModalVisible: true,
+        });
+        break;
+      case "minio":
+        this.setState({
+          ...this.state,
+          minioDefaultValue: storageProvider?.properties,
+          minioModalVisible: true,
+        });
+        break;
+    }
+  }
+
+  public removeStorageProvider(type: string, name: string) {
+    console.log(`removing ${type} ${name}`);
+    console.log(this.state.storageProviders);
+
+    const index = this.state.storageProviders.findIndex(
+      (x) => x.type === type && x.properties.name === name
+    );
+    const storageProviders = [...this.state.storageProviders];
+    storageProviders.splice(index, 1);
+
+    this.setState({ ...this.state, storageProviders: storageProviders });
+  }
+
+  public addStorageProvider(type: string, sidebarItemProps: any) {
+    const storageProviders = [
+      ...this.state.storageProviders,
+      {
+        type: type,
+        ports: {
+          port1: {
+            id: "port1",
+            type: "top",
+            properties: {
+              path: "",
+            },
+          },
+          port2: {
+            id: "port2",
+            type: "right",
+            properties: {
+              path: "",
+            },
+          },
+          port3: {
+            id: "port3",
+            type: "bottom",
+            properties: {
+              path: "",
+            },
+          },
+          port4: {
+            id: "port4",
+            type: "left",
+            properties: {
+              path: "",
+            },
+          },
+        },
+        properties: sidebarItemProps,
+      },
+    ];
+    this.setState({
+      ...this.state,
+      storageProviders: storageProviders,
+      s3ModalVisible: false,
+      oneDataModalVisible: false,
+      minioModalVisible: false,
+    });
+  }
+
   public render() {
     const chart = this.state;
 
@@ -297,6 +415,48 @@ export class App extends React.Component {
     return (
       <div className="App">
         <Layout className="layout">
+          <ModalS3Provider
+            defaultValue={this.state.s3DefaultValue}
+            visible={this.state.s3ModalVisible}
+            onCancel={() =>
+              this.setState({
+                ...this.state,
+                s3DefaultValue: undefined,
+                s3ModalVisible: false,
+              })
+            }
+            onOk={(sidebarItemProps) => {
+              this.addStorageProvider("s3", sidebarItemProps);
+            }}
+          />
+          <ModalOneDataProvider
+            defaultValue={this.state.oneDataDefaultValue}
+            visible={this.state.oneDataModalVisible}
+            onCancel={() =>
+              this.setState({
+                ...this.state,
+                oneDataDefaultValue: undefined,
+                oneDataModalVisible: false,
+              })
+            }
+            onOk={(sidebarItemProps) => {
+              this.addStorageProvider("onedata", sidebarItemProps);
+            }}
+          />
+          <ModalMinioProvider
+            defaultValue={this.state.minioDefaultValue}
+            visible={this.state.minioModalVisible}
+            onCancel={() =>
+              this.setState({
+                ...this.state,
+                minioDefaultValue: undefined,
+                minioModalVisible: false,
+              })
+            }
+            onOk={(sidebarItemProps) => {
+              this.addStorageProvider("minio", sidebarItemProps);
+            }}
+          />
           <Header>
             <Menu theme="dark" mode="horizontal">
               <StyledButton
@@ -322,6 +482,36 @@ export class App extends React.Component {
               >
                 Export yaml
               </StyledButton>
+              <SubMenu
+                key="SubMenu"
+                icon={<SettingOutlined />}
+                title="Storage providers"
+              >
+                <Menu.Item
+                  key="storage:s3"
+                  onClick={() => {
+                    this.setState({ ...this.state, s3ModalVisible: true });
+                  }}
+                >
+                  S3
+                </Menu.Item>
+                <Menu.Item
+                  key="storage:minio"
+                  onClick={() => {
+                    this.setState({ ...this.state, minioModalVisible: true });
+                  }}
+                >
+                  Minio
+                </Menu.Item>
+                <Menu.Item
+                  key="storage:onedata"
+                  onClick={() => {
+                    this.setState({ ...this.state, oneDataModalVisible: true });
+                  }}
+                >
+                  One data
+                </Menu.Item>
+              </SubMenu>
             </Menu>
           </Header>
           <PageContent>
@@ -333,7 +523,11 @@ export class App extends React.Component {
                 Port: PortCustom,
               }}
             />
-            <SideNav></SideNav>
+            <SideNav
+              removeStorageProvider={this.removeStorageProvider}
+              editStorageProvider={this.editStorageProvider}
+              storageProviders={this.state.storageProviders}
+            ></SideNav>
           </PageContent>
         </Layout>
       </div>

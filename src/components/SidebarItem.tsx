@@ -1,6 +1,7 @@
-import { IConfig, INode, REACT_FLOW_CHART } from "@mrblenny/react-flow-chart";
+import { REACT_FLOW_CHART } from "@mrblenny/react-flow-chart";
 import * as React from "react";
 import styled, { css } from "styled-components";
+import { ISidebarItemProps } from "./types";
 
 interface IOuterProps {
   background?: string;
@@ -44,12 +45,6 @@ const Circle = styled.div<IOuterProps>`
       background: ${props.background};
     `};
 `;
-export interface ISidebarItemProps {
-  type: string;
-  ports: INode["ports"];
-  config?: IConfig;
-  properties?: any;
-}
 
 export const getColor = (type: string) => {
   switch (type) {
@@ -92,7 +87,7 @@ export const getIcon = (type: string) => {
       return (
         <img
           alt="oscar logo"
-          src="https://github.com/grycap/oscar/blob/master/docs/source/images/oscar3.png?raw=true"
+          src="https://github.com/grycap/oscar/blob/master/docs/images/oscar3.png?raw=true"
           width="96px"
         />
       );
@@ -131,7 +126,12 @@ export const getIcon = (type: string) => {
   }
 };
 
-export const SidebarItem = ({ type, ports, properties }: ISidebarItemProps) => {
+export const SidebarItem = ({
+  type,
+  ports,
+  properties,
+  ...rest
+}: ISidebarItemProps) => {
   const color = getColor(type);
   const storage = ["s3", "onedata", "minio"];
   return storage.includes(type) ? (
@@ -145,8 +145,10 @@ export const SidebarItem = ({ type, ports, properties }: ISidebarItemProps) => {
           JSON.stringify({ type, ports, properties })
         );
       }}
+      {...rest}
     >
       {getIcon(type)}
+      {properties?.name}
     </Circle>
   ) : (
     <Outer

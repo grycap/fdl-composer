@@ -1,6 +1,6 @@
 import { INodeInnerDefaultProps } from "@mrblenny/react-flow-chart";
 import { Checkbox, Divider, Modal, Tabs } from "antd";
-import React, { ReactElement } from "react";
+import React from "react";
 import styled, { css } from "styled-components";
 import { getColor, getIcon } from "./SidebarItem";
 interface IOuterProps {
@@ -36,34 +36,22 @@ const Circle = styled.div<IOuterProps>`
     `};
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
   padding: 10px;
   border: 1px solid cornflowerblue;
   margin-bottom: 0.5rem;
   width: 80%;
 `;
 
-const Row = styled.div`
+export const Row = styled.div`
   display: flex;
   flex-direction: row;
 `;
 
-const Label = styled.div`
+export const Label = styled.div`
   width: 20%;
   align-content: center;
 `;
-
-interface ICustomPropertiesProps {
-  updateProperties: (propertyName: string, customProperty: any) => void;
-}
-
-const ModalCustomProperty: React.FC<ICustomPropertiesProps> = ({
-  updateProperties,
-}): ReactElement => {
-  const [visible, setVisible] = React.useState(false);
-
-  return <Row></Row>;
-};
 
 /**
  * Create the custom component,
@@ -81,6 +69,8 @@ export const NodeInnerCustom = ({
   const color = getColor(node.type);
   switch (node.type) {
     case "s3":
+    case "onedata":
+    case "minio":
       return (
         <Circle
           {...otherProps}
@@ -100,281 +90,18 @@ export const NodeInnerCustom = ({
             cancelButtonProps={{ disabled: false }}
           >
             <Row>
-              <Label>Name:</Label>
+              <Label>Path:</Label>
               <Input
                 onClick={(e) => e.stopPropagation()}
                 onMouseUp={(e) => e.stopPropagation()}
                 onMouseDown={(e) => e.stopPropagation()}
                 onKeyDown={(e) => e.stopPropagation()}
-                placeholder="my-s3"
-                value={currentProperties.name}
+                placeholder="darknet-workflow/output"
+                value={currentProperties.path}
                 onChange={(e) => {
                   setCurrentProperties({
                     ...currentProperties,
-                    name: e.target.value,
-                  });
-                }}
-              />
-            </Row>
-            <Row>
-              <Label>Access Key:</Label>
-              <Input
-                onClick={(e) => e.stopPropagation()}
-                onMouseUp={(e) => e.stopPropagation()}
-                onMouseDown={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-                placeholder="xxxxxxxxxxxxxxxx"
-                value={currentProperties.access_key}
-                onChange={(e) => {
-                  setCurrentProperties({
-                    ...currentProperties,
-                    access_key: e.target.value,
-                  });
-                }}
-              />
-            </Row>
-            <Row>
-              <Label>Secret Key:</Label>
-              <Input
-                onClick={(e) => e.stopPropagation()}
-                onMouseUp={(e) => e.stopPropagation()}
-                onMouseDown={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-                placeholder="xxxxxxxxxxxxxxxx"
-                value={currentProperties.secret_key}
-                onChange={(e) => {
-                  setCurrentProperties({
-                    ...currentProperties,
-                    secret_key: e.target.value,
-                  });
-                }}
-              />
-            </Row>
-            <Row>
-              <Label>Region:</Label>
-              <Input
-                onClick={(e) => e.stopPropagation()}
-                onMouseUp={(e) => e.stopPropagation()}
-                onMouseDown={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-                placeholder="us-east-1"
-                value={currentProperties.region}
-                onChange={(e) => {
-                  setCurrentProperties({
-                    ...currentProperties,
-                    region: e.target.value,
-                  });
-                }}
-              />
-            </Row>
-          </Modal>
-          <div>{getIcon(node.type)}</div>
-          <div>{`${node.properties?.name || ""}`}</div>
-        </Circle>
-      );
-    case "minio":
-      return (
-        <Circle
-          color={color.color}
-          background={color.background}
-          onDoubleClick={(e) => setVisible(true)}
-        >
-          <Modal
-            title={node.properties?.name || node.type}
-            visible={visible}
-            onOk={() => {
-              node.properties = currentProperties;
-              setVisible(false);
-            }}
-            onCancel={() => setVisible(false)}
-            okButtonProps={{ disabled: false }}
-            cancelButtonProps={{ disabled: false }}
-          >
-            <Row>
-              <Label>Name:</Label>
-              <Input
-                onClick={(e) => e.stopPropagation()}
-                onMouseUp={(e) => e.stopPropagation()}
-                onMouseDown={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-                placeholder="my_minio"
-                value={currentProperties.name}
-                onChange={(e) => {
-                  setCurrentProperties({
-                    ...currentProperties,
-                    name: e.target.value,
-                  });
-                }}
-              />
-            </Row>
-            <Row>
-              <Label>Endpoint:</Label>
-              <Input
-                onClick={(e) => e.stopPropagation()}
-                onMouseUp={(e) => e.stopPropagation()}
-                onMouseDown={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-                placeholder="minio-endpoint"
-                value={currentProperties.endpoint}
-                onChange={(e) => {
-                  setCurrentProperties({
-                    ...currentProperties,
-                    endpoint: e.target.value,
-                  });
-                }}
-              />
-            </Row>
-            <Row>
-              <Label>Verify:</Label>
-              <Checkbox
-                onClick={(e) => e.stopPropagation()}
-                value={currentProperties.verify}
-                onChange={(e) => {
-                  setCurrentProperties({
-                    ...currentProperties,
-                    verify: e.target.checked,
-                  });
-                }}
-              />
-            </Row>
-            <Row>
-              <Label>Region:</Label>
-              <Input
-                onClick={(e) => e.stopPropagation()}
-                onMouseUp={(e) => e.stopPropagation()}
-                onMouseDown={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-                placeholder="us-east-1"
-                value={currentProperties.region}
-                onChange={(e) => {
-                  setCurrentProperties({
-                    ...currentProperties,
-                    region: e.target.value,
-                  });
-                }}
-              />
-            </Row>
-            <Row>
-              <Label>Access Key:</Label>
-              <Input
-                onClick={(e) => e.stopPropagation()}
-                onMouseUp={(e) => e.stopPropagation()}
-                onMouseDown={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-                placeholder="xxxxxxxxxxxxxxxx"
-                value={currentProperties.access_key}
-                onChange={(e) => {
-                  setCurrentProperties({
-                    ...currentProperties,
-                    access_key: e.target.value,
-                  });
-                }}
-              />
-            </Row>
-            <Row>
-              <Label>Secret Key:</Label>
-              <Input
-                onClick={(e) => e.stopPropagation()}
-                onMouseUp={(e) => e.stopPropagation()}
-                onMouseDown={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-                placeholder="xxxxxxxxxxxxxxxx"
-                value={currentProperties.secret_key}
-                onChange={(e) => {
-                  setCurrentProperties({
-                    ...currentProperties,
-                    secret_key: e.target.value,
-                  });
-                }}
-              />
-            </Row>
-          </Modal>
-          <div>{getIcon(node.type)}</div>
-          <div>{`${node.properties?.name || ""}`}</div>
-        </Circle>
-      );
-    case "onedata":
-      return (
-        <Circle
-          color={color.color}
-          background={color.background}
-          onDoubleClick={() => setVisible(true)}
-        >
-          <Modal
-            title={node.properties?.name || node.type}
-            visible={visible}
-            onOk={() => {
-              node.properties = currentProperties;
-              setVisible(false);
-            }}
-            onCancel={() => setVisible(false)}
-            okButtonProps={{ disabled: false }}
-            cancelButtonProps={{ disabled: false }}
-          >
-            <Row>
-              <Label>Name:</Label>
-              <Input
-                onClick={(e) => e.stopPropagation()}
-                onMouseUp={(e) => e.stopPropagation()}
-                onMouseDown={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-                placeholder="my-onedata"
-                value={currentProperties.name}
-                onChange={(e) => {
-                  setCurrentProperties({
-                    ...currentProperties,
-                    name: e.target.value,
-                  });
-                }}
-              />
-            </Row>
-            <Row>
-              <Label>One Provider Host:</Label>
-              <Input
-                onClick={(e) => e.stopPropagation()}
-                onMouseUp={(e) => e.stopPropagation()}
-                onMouseDown={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-                placeholder="plg-cyfronet-01.datahub.egi.eu"
-                value={currentProperties.oneprovider_host}
-                onChange={(e) => {
-                  setCurrentProperties({
-                    ...currentProperties,
-                    oneprovider_host: e.target.value,
-                  });
-                }}
-              />
-            </Row>
-            <Row>
-              <Label>Token:</Label>
-              <Input
-                onClick={(e) => e.stopPropagation()}
-                onMouseUp={(e) => e.stopPropagation()}
-                onMouseDown={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-                placeholder="xxxxxxxxxxxxxxxx"
-                value={currentProperties.token}
-                onChange={(e) => {
-                  setCurrentProperties({
-                    ...currentProperties,
-                    token: e.target.value,
-                  });
-                }}
-              />
-            </Row>
-            <Row>
-              <Label>Space:</Label>
-              <Input
-                onClick={(e) => e.stopPropagation()}
-                onMouseUp={(e) => e.stopPropagation()}
-                onMouseDown={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-                placeholder="my-space"
-                value={currentProperties.space}
-                onChange={(e) => {
-                  setCurrentProperties({
-                    ...currentProperties,
-                    space: e.target.value,
+                    path: e.target.value,
                   });
                 }}
               />
@@ -531,26 +258,7 @@ export const NodeInnerCustom = ({
                 }}
               />
             </Row> */}
-            <Row>
-              <Label>Path:</Label>
-              <Input
-                onClick={(e) => e.stopPropagation()}
-                onMouseUp={(e) => e.stopPropagation()}
-                onMouseDown={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-                placeholder="darknet-workflow/input"
-                value={currentProperties.input?.path}
-                onChange={(e) => {
-                  setCurrentProperties({
-                    ...currentProperties,
-                    input: {
-                      ...currentProperties.input,
-                      path: e.target.value,
-                    },
-                  });
-                }}
-              />
-            </Row>
+
             <Row>
               <Label>Suffix</Label>
               <Input
@@ -618,26 +326,7 @@ export const NodeInnerCustom = ({
                 }}
               />
             </Row> */}
-            <Row>
-              <Label>Path:</Label>
-              <Input
-                onClick={(e) => e.stopPropagation()}
-                onMouseUp={(e) => e.stopPropagation()}
-                onMouseDown={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-                placeholder="darknet-workflow/output"
-                value={currentProperties.output?.path}
-                onChange={(e) => {
-                  setCurrentProperties({
-                    ...currentProperties,
-                    output: {
-                      ...currentProperties.output,
-                      path: e.target.value,
-                    },
-                  });
-                }}
-              />
-            </Row>
+
             <Row>
               <Label>Suffix</Label>
               <Input
@@ -1027,29 +716,7 @@ export const NodeInnerCustom = ({
                     }}
                   />
                 </Row> */}
-                <Row>
-                  <Label>Path:</Label>
-                  <Input
-                    onClick={(e) => e.stopPropagation()}
-                    onMouseUp={(e) => e.stopPropagation()}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="darknet-workflow/input"
-                    value={currentProperties.lambda?.input?.path}
-                    onChange={(e) => {
-                      setCurrentProperties({
-                        ...currentProperties,
-                        lambda: {
-                          ...currentProperties.lambda,
-                          input: {
-                            ...currentProperties.lambda?.input,
-                            path: e.target.value,
-                          },
-                        },
-                      });
-                    }}
-                  />
-                </Row>
+
                 <Row>
                   <Label>Suffix</Label>
                   <Input
@@ -1126,29 +793,7 @@ export const NodeInnerCustom = ({
                     }}
                   />
                 </Row> */}
-                <Row>
-                  <Label>Path:</Label>
-                  <Input
-                    onClick={(e) => e.stopPropagation()}
-                    onMouseUp={(e) => e.stopPropagation()}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
-                    placeholder="darknet-workflow/output"
-                    value={currentProperties.lambda?.output?.path}
-                    onChange={(e) => {
-                      setCurrentProperties({
-                        ...currentProperties,
-                        lambda: {
-                          ...currentProperties.lambda,
-                          output: {
-                            ...currentProperties.lambda?.input,
-                            path: e.target.value,
-                          },
-                        },
-                      });
-                    }}
-                  />
-                </Row>
+
                 <Row>
                   <Label>Suffix</Label>
                   <Input

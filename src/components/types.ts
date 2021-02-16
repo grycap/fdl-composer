@@ -9,6 +9,7 @@ export interface IModalStorageProviderProps {
     visible: boolean;
     onOk: (sidebarItemProps: any) => void;
     onCancel: () => void;
+    defaultValue?: S3Storage | OneDataStorage | MinioDataStorage | undefined;
 
 }
 
@@ -17,4 +18,28 @@ export interface ISidebarItemProps extends StyledElementProps<'div'> {
     ports: INode["ports"];
     config?: IConfig;
     properties?: any;
+}
+
+export interface S3Storage {
+    name: string;
+    access_key: string;
+    secret_key: string;
+    region: string;
+
+}
+
+export interface OneDataStorage {
+    name: string;
+    oneprovider_host: string;
+    token: string;
+    space: string;
+}
+
+export interface MinioDataStorage {
+    name: string;
+    endpoint: string;
+    verify: boolean;
+    region: string;
+    access_key: string;
+    secret_key: string;
 }

@@ -1,9 +1,9 @@
-import { Modal } from "antd";
+import { Checkbox, Modal } from "antd";
 import React, { useEffect } from "react";
 import { Input, Label, Row } from "./NodeInnerCustom";
 import { IModalStorageProviderProps } from "./types";
 
-export const ModalS3Provider: React.FC<IModalStorageProviderProps> = ({
+export const ModalMinioProvider: React.FC<IModalStorageProviderProps> = ({
   visible,
   onOk,
   onCancel,
@@ -11,9 +11,11 @@ export const ModalS3Provider: React.FC<IModalStorageProviderProps> = ({
 }) => {
   const initialState = {
     name: "",
+    endpoint: "",
+    verify: false,
+    region: "",
     access_key: "",
     secret_key: "",
-    region: "",
   };
   const [currentProperties, setCurrentProperties] = React.useState<any>(
     initialState
@@ -24,7 +26,7 @@ export const ModalS3Provider: React.FC<IModalStorageProviderProps> = ({
   }, [defaultValue, visible]);
   return (
     <Modal
-      title={`S3 Storage Provider ${currentProperties.name}`}
+      title={`OneData Storage Provider ${currentProperties.name}`}
       visible={visible}
       onCancel={() => {
         onCancel();
@@ -42,12 +44,59 @@ export const ModalS3Provider: React.FC<IModalStorageProviderProps> = ({
           onMouseUp={(e) => e.stopPropagation()}
           onMouseDown={(e) => e.stopPropagation()}
           onKeyDown={(e) => e.stopPropagation()}
-          placeholder="my-s3"
+          placeholder="my_minio"
           value={currentProperties.name}
           onChange={(e) => {
             setCurrentProperties({
               ...currentProperties,
               name: e.target.value,
+            });
+          }}
+        />
+      </Row>
+      <Row>
+        <Label>Endpoint:</Label>
+        <Input
+          onClick={(e) => e.stopPropagation()}
+          onMouseUp={(e) => e.stopPropagation()}
+          onMouseDown={(e) => e.stopPropagation()}
+          onKeyDown={(e) => e.stopPropagation()}
+          placeholder="minio-endpoint"
+          value={currentProperties.endpoint}
+          onChange={(e) => {
+            setCurrentProperties({
+              ...currentProperties,
+              endpoint: e.target.value,
+            });
+          }}
+        />
+      </Row>
+      <Row>
+        <Label>Verify:</Label>
+        <Checkbox
+          onClick={(e) => e.stopPropagation()}
+          value={currentProperties.verify}
+          onChange={(e) => {
+            setCurrentProperties({
+              ...currentProperties,
+              verify: e.target.checked,
+            });
+          }}
+        />
+      </Row>
+      <Row>
+        <Label>Region:</Label>
+        <Input
+          onClick={(e) => e.stopPropagation()}
+          onMouseUp={(e) => e.stopPropagation()}
+          onMouseDown={(e) => e.stopPropagation()}
+          onKeyDown={(e) => e.stopPropagation()}
+          placeholder="us-east-1"
+          value={currentProperties.region}
+          onChange={(e) => {
+            setCurrentProperties({
+              ...currentProperties,
+              region: e.target.value,
             });
           }}
         />
@@ -82,23 +131,6 @@ export const ModalS3Provider: React.FC<IModalStorageProviderProps> = ({
             setCurrentProperties({
               ...currentProperties,
               secret_key: e.target.value,
-            });
-          }}
-        />
-      </Row>
-      <Row>
-        <Label>Region:</Label>
-        <Input
-          onClick={(e) => e.stopPropagation()}
-          onMouseUp={(e) => e.stopPropagation()}
-          onMouseDown={(e) => e.stopPropagation()}
-          onKeyDown={(e) => e.stopPropagation()}
-          placeholder="us-east-1"
-          value={currentProperties.region}
-          onChange={(e) => {
-            setCurrentProperties({
-              ...currentProperties,
-              region: e.target.value,
             });
           }}
         />

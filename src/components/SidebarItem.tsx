@@ -1,6 +1,6 @@
-import { IConfig, INode, REACT_FLOW_CHART } from "@mrblenny/react-flow-chart";
+import { REACT_FLOW_CHART } from "@mrblenny/react-flow-chart";
 import * as React from "react";
-import styled, { css, StyledComponentProps } from "styled-components";
+import styled, { css } from "styled-components";
 import { ISidebarItemProps } from "./types";
 
 interface IOuterProps {
@@ -87,7 +87,7 @@ export const getIcon = (type: string) => {
       return (
         <img
           alt="oscar logo"
-          src="https://github.com/grycap/oscar/blob/master/docs/source/images/oscar3.png?raw=true"
+          src="https://github.com/grycap/oscar/blob/master/docs/images/oscar3.png?raw=true"
           width="96px"
         />
       );

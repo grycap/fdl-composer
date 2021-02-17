@@ -306,7 +306,6 @@ export class App extends React.Component {
 
   public editStorageProvider(type: string, name: string) {
     console.log(`editing ${type} ${name}`);
-    console.log(this.state.storageProviders);
 
     const storageProvider = this.state.storageProviders.find(
       (x) => x.type === type && x.properties.name === name
@@ -350,9 +349,16 @@ export class App extends React.Component {
     this.setState({ ...this.state, storageProviders: storageProviders });
   }
 
-  public addStorageProvider(type: string, sidebarItemProps: any) {
+  public addOrUpdateStorageProvider(type: string, sidebarItemProps: any) {
+    const index = this.state.storageProviders.findIndex(
+      (x) => x.type === type && sidebarItemProps.name === x.properties?.name
+    );
+    console.log(index);
+
+    const oldValues = [...this.state.storageProviders];
+    index !== -1 && oldValues.splice(index, 1);
     const storageProviders = [
-      ...this.state.storageProviders,
+      ...oldValues,
       {
         type: type,
         ports: {
@@ -426,7 +432,7 @@ export class App extends React.Component {
               })
             }
             onOk={(sidebarItemProps) => {
-              this.addStorageProvider("s3", sidebarItemProps);
+              this.addOrUpdateStorageProvider("s3", sidebarItemProps);
             }}
           />
           <ModalOneDataProvider
@@ -440,7 +446,7 @@ export class App extends React.Component {
               })
             }
             onOk={(sidebarItemProps) => {
-              this.addStorageProvider("onedata", sidebarItemProps);
+              this.addOrUpdateStorageProvider("onedata", sidebarItemProps);
             }}
           />
           <ModalMinioProvider
@@ -454,7 +460,7 @@ export class App extends React.Component {
               })
             }
             onOk={(sidebarItemProps) => {
-              this.addStorageProvider("minio", sidebarItemProps);
+              this.addOrUpdateStorageProvider("minio", sidebarItemProps);
             }}
           />
           <Header>

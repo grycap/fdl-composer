@@ -9,7 +9,7 @@ export interface IModalStorageProviderProps {
     visible: boolean;
     onOk: (sidebarItemProps: any) => void;
     onCancel: () => void;
-    defaultValue?: S3Storage | OneDataStorage | MinioDataStorage | undefined;
+    defaultValue?: any;
 
 }
 

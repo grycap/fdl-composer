@@ -1,6 +1,6 @@
-import { Checkbox, Modal } from "antd";
-import React, { useEffect } from "react";
-import { Input, Label, Row } from "./NodeInnerCustom";
+import { Checkbox, Modal, Form, Input, Row, Col } from "antd";
+import React, { useEffect, useState } from "react";
+// import { Input, Label, Row } from "./NodeInnerCustom";
 import { IModalStorageProviderProps } from "./types";
 
 export const ModalMinioProvider: React.FC<IModalStorageProviderProps> = ({
@@ -9,68 +9,114 @@ export const ModalMinioProvider: React.FC<IModalStorageProviderProps> = ({
   onCancel,
   defaultValue,
 }) => {
-  const initialState = {
-    name: "",
-    endpoint: "",
-    verify: false,
-    region: "",
-    access_key: "",
-    secret_key: "",
-  };
-  const [currentProperties, setCurrentProperties] = React.useState<any>(
-    initialState
-  );
+  const [form] = Form.useForm();
+  const [verify, setVerify] = useState(false);
 
   useEffect(() => {
-    defaultValue && setCurrentProperties(defaultValue);
-  }, [defaultValue, visible]);
+    if (defaultValue) {
+      form.setFieldsValue(defaultValue);
+    }
+  }, [defaultValue, visible, form]);
+
+  useEffect(() => {
+    defaultValue && setVerify(defaultValue.verify);
+  }, [defaultValue]);
+
+  const onCheckboxChange = (e: { target: { checked: boolean } }) => {
+    setVerify(e.target.checked);
+  };
   return (
     <Modal
-      title={`OneData Storage Provider ${currentProperties.name}`}
+      title={`OneData Storage Provider ${defaultValue?.name || ""}`}
       visible={visible}
       onCancel={() => {
         onCancel();
-        setCurrentProperties(initialState);
+        form.resetFields();
+        setVerify(false);
       }}
       onOk={() => {
-        onOk(JSON.parse(JSON.stringify(currentProperties)));
-        setCurrentProperties(initialState);
+        form
+          .validateFields()
+          .then((values) => {
+            const newState = { ...values, verify: verify };
+            console.log(newState);
+
+            onOk(newState);
+            form.resetFields();
+            setVerify(false);
+          })
+          .catch((error) => console.log("Error", error));
       }}
     >
-      <Row>
-        <Label>Name:</Label>
-        <Input
-          onClick={(e) => e.stopPropagation()}
-          onMouseUp={(e) => e.stopPropagation()}
-          onMouseDown={(e) => e.stopPropagation()}
-          onKeyDown={(e) => e.stopPropagation()}
-          placeholder="my_minio"
-          value={currentProperties.name}
-          onChange={(e) => {
-            setCurrentProperties({
-              ...currentProperties,
-              name: e.target.value,
-            });
-          }}
-        />
-      </Row>
-      <Row>
-        <Label>Endpoint:</Label>
-        <Input
-          onClick={(e) => e.stopPropagation()}
-          onMouseUp={(e) => e.stopPropagation()}
-          onMouseDown={(e) => e.stopPropagation()}
-          onKeyDown={(e) => e.stopPropagation()}
-          placeholder="minio-endpoint"
-          value={currentProperties.endpoint}
-          onChange={(e) => {
-            setCurrentProperties({
-              ...currentProperties,
-              endpoint: e.target.value,
-            });
-          }}
-        />
-      </Row>
+      <Form form={form} initialValues={defaultValue} name="Form minio modal">
+        <Form.Item
+          name="name"
+          label="Name"
+          rules={[
+            {
+              required: true,
+              message: "Please input the name of the storage provider",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="endpoint"
+          label="Endpoint"
+          rules={[
+            {
+              required: true,
+              message: "Please input the endpoint of the storage provider",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        {/* <Form.Item initialValue={verify} name="verify" label="Verify"> */}
+        <Row style={{ marginBottom: "1rem" }}>
+          <Col span={3}>Verify:</Col>
+          <Col span={1}>
+            <Checkbox value={verify} onChange={onCheckboxChange} />
+          </Col>
+        </Row>
+        <Form.Item
+          name="region"
+          label="Region"
+          rules={[
+            {
+              required: true,
+              message: "Please input the region of the storage provider",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="access_key"
+          label="Access Key"
+          rules={[
+            {
+              required: true,
+              message: "Please input the access key of the storage provider",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="secret_key"
+          label="Secret Key"
+          rules={[
+            {
+              required: true,
+              message: "Please input the secret key of the storage provider",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        {/* 
       <Row>
         <Label>Verify:</Label>
         <Checkbox
@@ -134,7 +180,8 @@ export const ModalMinioProvider: React.FC<IModalStorageProviderProps> = ({
             });
           }}
         />
-      </Row>
+      </Row> */}
+      </Form>
     </Modal>
   );
 };

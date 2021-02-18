@@ -1,6 +1,5 @@
-import { Modal } from "antd";
+import { Form, Input, Modal } from "antd";
 import React, { useEffect } from "react";
-import { Input, Label, Row } from "./NodeInnerCustom";
 import { IModalStorageProviderProps } from "./types";
 
 export const ModalOneDataProvider: React.FC<IModalStorageProviderProps> = ({
@@ -8,101 +7,90 @@ export const ModalOneDataProvider: React.FC<IModalStorageProviderProps> = ({
   onOk,
   onCancel,
   defaultValue,
+  removeStorageProvider,
 }) => {
-  const initialState = {
-    name: "",
-    oneprovider_host: "",
-    token: "",
-    space: "",
-  };
-  const [currentProperties, setCurrentProperties] = React.useState<any>(
-    initialState
-  );
-
+  const [form] = Form.useForm();
   useEffect(() => {
-    defaultValue && setCurrentProperties(defaultValue);
-  }, [defaultValue, visible]);
+    if (defaultValue) {
+      form.setFieldsValue(defaultValue);
+    }
+  }, [defaultValue, visible, form]);
+
   return (
     <Modal
-      title={`OneData Storage Provider ${currentProperties.name}`}
+      title={`OneData Storage Provider ${defaultValue?.name || ""}`}
       visible={visible}
       onCancel={() => {
         onCancel();
-        setCurrentProperties(initialState);
+        form.resetFields();
       }}
       onOk={() => {
-        onOk(JSON.parse(JSON.stringify(currentProperties)));
-        setCurrentProperties(initialState);
+        form
+          .validateFields()
+          .then((newState) => {
+            defaultValue &&
+              removeStorageProvider &&
+              newState.name !== defaultValue.name &&
+              removeStorageProvider("onedata", defaultValue.name);
+
+            onOk(newState);
+            form.resetFields();
+          })
+          .catch((error) => console.log("Error", error));
       }}
     >
-      <Row>
-        <Label>Name:</Label>
-        <Input
-          onClick={(e) => e.stopPropagation()}
-          onMouseUp={(e) => e.stopPropagation()}
-          onMouseDown={(e) => e.stopPropagation()}
-          onKeyDown={(e) => e.stopPropagation()}
-          placeholder="my-onedata"
-          value={currentProperties.name}
-          onChange={(e) => {
-            setCurrentProperties({
-              ...currentProperties,
-              name: e.target.value,
-            });
-          }}
-        />
-      </Row>
-      <Row>
-        <Label>One Provider Host:</Label>
-        <Input
-          onClick={(e) => e.stopPropagation()}
-          onMouseUp={(e) => e.stopPropagation()}
-          onMouseDown={(e) => e.stopPropagation()}
-          onKeyDown={(e) => e.stopPropagation()}
-          placeholder="plg-cyfronet-01.datahub.egi.eu"
-          value={currentProperties.oneprovider_host}
-          onChange={(e) => {
-            setCurrentProperties({
-              ...currentProperties,
-              oneprovider_host: e.target.value,
-            });
-          }}
-        />
-      </Row>
-      <Row>
-        <Label>Token:</Label>
-        <Input
-          onClick={(e) => e.stopPropagation()}
-          onMouseUp={(e) => e.stopPropagation()}
-          onMouseDown={(e) => e.stopPropagation()}
-          onKeyDown={(e) => e.stopPropagation()}
-          placeholder="xxxxxxxxxxxxxxxx"
-          value={currentProperties.token}
-          onChange={(e) => {
-            setCurrentProperties({
-              ...currentProperties,
-              token: e.target.value,
-            });
-          }}
-        />
-      </Row>
-      <Row>
-        <Label>Space:</Label>
-        <Input
-          onClick={(e) => e.stopPropagation()}
-          onMouseUp={(e) => e.stopPropagation()}
-          onMouseDown={(e) => e.stopPropagation()}
-          onKeyDown={(e) => e.stopPropagation()}
-          placeholder="my-space"
-          value={currentProperties.space}
-          onChange={(e) => {
-            setCurrentProperties({
-              ...currentProperties,
-              space: e.target.value,
-            });
-          }}
-        />
-      </Row>
+      <Form form={form} initialValues={defaultValue} name="Form s3 modal">
+        <Form.Item
+          name="name"
+          label="Name"
+          rules={[
+            {
+              required: true,
+              message: "Please input the name of the storage provider",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="oneprovider_host"
+          label="One Provider Host"
+          rules={[
+            {
+              required: true,
+              message:
+                "Please input the One Provider Host of the storage provider",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="token"
+          label="Token"
+          rules={[
+            {
+              required: true,
+              message: "Please input the token of the storage provider",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="space"
+          label="Space"
+          rules={[
+            {
+              required: true,
+              message: "Please input the space of the storage provider",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+      </Form>
     </Modal>
   );
 };

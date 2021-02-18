@@ -1,6 +1,5 @@
-import { Modal } from "antd";
+import { Form, Input, Modal } from "antd";
 import React, { useEffect } from "react";
-import { Input, Label, Row } from "./NodeInnerCustom";
 import { IModalStorageProviderProps } from "./types";
 
 export const ModalS3Provider: React.FC<IModalStorageProviderProps> = ({
@@ -8,101 +7,90 @@ export const ModalS3Provider: React.FC<IModalStorageProviderProps> = ({
   onOk,
   onCancel,
   defaultValue,
+  removeStorageProvider,
 }) => {
-  const initialState = {
-    name: "",
-    access_key: "",
-    secret_key: "",
-    region: "",
-  };
-  const [currentProperties, setCurrentProperties] = React.useState<any>(
-    initialState
-  );
-
+  const [form] = Form.useForm();
   useEffect(() => {
-    defaultValue && setCurrentProperties(defaultValue);
-  }, [defaultValue, visible]);
+    if (defaultValue) {
+      form.setFieldsValue(defaultValue);
+    }
+  }, [defaultValue, visible, form]);
+
   return (
     <Modal
-      title={`S3 Storage Provider ${currentProperties.name}`}
+      title={`S3 Storage Provider ${defaultValue?.name || ""}`}
       visible={visible}
       onCancel={() => {
         onCancel();
-        setCurrentProperties(initialState);
+
+        form.resetFields();
       }}
       onOk={() => {
-        onOk(JSON.parse(JSON.stringify(currentProperties)));
-        setCurrentProperties(initialState);
+        form
+          .validateFields()
+          .then((newState) => {
+            defaultValue &&
+              removeStorageProvider &&
+              newState.name !== defaultValue.name &&
+              removeStorageProvider("s3", defaultValue.name);
+
+            onOk(newState);
+            form.resetFields();
+          })
+          .catch((error) => console.log("Error", error));
       }}
     >
-      <Row>
-        <Label>Name:</Label>
-        <Input
-          onClick={(e) => e.stopPropagation()}
-          onMouseUp={(e) => e.stopPropagation()}
-          onMouseDown={(e) => e.stopPropagation()}
-          onKeyDown={(e) => e.stopPropagation()}
-          placeholder="my-s3"
-          value={currentProperties.name}
-          onChange={(e) => {
-            setCurrentProperties({
-              ...currentProperties,
-              name: e.target.value,
-            });
-          }}
-        />
-      </Row>
-      <Row>
-        <Label>Access Key:</Label>
-        <Input
-          onClick={(e) => e.stopPropagation()}
-          onMouseUp={(e) => e.stopPropagation()}
-          onMouseDown={(e) => e.stopPropagation()}
-          onKeyDown={(e) => e.stopPropagation()}
-          placeholder="xxxxxxxxxxxxxxxx"
-          value={currentProperties.access_key}
-          onChange={(e) => {
-            setCurrentProperties({
-              ...currentProperties,
-              access_key: e.target.value,
-            });
-          }}
-        />
-      </Row>
-      <Row>
-        <Label>Secret Key:</Label>
-        <Input
-          onClick={(e) => e.stopPropagation()}
-          onMouseUp={(e) => e.stopPropagation()}
-          onMouseDown={(e) => e.stopPropagation()}
-          onKeyDown={(e) => e.stopPropagation()}
-          placeholder="xxxxxxxxxxxxxxxx"
-          value={currentProperties.secret_key}
-          onChange={(e) => {
-            setCurrentProperties({
-              ...currentProperties,
-              secret_key: e.target.value,
-            });
-          }}
-        />
-      </Row>
-      <Row>
-        <Label>Region:</Label>
-        <Input
-          onClick={(e) => e.stopPropagation()}
-          onMouseUp={(e) => e.stopPropagation()}
-          onMouseDown={(e) => e.stopPropagation()}
-          onKeyDown={(e) => e.stopPropagation()}
-          placeholder="us-east-1"
-          value={currentProperties.region}
-          onChange={(e) => {
-            setCurrentProperties({
-              ...currentProperties,
-              region: e.target.value,
-            });
-          }}
-        />
-      </Row>
+      <Form form={form} initialValues={defaultValue} name="Form s3 modal">
+        <Form.Item
+          name="name"
+          label="Name"
+          rules={[
+            {
+              required: true,
+              message: "Please input the name of the storage provider",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="region"
+          label="Region"
+          rules={[
+            {
+              required: true,
+              message: "Please input the region of the storage provider",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="access_key"
+          label="Access Key"
+          rules={[
+            {
+              required: true,
+              message: "Please input the access key of the storage provider",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="secret_key"
+          label="Secret Key"
+          rules={[
+            {
+              required: true,
+              message: "Please input the secret key of the storage provider",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+      </Form>
     </Modal>
   );
 };

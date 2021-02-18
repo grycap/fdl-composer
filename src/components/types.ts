@@ -11,6 +11,8 @@ export interface IModalStorageProviderProps {
     onCancel: () => void;
     defaultValue?: any;
 
+    removeStorageProvider: (type: string, name: string) => void;
+
 }
 
 export interface ISidebarItemProps extends StyledElementProps<'div'> {

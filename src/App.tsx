@@ -423,6 +423,7 @@ export class App extends React.Component {
         <Layout className="layout">
           <ModalS3Provider
             defaultValue={this.state.s3DefaultValue}
+            removeStorageProvider={this.removeStorageProvider}
             visible={this.state.s3ModalVisible}
             onCancel={() =>
               this.setState({
@@ -437,6 +438,7 @@ export class App extends React.Component {
           />
           <ModalOneDataProvider
             defaultValue={this.state.oneDataDefaultValue}
+            removeStorageProvider={this.removeStorageProvider}
             visible={this.state.oneDataModalVisible}
             onCancel={() =>
               this.setState({
@@ -451,6 +453,7 @@ export class App extends React.Component {
           />
           <ModalMinioProvider
             defaultValue={this.state.minioDefaultValue}
+            removeStorageProvider={this.removeStorageProvider}
             visible={this.state.minioModalVisible}
             onCancel={() =>
               this.setState({

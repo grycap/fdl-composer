@@ -291,8 +291,11 @@ export class App extends React.Component {
   public importState() {
     const input = document.createElement("input");
     input.type = "file";
+    input.accept = ".json";
     input.onchange = (e: any) => {
       // var file = e!.target!.files[0];
+      console.log(e.target.files[0].name);
+
       const fr = new FileReader();
       fr.onload = async (e) => {
         e?.target?.result &&
@@ -423,6 +426,7 @@ export class App extends React.Component {
         <Layout className="layout">
           <ModalS3Provider
             defaultValue={this.state.s3DefaultValue}
+            removeStorageProvider={this.removeStorageProvider}
             visible={this.state.s3ModalVisible}
             onCancel={() =>
               this.setState({
@@ -437,6 +441,7 @@ export class App extends React.Component {
           />
           <ModalOneDataProvider
             defaultValue={this.state.oneDataDefaultValue}
+            removeStorageProvider={this.removeStorageProvider}
             visible={this.state.oneDataModalVisible}
             onCancel={() =>
               this.setState({
@@ -451,6 +456,7 @@ export class App extends React.Component {
           />
           <ModalMinioProvider
             defaultValue={this.state.minioDefaultValue}
+            removeStorageProvider={this.removeStorageProvider}
             visible={this.state.minioModalVisible}
             onCancel={() =>
               this.setState({
@@ -499,7 +505,7 @@ export class App extends React.Component {
                     this.setState({ ...this.state, s3ModalVisible: true });
                   }}
                 >
-                  S3
+                  New S3
                 </Menu.Item>
                 <Menu.Item
                   key="storage:minio"
@@ -507,7 +513,7 @@ export class App extends React.Component {
                     this.setState({ ...this.state, minioModalVisible: true });
                   }}
                 >
-                  Minio
+                  New Minio
                 </Menu.Item>
                 <Menu.Item
                   key="storage:onedata"
@@ -515,7 +521,7 @@ export class App extends React.Component {
                     this.setState({ ...this.state, oneDataModalVisible: true });
                   }}
                 >
-                  One data
+                  New One data
                 </Menu.Item>
               </SubMenu>
             </Menu>

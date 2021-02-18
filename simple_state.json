@@ -1,10 +1,10 @@
 {
-  "offset": { "x": 31.27, "y": -63.25 },
-  "scale": 0.732,
+  "offset": { "x": 13.36, "y": 44.28 },
+  "scale": 0.765,
   "nodes": {
-    "6921d02a-ac8c-4494-9a59-0f871af40547": {
-      "id": "6921d02a-ac8c-4494-9a59-0f871af40547",
-      "position": { "x": 138.0983606557377, "y": 106.97142792224757 },
+    "f8c12b5e-3e55-495c-a0bf-607d762809a0": {
+      "id": "f8c12b5e-3e55-495c-a0bf-607d762809a0",
+      "position": { "x": 94, "y": 28 },
       "orientation": 0,
       "type": "minio",
       "ports": {
@@ -12,25 +12,25 @@
           "id": "port1",
           "type": "top",
           "properties": { "path": "" },
-          "position": { "x": 105, "y": -1 }
+          "position": { "x": 103, "y": -1 }
         },
         "port2": {
           "id": "port2",
           "type": "right",
           "properties": { "path": "" },
-          "position": { "x": 214, "y": 48 }
+          "position": { "x": 209, "y": 59 }
         },
         "port3": {
           "id": "port3",
           "type": "bottom",
           "properties": { "path": "" },
-          "position": { "x": 105, "y": 97 }
+          "position": { "x": 103, "y": 119 }
         },
         "port4": {
           "id": "port4",
           "type": "left",
           "properties": { "path": "" },
-          "position": { "x": -4, "y": 48 }
+          "position": { "x": -4, "y": 59 }
         }
       },
       "properties": {
@@ -38,14 +38,16 @@
         "endpoint": "minio-endpoint",
         "verify": true,
         "region": "us-east-1",
-        "access_key": "xxxxxxxxxxxxxx",
-        "secret_key": "xxxxxxxxxxxxxx"
+        "access_key": "xxxxxxxxxxxxxxx",
+        "secret_key": "xxxxxxxxxxxxxxx",
+        "output": { "path": "darknet-workflow/input" },
+        "path": "darknet-workflow/input"
       },
-      "size": { "width": 210, "height": 96 }
+      "size": { "width": 205, "height": 118 }
     },
-    "ce46b0f6-e3f9-4bbc-a2db-90a08441b617": {
-      "id": "ce46b0f6-e3f9-4bbc-a2db-90a08441b617",
-      "position": { "x": 198.92896174863387, "y": 243.0983606557377 },
+    "8d286cb4-88cd-4520-afc1-f83647218d9a": {
+      "id": "8d286cb4-88cd-4520-afc1-f83647218d9a",
+      "position": { "x": 166, "y": 194 },
       "orientation": 0,
       "type": "oscar-fx",
       "ports": {
@@ -59,91 +61,35 @@
           "id": "port2",
           "type": "right",
           "properties": { "path": "" },
-          "position": { "x": 204, "y": 48 }
+          "position": { "x": 204, "y": 61 }
         },
         "port3": {
           "id": "port3",
           "type": "bottom",
           "properties": { "path": "" },
-          "position": { "x": 100, "y": 97 }
+          "position": { "x": 100, "y": 123 }
         },
         "port4": {
           "id": "port4",
           "type": "left",
           "properties": { "path": "" },
-          "position": { "x": -4, "y": 48 }
+          "position": { "x": -4, "y": 61 }
         }
       },
       "properties": {
-        "input": {
-          "path": "darknet-workflow/input"
-        },
-        "output": {
-          "path": "scar-grayify-workflow/input",
-          "suffix": "png, jpg"
-        },
         "name": "darknet",
         "memory": "1Gi",
         "cpu": "1.0",
-        "image": "grycap/darknet",
+        "image": "grycap/dark",
         "script": "yolo.sh",
-        "environment": { "Variables": "key1=val1, key2=val2" }
+        "input": { "suffix": "png" },
+        "output": { "suffix": "png" }
       },
-      "size": { "width": 200, "height": 96 }
+      "size": { "width": 200, "height": 122 }
     },
-    "24cc2de8-335e-4faf-aa67-ed974cc9990a": {
-      "id": "24cc2de8-335e-4faf-aa67-ed974cc9990a",
-      "position": { "x": 335.3555093555093, "y": 565.2099792099793 },
-      "orientation": 0,
-      "type": "aws-fx",
-      "ports": {
-        "port1": {
-          "id": "port1",
-          "type": "top",
-          "properties": { "path": "" },
-          "position": { "x": 100, "y": -1 }
-        },
-        "port2": {
-          "id": "port2",
-          "type": "right",
-          "properties": { "path": "" },
-          "position": { "x": 204, "y": 48 }
-        },
-        "port3": {
-          "id": "port3",
-          "type": "bottom",
-          "properties": { "path": "" },
-          "position": { "x": 100, "y": 97 }
-        },
-        "port4": {
-          "id": "port4",
-          "type": "left",
-          "properties": { "path": "" },
-          "position": { "x": -4, "y": 48 }
-        }
-      },
-      "properties": {
-        "lambda": {
-          "name": "scar-grayify-workflow",
-          "init_script": "grayify-image.sh",
-          "container": {
-            "image": "grycap/imagemagick",
-            "environment": { "Variables": "key1=val1, key2=val2" }
-          },
-          "input": {
-            "path": "scar-grayify-workflow/input"
-          },
-          "output": {
-            "path": "scar-grayify-workflow/input"
-          },
-          "environment": { "Variables": "key1=val1, key2=val2" }
-        }
-      },
-      "size": { "width": 200, "height": 96 }
-    },
-    "341bb3e3-3546-48ed-8310-c9aad35e114d": {
-      "id": "341bb3e3-3546-48ed-8310-c9aad35e114d",
-      "position": { "x": 260, "y": 410 },
+    "308d48df-28b6-4736-b622-f0e294eca0b1": {
+      "id": "308d48df-28b6-4736-b622-f0e294eca0b1",
+      "position": { "x": 272, "y": 352 },
       "orientation": 0,
       "type": "s3",
       "ports": {
@@ -157,32 +103,73 @@
           "id": "port2",
           "type": "right",
           "properties": { "path": "" },
-          "position": { "x": 204, "y": 48 }
+          "position": { "x": 204, "y": 65 }
         },
         "port3": {
           "id": "port3",
           "type": "bottom",
           "properties": { "path": "" },
-          "position": { "x": 100, "y": 97 }
+          "position": { "x": 100, "y": 131 }
         },
         "port4": {
           "id": "port4",
           "type": "left",
           "properties": { "path": "" },
-          "position": { "x": -4, "y": 48 }
+          "position": { "x": -4, "y": 65 }
         }
       },
       "properties": {
         "name": "my-aws",
-        "access_key": "xxxxxxxxxxxxx",
-        "secret_key": "xxxxxxxxxxxx",
-        "region": "us-east-1"
+        "access_key": "xxxxxxxxxxxxxxxx",
+        "secret_key": "xxxxxxxxxxxxxxxx",
+        "region": "us-east-1",
+        "output": { "path": "scar-grayify-workflow/input" },
+        "path": "scar-grayify-workflow/input"
       },
-      "size": { "width": 200, "height": 96 }
+      "size": { "width": 200, "height": 130 }
     },
-    "4b528dbc-a5bb-48db-b9d1-f89cb0fcc5a6": {
-      "id": "4b528dbc-a5bb-48db-b9d1-f89cb0fcc5a6",
-      "position": { "x": 412.079002079002, "y": 741.7151767151765 },
+    "6a0cf001-9c66-4660-ac64-b9de61603e29": {
+      "id": "6a0cf001-9c66-4660-ac64-b9de61603e29",
+      "position": { "x": 423, "y": 555 },
+      "orientation": 0,
+      "type": "aws-fx",
+      "ports": {
+        "port1": {
+          "id": "port1",
+          "type": "top",
+          "properties": { "path": "" },
+          "position": { "x": 100, "y": -1 }
+        },
+        "port2": {
+          "id": "port2",
+          "type": "right",
+          "properties": { "path": "" },
+          "position": { "x": 204, "y": 57 }
+        },
+        "port3": {
+          "id": "port3",
+          "type": "bottom",
+          "properties": { "path": "" },
+          "position": { "x": 100, "y": 115 }
+        },
+        "port4": {
+          "id": "port4",
+          "type": "left",
+          "properties": { "path": "" },
+          "position": { "x": -4, "y": 57 }
+        }
+      },
+      "properties": {
+        "lambda": {
+          "name": "scar-grayify-workflow",
+          "container": { "image": "grycap/imagemagick" }
+        }
+      },
+      "size": { "width": 200, "height": 114 }
+    },
+    "d3aa6ff0-78a8-49c2-b955-f80bd8bd0fa5": {
+      "id": "d3aa6ff0-78a8-49c2-b955-f80bd8bd0fa5",
+      "position": { "x": 726, "y": 581 },
       "orientation": 0,
       "type": "onedata",
       "ports": {
@@ -190,83 +177,169 @@
           "id": "port1",
           "type": "top",
           "properties": { "path": "" },
-          "position": { "x": 124, "y": -1 }
+          "position": { "x": 100, "y": -1 }
         },
         "port2": {
           "id": "port2",
           "type": "right",
           "properties": { "path": "" },
-          "position": { "x": 251, "y": 48 }
+          "position": { "x": 204, "y": 53 }
         },
         "port3": {
           "id": "port3",
           "type": "bottom",
           "properties": { "path": "" },
-          "position": { "x": 124, "y": 97 }
+          "position": { "x": 100, "y": 108 }
         },
         "port4": {
           "id": "port4",
           "type": "left",
           "properties": { "path": "" },
-          "position": { "x": -4, "y": 48 }
+          "position": { "x": -4, "y": 53 }
         }
       },
       "properties": {
         "name": "my-onedata",
         "oneprovider_host": "plg-cyfronet-01.datahub.egi.eu",
-        "token": "xxxxxxxxxxx",
-        "space": "my-space"
+        "token": "xxxxxxxxxxxxx",
+        "space": "my-space",
+        "output": { "path": "scar-grayify-workflow/output" },
+        "path": "scar-grayify-workflow/output"
       },
-      "size": { "width": 247, "height": 96 }
+      "size": { "width": 200, "height": 107 }
     }
   },
   "links": {
-    "6739a8c8-a8bf-4337-9894-27f838a448d7": {
-      "id": "6739a8c8-a8bf-4337-9894-27f838a448d7",
+    "d83fafe7-e48c-4e63-b257-8301baf6d66e": {
+      "id": "d83fafe7-e48c-4e63-b257-8301baf6d66e",
       "from": {
-        "nodeId": "6921d02a-ac8c-4494-9a59-0f871af40547",
+        "nodeId": "f8c12b5e-3e55-495c-a0bf-607d762809a0",
         "portId": "port3"
       },
       "to": {
-        "nodeId": "ce46b0f6-e3f9-4bbc-a2db-90a08441b617",
+        "nodeId": "8d286cb4-88cd-4520-afc1-f83647218d9a",
         "portId": "port1"
       }
     },
-    "f93d82a5-92d0-4a87-a17e-7638051b60fa": {
-      "id": "f93d82a5-92d0-4a87-a17e-7638051b60fa",
+    "23731dba-5100-4843-bc54-91cdc18bfa42": {
+      "id": "23731dba-5100-4843-bc54-91cdc18bfa42",
       "from": {
-        "nodeId": "ce46b0f6-e3f9-4bbc-a2db-90a08441b617",
+        "nodeId": "8d286cb4-88cd-4520-afc1-f83647218d9a",
         "portId": "port3"
       },
       "to": {
-        "nodeId": "341bb3e3-3546-48ed-8310-c9aad35e114d",
+        "nodeId": "308d48df-28b6-4736-b622-f0e294eca0b1",
         "portId": "port1"
       }
     },
-    "3aae1b6c-17e4-4b95-aa4d-3160262496ce": {
-      "id": "3aae1b6c-17e4-4b95-aa4d-3160262496ce",
+    "eb5f0d47-6cfe-4806-8097-d442fcbfdeb0": {
+      "id": "eb5f0d47-6cfe-4806-8097-d442fcbfdeb0",
       "from": {
-        "nodeId": "341bb3e3-3546-48ed-8310-c9aad35e114d",
+        "nodeId": "308d48df-28b6-4736-b622-f0e294eca0b1",
         "portId": "port3"
       },
       "to": {
-        "nodeId": "24cc2de8-335e-4faf-aa67-ed974cc9990a",
+        "nodeId": "6a0cf001-9c66-4660-ac64-b9de61603e29",
         "portId": "port1"
       }
     },
-    "f60dac70-0ee7-4266-8218-6eca1aed45cf": {
-      "id": "f60dac70-0ee7-4266-8218-6eca1aed45cf",
+    "ec832a25-b2b5-48a7-b10b-0daffe765add": {
+      "id": "ec832a25-b2b5-48a7-b10b-0daffe765add",
       "from": {
-        "nodeId": "24cc2de8-335e-4faf-aa67-ed974cc9990a",
-        "portId": "port3"
+        "nodeId": "6a0cf001-9c66-4660-ac64-b9de61603e29",
+        "portId": "port2"
       },
       "to": {
-        "nodeId": "4b528dbc-a5bb-48db-b9d1-f89cb0fcc5a6",
-        "portId": "port1"
+        "nodeId": "d3aa6ff0-78a8-49c2-b955-f80bd8bd0fa5",
+        "portId": "port4"
       }
     }
   },
   "selected": {},
   "hovered": {},
-  "modalVisible": false
+  "modalVisible": false,
+  "storageProviders": [
+    {
+      "type": "s3",
+      "ports": {
+        "port1": { "id": "port1", "type": "top", "properties": { "path": "" } },
+        "port2": {
+          "id": "port2",
+          "type": "right",
+          "properties": { "path": "" }
+        },
+        "port3": {
+          "id": "port3",
+          "type": "bottom",
+          "properties": { "path": "" }
+        },
+        "port4": { "id": "port4", "type": "left", "properties": { "path": "" } }
+      },
+      "properties": {
+        "name": "my-aws",
+        "access_key": "xxxxxxxxxxxxxxxx",
+        "secret_key": "xxxxxxxxxxxxxxxx",
+        "region": "us-east-1"
+      }
+    },
+    {
+      "type": "onedata",
+      "ports": {
+        "port1": { "id": "port1", "type": "top", "properties": { "path": "" } },
+        "port2": {
+          "id": "port2",
+          "type": "right",
+          "properties": { "path": "" }
+        },
+        "port3": {
+          "id": "port3",
+          "type": "bottom",
+          "properties": { "path": "" }
+        },
+        "port4": { "id": "port4", "type": "left", "properties": { "path": "" } }
+      },
+      "properties": {
+        "name": "my-onedata",
+        "oneprovider_host": "plg-cyfronet-01.datahub.egi.eu",
+        "token": "xxxxxxxxxxxxx",
+        "space": "my-space"
+      }
+    },
+    {
+      "type": "minio",
+      "ports": {
+        "port1": { "id": "port1", "type": "top", "properties": { "path": "" } },
+        "port2": {
+          "id": "port2",
+          "type": "right",
+          "properties": { "path": "" }
+        },
+        "port3": {
+          "id": "port3",
+          "type": "bottom",
+          "properties": { "path": "" }
+        },
+        "port4": { "id": "port4", "type": "left", "properties": { "path": "" } }
+      },
+      "properties": {
+        "name": "my_minio",
+        "endpoint": "minio-endpoint",
+        "region": "us-east-1",
+        "access_key": "xxxxxxxxxxxxxxx",
+        "secret_key": "xxxxxxxxxxxxxxx",
+        "verify": true
+      }
+    }
+  ],
+  "s3ModalVisible": false,
+  "oneDataModalVisible": false,
+  "minioModalVisible": false,
+  "minioDefaultValue": {
+    "name": "my_minio",
+    "endpoint": "minio-endpoint",
+    "verify": true,
+    "region": "us-east-1",
+    "access_key": "xxxxxxxxxxxxxxx",
+    "secret_key": "xxxxxxxxxxxxxxx"
+  }
 }

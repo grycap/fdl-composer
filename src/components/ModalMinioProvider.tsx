@@ -1,6 +1,5 @@
 import { Checkbox, Modal, Form, Input, Row, Col } from "antd";
 import React, { useEffect, useState } from "react";
-// import { Input, Label, Row } from "./NodeInnerCustom";
 import { IModalStorageProviderProps } from "./types";
 
 export const ModalMinioProvider: React.FC<IModalStorageProviderProps> = ({
@@ -8,6 +7,7 @@ export const ModalMinioProvider: React.FC<IModalStorageProviderProps> = ({
   onOk,
   onCancel,
   defaultValue,
+  removeStorageProvider,
 }) => {
   const [form] = Form.useForm();
   const [verify, setVerify] = useState(false);
@@ -38,8 +38,11 @@ export const ModalMinioProvider: React.FC<IModalStorageProviderProps> = ({
         form
           .validateFields()
           .then((values) => {
-            const newState = { ...values, verify: verify };
-            console.log(newState);
+            const newState = { ...values, verify: verify } as any;
+            defaultValue &&
+              removeStorageProvider &&
+              newState.name !== defaultValue.name &&
+              removeStorageProvider("minio", defaultValue.name);
 
             onOk(newState);
             form.resetFields();
@@ -73,7 +76,6 @@ export const ModalMinioProvider: React.FC<IModalStorageProviderProps> = ({
         >
           <Input />
         </Form.Item>
-        {/* <Form.Item initialValue={verify} name="verify" label="Verify"> */}
         <Row style={{ marginBottom: "1rem" }}>
           <Col span={3}>Verify:</Col>
           <Col span={1}>
@@ -116,71 +118,6 @@ export const ModalMinioProvider: React.FC<IModalStorageProviderProps> = ({
         >
           <Input />
         </Form.Item>
-        {/* 
-      <Row>
-        <Label>Verify:</Label>
-        <Checkbox
-          onClick={(e) => e.stopPropagation()}
-          value={currentProperties.verify}
-          onChange={(e) => {
-            setCurrentProperties({
-              ...currentProperties,
-              verify: e.target.checked,
-            });
-          }}
-        />
-      </Row>
-      <Row>
-        <Label>Region:</Label>
-        <Input
-          onClick={(e) => e.stopPropagation()}
-          onMouseUp={(e) => e.stopPropagation()}
-          onMouseDown={(e) => e.stopPropagation()}
-          onKeyDown={(e) => e.stopPropagation()}
-          placeholder="us-east-1"
-          value={currentProperties.region}
-          onChange={(e) => {
-            setCurrentProperties({
-              ...currentProperties,
-              region: e.target.value,
-            });
-          }}
-        />
-      </Row>
-      <Row>
-        <Label>Access Key:</Label>
-        <Input
-          onClick={(e) => e.stopPropagation()}
-          onMouseUp={(e) => e.stopPropagation()}
-          onMouseDown={(e) => e.stopPropagation()}
-          onKeyDown={(e) => e.stopPropagation()}
-          placeholder="xxxxxxxxxxxxxxxx"
-          value={currentProperties.access_key}
-          onChange={(e) => {
-            setCurrentProperties({
-              ...currentProperties,
-              access_key: e.target.value,
-            });
-          }}
-        />
-      </Row>
-      <Row>
-        <Label>Secret Key:</Label>
-        <Input
-          onClick={(e) => e.stopPropagation()}
-          onMouseUp={(e) => e.stopPropagation()}
-          onMouseDown={(e) => e.stopPropagation()}
-          onKeyDown={(e) => e.stopPropagation()}
-          placeholder="xxxxxxxxxxxxxxxx"
-          value={currentProperties.secret_key}
-          onChange={(e) => {
-            setCurrentProperties({
-              ...currentProperties,
-              secret_key: e.target.value,
-            });
-          }}
-        />
-      </Row> */}
       </Form>
     </Modal>
   );

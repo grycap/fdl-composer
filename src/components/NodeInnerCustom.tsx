@@ -1,7 +1,9 @@
+import { UploadOutlined } from "@ant-design/icons";
 import { INodeInnerDefaultProps } from "@mrblenny/react-flow-chart";
-import { Checkbox, Divider, Modal, Tabs } from "antd";
+import { Button, Checkbox, Divider, Modal, Tabs } from "antd";
 import React from "react";
 import styled, { css } from "styled-components";
+import { ModalOscarFx } from "./ModalOscarFx";
 import { getColor, getIcon } from "./SidebarItem";
 interface IOuterProps {
   background?: string;
@@ -66,6 +68,29 @@ export const NodeInnerCustom = ({
   const [currentProperties, setCurrentProperties] = React.useState<
     any | undefined
   >(node.properties || {});
+
+  const importScript = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".json";
+    input.onchange = (e: any) => {
+      // var file = e!.target!.files[0];
+      console.log(e.target.files[0].name);
+      const scriptName = e.target.files[0].name;
+      const fr = new FileReader();
+      fr.onload = async (e) => {
+        setCurrentProperties({
+          ...currentProperties,
+          script_value: e!.target!.result,
+          script: scriptName,
+        });
+      };
+
+      fr.readAsText(input.files![0]);
+    };
+    input.click();
+  };
+
   const color = getColor(node.type);
   switch (node.type) {
     case "s3":
@@ -205,15 +230,20 @@ export const NodeInnerCustom = ({
                 onMouseUp={(e) => e.stopPropagation()}
                 onMouseDown={(e) => e.stopPropagation()}
                 onKeyDown={(e) => e.stopPropagation()}
-                placeholder="yolo.sh"
+                disabled={true}
+                // placeholder="yolo.sh"
                 value={currentProperties.script}
-                onChange={(e) => {
-                  setCurrentProperties({
-                    ...currentProperties,
-                    script: e.target.value,
-                  });
-                }}
+                // onChange={(e) => {
+                //   setCurrentProperties({
+                //     ...currentProperties,
+                //     script: e.target.value,
+                //   });
+                // }}
               />
+              <Button
+                icon={<UploadOutlined />}
+                onClick={() => importScript()}
+              ></Button>
             </Row>
             <Row>
               <Label>Environment variables</Label>
@@ -374,6 +404,12 @@ export const NodeInnerCustom = ({
               />
             </Row>
           </Modal>
+          <ModalOscarFx
+            visible={visible}
+            defaultValue={node.properties}
+            onOk={(properties) => console.log(properties)}
+            onCancel={() => setVisible(false)}
+          ></ModalOscarFx>
           <div>{getIcon(node.type)}</div>
           <div>{`${node.properties?.name || ""}`}</div>
         </Outer>

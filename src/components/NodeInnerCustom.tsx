@@ -133,7 +133,9 @@ export const NodeInnerCustom = ({
             </Row>
           </Modal>
           <div>{getIcon(node.type)}</div>
-          <div>{`${node.properties?.name || ""}`}</div>
+          <div style={{ fontSize: "1.5rem", fontWeight: 700 }}>{`${
+            node.properties?.name || ""
+          }`}</div>
         </Circle>
       );
     case "oscar-fx":
@@ -411,7 +413,9 @@ export const NodeInnerCustom = ({
             onCancel={() => setVisible(false)}
           ></ModalOscarFx> */}
           <div>{getIcon(node.type)}</div>
-          <div>{`${node.properties?.name || ""}`}</div>
+          <div style={{ fontSize: "1.5rem", fontWeight: 700 }}>{`${
+            node.properties?.name || ""
+          }`}</div>
         </Outer>
       );
     case "aws-fx":
@@ -1231,7 +1235,9 @@ export const NodeInnerCustom = ({
             </Tabs>
           </Modal>
           <div>{getIcon(node.type)}</div>
-          <div>{`${node.properties?.lambda.name || ""}`}</div>
+          <div style={{ fontSize: "1.5rem", fontWeight: 700 }}>{`${
+            node.properties?.lambda.name || ""
+          }`}</div>
         </Outer>
       );
     default:
@@ -1255,7 +1261,9 @@ export const NodeInnerCustom = ({
             cancelButtonProps={{ disabled: false }}
           ></Modal>
           <div>{getIcon(node.type)}</div>
-          <div>{`${node.properties?.name || ""}`}</div>
+          <div style={{ fontSize: "1.5rem", fontWeight: 700 }}>{`${
+            node.properties?.name || ""
+          }`}</div>
         </Outer>
       );
   }

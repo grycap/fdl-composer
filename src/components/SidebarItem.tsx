@@ -8,8 +8,11 @@ interface IOuterProps {
   color?: string;
 }
 const Outer = styled.div<IOuterProps>`
+  min-height: 100px;
+
   margin-bottom: 1rem;
   border: 0.5px solid grey;
+
   padding: 20px 30px;
   font-size: 14px;
   background: black;
@@ -19,30 +22,13 @@ const Outer = styled.div<IOuterProps>`
     css`
       color: ${props.color};
     `}
-  ${(props) =>
-    props.background &&
-    css`
-      background: ${props.background};
-    `};
-`;
 
-const Circle = styled.div<IOuterProps>`
-  margin-bottom: 1rem;
-  border: 0.5px solid grey;
-  padding: 30px;
-  min-height: 100px;
-  border-radius: 50%;
-  font-size: 14px;
-  cursor: move;
-  ${(props) =>
-    props.color &&
-    css`
-      color: ${props.color};
-    `}
   ${(props) =>
     props.background &&
     css`
-      background: ${props.background};
+      background: url(${props.background}) no-repeat;
+      background-size: 96px;
+      background-position: center;
     `};
 `;
 
@@ -80,6 +66,29 @@ export const getColor = (type: string) => {
       };
   }
 };
+const Circle = styled.div<IOuterProps>`
+  font-weight: 700;
+  font-size: 2rem;
+  min-height: 100px;
+  margin-bottom: 1rem;
+  border: 0.5px solid grey;
+  padding: 30px;
+  min-height: 100px;
+  border-radius: 50%;
+  cursor: move;
+  ${(props) =>
+    props.color &&
+    css`
+      color: ${props.color};
+    `}
+  ${(props) =>
+    props.background &&
+    css`
+      background: url(${props.background}) no-repeat;
+      background-size: 96px;
+      background-position: center;
+    `};
+`;
 
 export const getIcon = (type: string) => {
   switch (type) {
@@ -126,6 +135,20 @@ export const getIcon = (type: string) => {
   }
 };
 
+export const getImgBackground = (type: string) => {
+  switch (type) {
+    case "oscar-fx":
+      return "https://github.com/grycap/oscar/blob/master/docs/images/oscar3.png?raw=true";
+    case "aws-fx":
+      return "https://d1.awsstatic.com/Digital%20Marketing/House/PAC/2up/PAC-Q4_House-Ads_Lambda_2up.62dc7e19b7b2e0a2c06821594c31f1ce00a6bdda.png";
+    case "s3":
+      return "https://servmask.com/img/products/s3.png";
+    case "onedata":
+      return "https://www.ebi.ac.uk/about/technology/wp-content/uploads/2019/10/onedata-logo.png";
+    case "minio":
+      return "https://suarapapua.com/wp-content/plugins/ilab-media-tools-premium/public/img/wizard-icon-minio.png";
+  }
+};
 export const SidebarItem = ({
   type,
   ports,
@@ -136,7 +159,7 @@ export const SidebarItem = ({
   const storage = ["s3", "onedata", "minio"];
   return storage.includes(type) ? (
     <Circle
-      background={color.background}
+      background={getImgBackground(type)}
       color={color.color}
       draggable={true}
       onDragStart={(event) => {
@@ -147,12 +170,11 @@ export const SidebarItem = ({
       }}
       {...rest}
     >
-      {getIcon(type)}
       {properties?.name}
     </Circle>
   ) : (
     <Outer
-      background={color.background}
+      background={getImgBackground(type)}
       color={color.color}
       draggable={true}
       onDragStart={(event) => {
@@ -161,8 +183,6 @@ export const SidebarItem = ({
           JSON.stringify({ type, ports, properties })
         );
       }}
-    >
-      {getIcon(type)}
-    </Outer>
+    ></Outer>
   );
 };

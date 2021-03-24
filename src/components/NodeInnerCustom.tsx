@@ -404,12 +404,12 @@ export const NodeInnerCustom = ({
               />
             </Row>
           </Modal>
-          <ModalOscarFx
+          {/* <ModalOscarFx
             visible={visible}
             defaultValue={node.properties}
             onOk={(properties) => console.log(properties)}
             onCancel={() => setVisible(false)}
-          ></ModalOscarFx>
+          ></ModalOscarFx> */}
           <div>{getIcon(node.type)}</div>
           <div>{`${node.properties?.name || ""}`}</div>
         </Outer>

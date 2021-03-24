@@ -27,7 +27,7 @@ export const ModalMinioProvider: React.FC<IModalStorageProviderProps> = ({
   };
   return (
     <Modal
-      title={`OneData Storage Provider ${defaultValue?.name || ""}`}
+      title={`MinIO Storage Provider ${defaultValue?.name || ""}`}
       visible={visible}
       onCancel={() => {
         onCancel();

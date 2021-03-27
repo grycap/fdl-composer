@@ -19,6 +19,7 @@ import { NodeInnerCustom } from "./components/NodeInnerCustom";
 import { ModalS3Provider } from "./components/ModalS3Provider";
 import { ModalOneDataProvider } from "./components/ModalOneDataProvider";
 import { ModalMinioProvider } from "./components/ModalMinioProvider";
+import { YamlExport } from "./components/types";
 
 const { Header } = Layout;
 const { SubMenu } = Menu;
@@ -237,6 +238,7 @@ export class App extends React.Component {
       .reduce((a, b) => {
         const copy = JSON.parse(JSON.stringify(b));
         delete copy.path;
+        delete copy.output;
 
         return { ...a, [b.name]: copy };
       }, {});
@@ -248,6 +250,7 @@ export class App extends React.Component {
         const copy = JSON.parse(JSON.stringify(b));
         delete copy.name;
         delete copy.path;
+        delete copy.output;
         return { ...a, [b.name]: copy };
       }, {});
 
@@ -258,22 +261,36 @@ export class App extends React.Component {
         const copy = JSON.parse(JSON.stringify(b));
         delete copy.name;
         delete copy.path;
+        delete copy.output;
 
         return { ...a, [b.name]: copy };
       }, {});
-    const output = yaml.dump({
+    const result: YamlExport = {
       functions: {
         oscar: oscarFxs.map((x) =>
           JSON.parse(`{ "${x.name}": ${JSON.stringify(x)} }`)
         ),
         aws: awsFxs,
       },
-      storage_providers: {
-        s3: s3Storage,
-        onedata: oneDataStorage,
-        minio: minio,
-      },
-    });
+      storage_providers: {},
+    };
+    if (Object.keys(s3Storage).length !== 0) {
+      result["storage_providers"].s3 = s3Storage;
+    }
+    if (Object.keys(oneDataStorage).length !== 0) {
+      result["storage_providers"].onedata = oneDataStorage;
+    }
+    if (Object.keys(minio).length !== 0) {
+      result["storage_providers"].minio = minio;
+    }
+
+    result.storage_providers.s3 === {} && delete result.storage_providers.s3;
+    result.storage_providers.onedata === {} &&
+      delete result.storage_providers.onedata;
+    result.storage_providers.minio === {} &&
+      delete result.storage_providers.minio;
+
+    const output = yaml.dump(result);
     const blob = new Blob([output], {
       type: "text/plain;charset=utf-8",
     });

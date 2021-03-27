@@ -52,3 +52,8 @@ export interface MinioDataStorage {
     access_key: string;
     secret_key: string;
 }
+
+export interface YamlExport {
+    functions: any;
+    storage_providers: any;
+}

@@ -44,26 +44,58 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
             console.log("Output node", outputNode);
 
             const copy = JSON.parse(JSON.stringify(node.properties));
-            const input = copy.input;
+            let input = copy.input;
             if (input) {
-                input.storage_provider = `${inputNode?.type}.${inputNode?.properties.name}`;
                 input.path = inputNode?.properties.path;
-                if (input.prefix)
+                input.storage_provider = `${inputNode?.type}.${inputNode?.properties.name}`;
+
+                if (input.prefix) {
                     input.prefix = input.prefix.replace(" ", "").split(",");
-                if (input?.suffix)
+                }
+                else {
+                    delete input.prefix;
+                }
+
+                if (input?.suffix) {
+
                     input.suffix = input.suffix.replace(" ", "").split(",");
-                copy.input = [input];
+                }
+                else {
+                    delete input.suffix;
+                }
             }
-            const output = copy.output;
+            else {
+                input = { path: inputNode?.properties.path, storage_provider: `${inputNode?.type}.${inputNode?.properties.name}` }
+
+            }
+            copy.input = [input];
+
+            let output = copy.output;
             if (output) {
-                output.storage_provider = `${outputNode?.type}.${outputNode?.properties.name}`;
                 output.path = outputNode?.properties.path;
-                if (output.prefix)
+
+                output.storage_provider = `${outputNode?.type}.${outputNode?.properties.name}`;
+                if (output.prefix) {
+
                     output.prefix = output.prefix.replace(" ", "").split(",");
-                if (output.suffix)
+                }
+                else {
+                    delete output.prefix;
+                }
+
+                if (output.suffix) {
                     output.suffix = output.suffix.replace(" ", "").split(",");
-                copy.output = [output];
+                }
+                else {
+                    delete output.suffix;
+                }
             }
+            else {
+                output = { path: outputNode?.properties.path, storage_provider: `${outputNode?.type}.${outputNode?.properties.name}` }
+            }
+            console.log(output);
+
+            copy.output = [output];
 
             const environment = copy.environment;
             if (environment) {
@@ -113,24 +145,39 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                     (y) => y.from.nodeId === x.id || y.to.nodeId === x.id
                 )
             );
-            const input = copy.lambda?.input;
+            let input = copy.lambda?.input;
             if (input) {
+                input.path = inputNode?.properties.path;
                 input.storage_provider = `${inputNode?.type}.${inputNode?.properties.name}`;
                 if (input?.prefix)
                     input.prefix = input.prefix.replace(" ", "").split(",");
                 if (input?.suffix)
                     input.suffix = input.suffix.replace(" ", "").split(",");
-                copy.lambda.input = input;
             }
-            const output = copy.lambda?.output;
+            else {
+                input = {
+                    path: inputNode?.properties.path, storage_provider: `${inputNode?.type}.${inputNode?.properties.name}`
+                }
+            }
+            copy.lambda.input = [input];
+
+            let output = copy.lambda?.output;
             if (output) {
+                output.path = outputNode?.properties.path;
                 output.storage_provider = `${outputNode?.type}.${outputNode?.properties.name}`;
                 if (output?.prefix)
                     output.prefix = output.prefix.replace(" ", "").split(",");
                 if (output.suffix)
                     output.suffix = output.suffix.replace(" ", "").split(",");
-                copy.lambda.output = output;
             }
+            else {
+
+                output = {
+                    path: outputNode?.properties.path,
+                    storage_provider: `${outputNode?.type}.${outputNode?.properties.name}`
+                }
+            }
+            copy.lambda.output = [output];
 
             const computeResources = copy.batch?.compute_resources;
             if (computeResources?.instance_types) {
@@ -231,7 +278,7 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
     const result: YamlExport = {
         functions: {
             oscar: oscarFxs.map((x) =>
-                JSON.parse(`{ "${x.name}": ${JSON.stringify(x)} }`)
+                JSON.parse(`{ "${x.name}": ${JSON.stringify(x)} } `)
             ),
             aws: awsFxs,
         },

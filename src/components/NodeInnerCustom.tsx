@@ -265,7 +265,6 @@ export const NodeInnerCustom = ({
                       Variables: e.target.value,
                     },
                   });
-                  !!!value && delete currentProperties.environment;
                 }}
               />
             </Row>
@@ -302,15 +301,13 @@ export const NodeInnerCustom = ({
                 value={currentProperties.input?.suffix}
                 onChange={(e) => {
                   const { value } = e.target;
-                  !!value
-                    ? setCurrentProperties({
-                        ...currentProperties,
-                        input: {
-                          ...currentProperties.input,
-                          suffix: e.target.value,
-                        },
-                      })
-                    : delete currentProperties.suffix;
+                  setCurrentProperties({
+                    ...currentProperties,
+                    input: {
+                      ...currentProperties.input,
+                      suffix: e.target.value,
+                    },
+                  });
                 }}
               />
             </Row>
@@ -325,15 +322,13 @@ export const NodeInnerCustom = ({
                 value={currentProperties.input?.prefix}
                 onChange={(e) => {
                   const { value } = e.target;
-                  !!value
-                    ? setCurrentProperties({
-                        ...currentProperties,
-                        input: {
-                          ...currentProperties.input,
-                          prefix: e.target.value,
-                        },
-                      })
-                    : delete currentProperties.prefix;
+                  setCurrentProperties({
+                    ...currentProperties,
+                    input: {
+                      ...currentProperties.input,
+                      prefix: e.target.value,
+                    },
+                  });
                 }}
               />
             </Row>
@@ -370,15 +365,13 @@ export const NodeInnerCustom = ({
                 value={currentProperties.output?.suffix}
                 onChange={(e) => {
                   const { value } = e.target;
-                  !!value
-                    ? setCurrentProperties({
-                        ...currentProperties,
-                        output: {
-                          ...currentProperties.output,
-                          suffix: e.target.value,
-                        },
-                      })
-                    : delete currentProperties.suffix;
+                  setCurrentProperties({
+                    ...currentProperties,
+                    output: {
+                      ...currentProperties.output,
+                      suffix: e.target.value,
+                    },
+                  });
                 }}
               />
             </Row>
@@ -393,15 +386,13 @@ export const NodeInnerCustom = ({
                 value={currentProperties.output?.prefix}
                 onChange={(e) => {
                   const { value } = e.target;
-                  !!value
-                    ? setCurrentProperties({
-                        ...currentProperties,
-                        output: {
-                          ...currentProperties.output,
-                          prefix: e.target.value,
-                        },
-                      })
-                    : delete currentProperties.prefix;
+                  setCurrentProperties({
+                    ...currentProperties,
+                    output: {
+                      ...currentProperties.output,
+                      prefix: e.target.value,
+                    },
+                  });
                 }}
               />
             </Row>
@@ -646,7 +637,6 @@ export const NodeInnerCustom = ({
                           },
                         },
                       });
-                      !!value && delete currentProperties.lambda.environment;
                     }}
                   />
                 </Row>
@@ -727,8 +717,6 @@ export const NodeInnerCustom = ({
                           },
                         },
                       });
-                      !!!value &&
-                        delete currentProperties.lambda.container.environment;
                     }}
                   />
                 </Row>
@@ -768,18 +756,16 @@ export const NodeInnerCustom = ({
                     value={currentProperties.lambda?.input?.suffix}
                     onChange={(e) => {
                       const { value } = e.target;
-                      !!value
-                        ? setCurrentProperties({
-                            ...currentProperties,
-                            lambda: {
-                              ...currentProperties.lambda,
-                              input: {
-                                ...currentProperties.lambda?.input,
-                                suffix: e.target.value,
-                              },
-                            },
-                          })
-                        : delete currentProperties.lambda.input.suffix;
+                      setCurrentProperties({
+                        ...currentProperties,
+                        lambda: {
+                          ...currentProperties.lambda,
+                          input: {
+                            ...currentProperties.lambda?.input,
+                            suffix: e.target.value,
+                          },
+                        },
+                      });
                     }}
                   />
                 </Row>
@@ -794,18 +780,16 @@ export const NodeInnerCustom = ({
                     value={currentProperties.lambda?.input?.prefix}
                     onChange={(e) => {
                       const { value } = e.target;
-                      !!value
-                        ? setCurrentProperties({
-                            ...currentProperties,
-                            lambda: {
-                              ...currentProperties.lambda,
-                              input: {
-                                ...currentProperties.lambda?.input,
-                                prefix: e.target.value,
-                              },
-                            },
-                          })
-                        : delete currentProperties.lambda.input.prefix;
+                      setCurrentProperties({
+                        ...currentProperties,
+                        lambda: {
+                          ...currentProperties.lambda,
+                          input: {
+                            ...currentProperties.lambda?.input,
+                            prefix: e.target.value,
+                          },
+                        },
+                      });
                     }}
                   />
                 </Row>
@@ -845,18 +829,16 @@ export const NodeInnerCustom = ({
                     value={currentProperties.lambda?.output?.suffix}
                     onChange={(e) => {
                       const { value } = e.target;
-                      !!value
-                        ? setCurrentProperties({
-                            ...currentProperties,
-                            lambda: {
-                              ...currentProperties.lambda,
-                              output: {
-                                ...currentProperties.lambda?.input,
-                                suffix: e.target.value,
-                              },
-                            },
-                          })
-                        : delete currentProperties.lambda.output.suffix;
+                      setCurrentProperties({
+                        ...currentProperties,
+                        lambda: {
+                          ...currentProperties.lambda,
+                          output: {
+                            ...currentProperties.lambda?.input,
+                            suffix: e.target.value,
+                          },
+                        },
+                      });
                     }}
                   />
                 </Row>
@@ -871,19 +853,17 @@ export const NodeInnerCustom = ({
                     value={currentProperties.lambda?.output?.prefix}
                     onChange={(e) => {
                       const { value } = e.target;
-                      !!value
-                        ? setCurrentProperties({
-                            ...currentProperties,
+                      setCurrentProperties({
+                        ...currentProperties,
 
-                            lambda: {
-                              ...currentProperties.lambda,
-                              output: {
-                                ...currentProperties.lambda?.input,
-                                prefix: e.target.value,
-                              },
-                            },
-                          })
-                        : delete currentProperties.prefix;
+                        lambda: {
+                          ...currentProperties.lambda,
+                          output: {
+                            ...currentProperties.lambda?.input,
+                            prefix: e.target.value,
+                          },
+                        },
+                      });
                     }}
                   />
                 </Row>
@@ -1029,7 +1009,6 @@ export const NodeInnerCustom = ({
                           },
                         },
                       });
-                      !!value && delete currentProperties.batch.environment;
                     }}
                   />
                 </Row>

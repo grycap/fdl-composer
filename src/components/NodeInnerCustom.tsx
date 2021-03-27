@@ -233,19 +233,19 @@ export const NodeInnerCustom = ({
                 onMouseDown={(e) => e.stopPropagation()}
                 onKeyDown={(e) => e.stopPropagation()}
                 disabled={true}
-                // placeholder="yolo.sh"
+                placeholder="yolo.sh"
                 value={currentProperties.script}
-                // onChange={(e) => {
-                //   setCurrentProperties({
-                //     ...currentProperties,
-                //     script: e.target.value,
-                //   });
-                // }}
+                onChange={(e) => {
+                  setCurrentProperties({
+                    ...currentProperties,
+                    script: e.target.value,
+                  });
+                }}
               />
-              <Button
+              {/* <Button
                 icon={<UploadOutlined />}
                 onClick={() => importScript()}
-              ></Button>
+              ></Button> */}
             </Row>
             <Row>
               <Label>Environment variables</Label>

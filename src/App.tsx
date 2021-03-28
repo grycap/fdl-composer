@@ -5,7 +5,7 @@ import { PageContent, PortCustom, SideNav } from "./components";
 import { actions, FlowChart } from "@mrblenny/react-flow-chart";
 import { initialState } from "./misc/chartScheme";
 import styled from "styled-components";
-import { Button, Layout, Menu } from "antd";
+import { Button, Layout, Menu, notification } from "antd";
 
 import {
   DownloadOutlined,
@@ -64,8 +64,19 @@ export class App extends React.Component {
 
       const fr = new FileReader();
       fr.onload = async (e) => {
-        e?.target?.result &&
-          this.setState(JSON.parse(e!.target!.result as string));
+        if (e?.target?.result) {
+          const fileContentObj = JSON.parse(e!.target!.result as string);
+          console.log();
+          if (!fileContentObj.nodes && !fileContentObj.storageProviders) {
+            notification.open({
+              message: "Not valid",
+              description:
+                "The file selected does not match a proper file structure",
+            });
+          } else {
+            this.setState(fileContentObj);
+          }
+        }
       };
 
       fr.readAsText(input.files![0]);

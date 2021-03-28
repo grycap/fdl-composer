@@ -1,5 +1,5 @@
 import { UploadOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Modal, Upload } from "antd";
+import { Button, Divider, Form, Input, Modal, Upload } from "antd";
 import React, { useEffect, useState } from "react";
 import { IModalFxProps } from "./types";
 
@@ -10,25 +10,27 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
   defaultValue,
 }) => {
   const [form] = Form.useForm();
+  const [formEnv] = Form.useForm();
+  const [formInput] = Form.useForm();
+  const [formOutput] = Form.useForm();
   const [script, setScript] = useState("");
   const [scriptContent, setScriptContent] = useState("");
-  useEffect(() => {
-    if (defaultValue) {
-      form.setFieldsValue(defaultValue);
-    }
-  }, [defaultValue, visible, form]);
 
   const importScript = () => {
     const input = document.createElement("input");
     input.type = "file";
     input.accept = ".json";
     input.onchange = (e: any) => {
-      // var file = e!.target!.files[0];
-      console.log(e.target.files[0].name);
       const scriptName = e.target.files[0].name;
       const fr = new FileReader();
       fr.onload = async (e) => {
-        form.setFieldsValue({ ...form.getFieldsValue(), script: scriptName });
+        form.setFieldsValue({
+          ...form.getFieldsValue(),
+          environment: formEnv.getFieldsValue(),
+          input: formInput.getFieldsValue(),
+          output: formOutput.getFieldsValue(),
+          script: scriptName,
+        });
         setScript(scriptName);
         setScriptContent(e!.target!.result as string);
       };
@@ -52,14 +54,13 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
             defaultValue &&
               onOk({
                 ...newState,
-                script: script,
-                scriptContent: scriptContent,
               });
           })
           .catch((error) => console.log("Error", error));
       }}
     >
       <Form form={form} initialValues={defaultValue} name="Form_oscar_fx_modal">
+        <Divider>Setup</Divider>
         <Form.Item
           name="name"
           label="Name"
@@ -70,7 +71,37 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
             },
           ]}
         >
-          <Input />
+          <Input
+            onClick={(e) => e.stopPropagation()}
+            onMouseUp={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+          />
+        </Form.Item>
+
+        <Form.Item name="memory" label="Memory">
+          <Input
+            onClick={(e) => e.stopPropagation()}
+            onMouseUp={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+          ></Input>
+        </Form.Item>
+        <Form.Item name="cpu" label="Cpu">
+          <Input
+            onClick={(e) => e.stopPropagation()}
+            onMouseUp={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+          ></Input>
+        </Form.Item>
+        <Form.Item name="image" label="Image">
+          <Input
+            onClick={(e) => e.stopPropagation()}
+            onMouseUp={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+          ></Input>
         </Form.Item>
 
         <Form.Item
@@ -83,64 +114,72 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
             },
           ]}
         >
-          <div style={{ display: "flex", columnGap: "1rem" }}>
-            <Input
-              onClick={(e) => e.stopPropagation()}
-              onMouseUp={(e) => e.stopPropagation()}
-              onMouseDown={(e) => e.stopPropagation()}
-              onKeyDown={(e) => e.stopPropagation()}
-              disabled={true}
-              value={script}
-              // placeholder="yolo.sh"
-              // onChange={(e) => {
-              //   setCurrentProperties({
-              //     ...currentProperties,
-              //     script: e.target.value,
-              //   });
-              // }}
-            />
-            <Button
-              icon={<UploadOutlined />}
-              onClick={() => importScript()}
-            ></Button>
-          </div>
+          <Input
+            onClick={(e) => e.stopPropagation()}
+            onMouseUp={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+          />
         </Form.Item>
-        <Form.Item
-          name="oneprovider_host"
-          label="One Provider Host"
-          rules={[
-            {
-              required: true,
-              message:
-                "Please input the One Provider Host of the storage provider",
-            },
-          ]}
-        >
-          <Input />
+      </Form>
+      <Form
+        form={formEnv}
+        initialValues={defaultValue?.environment}
+        name="Form oscar environment"
+      >
+        <Form.Item name="Variables" label="Environment variables">
+          <Input
+            onClick={(e) => e.stopPropagation()}
+            onMouseUp={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+          ></Input>
         </Form.Item>
-        <Form.Item
-          name="token"
-          label="Token"
-          rules={[
-            {
-              required: true,
-              message: "Please input the token of the storage provider",
-            },
-          ]}
-        >
-          <Input />
+      </Form>
+      <Divider>Input</Divider>
+      <Form
+        form={formInput}
+        initialValues={defaultValue?.input}
+        name="Form aws lambda input"
+      >
+        <Form.Item name="suffix" label="Suffix">
+          <Input
+            onClick={(e) => e.stopPropagation()}
+            onMouseUp={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+          ></Input>
         </Form.Item>
-        <Form.Item
-          name="space"
-          label="Space"
-          rules={[
-            {
-              required: true,
-              message: "Please input the space of the storage provider",
-            },
-          ]}
-        >
-          <Input />
+        <Form.Item name="prefix" label="Prefix">
+          <Input
+            onClick={(e) => e.stopPropagation()}
+            onMouseUp={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+          ></Input>
+        </Form.Item>
+      </Form>
+      <Divider>Output</Divider>
+      <Form
+        form={formOutput}
+        initialValues={defaultValue?.lambda}
+        name="Form aws lambda output"
+      >
+        <Form.Item name="suffix" label="Suffix">
+          <Input
+            onClick={(e) => e.stopPropagation()}
+            onMouseUp={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+          ></Input>
+        </Form.Item>
+        <Form.Item name="prefix" label="Prefix">
+          <Input
+            onClick={(e) => e.stopPropagation()}
+            onMouseUp={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+          ></Input>
         </Form.Item>
       </Form>
     </Modal>

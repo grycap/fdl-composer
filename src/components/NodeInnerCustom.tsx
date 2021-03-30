@@ -150,6 +150,8 @@ export const NodeInnerCustom = ({
             visible={visible}
             defaultValue={node.properties}
             onOk={(newState) => {
+              console.log(newState);
+
               node.properties = newState;
               setVisible(false);
             }}
@@ -173,6 +175,8 @@ export const NodeInnerCustom = ({
             visible={visible}
             defaultValue={node.properties}
             onOk={(newState) => {
+              console.log(newState);
+
               node.properties = newState;
               setVisible(false);
             }}
@@ -180,9 +184,9 @@ export const NodeInnerCustom = ({
           ></ModalAWSFx>
 
           <div>{getIcon(node.type)}</div>
-          <div style={{ fontSize: "1.5rem", fontWeight: 700 }}>{`${
-            node.properties?.lambda.name || ""
-          }`}</div>
+          <div
+            style={{ fontSize: "1.5rem", fontWeight: 700, color: "white" }}
+          >{`${node.properties?.lambda.name || ""}`}</div>
         </Outer>
       );
     default:

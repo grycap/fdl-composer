@@ -5,7 +5,8 @@ import { Message, SidebarItem } from ".";
 import { ISidebarItemProps } from "./types";
 
 export const Sidebar = styled.div`
-  width: 200px;
+  min-width: 200px;
+  max-width: 250px;
   background: white;
   display: flex;
   flex-direction: column;
@@ -31,7 +32,7 @@ export const SideNav: React.FC<ISidebarProps> = ({
         <Popover
           placement="top"
           key={`Popover_${index}`}
-          title={`Delete provider ${sidebarItem.properties.name}`}
+          title={`${sidebarItem.properties.name} options`}
           content={
             <div
               style={{

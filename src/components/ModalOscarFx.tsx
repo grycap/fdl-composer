@@ -51,10 +51,9 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
         form
           .validateFields()
           .then((newState) => {
-            defaultValue &&
-              onOk({
-                ...newState,
-              });
+            onOk({
+              ...newState,
+            });
           })
           .catch((error) => console.log("Error", error));
       }}

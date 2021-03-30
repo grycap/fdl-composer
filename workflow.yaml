@@ -1,41 +1,42 @@
 functions:
     oscar:
     - my_oscar:
-        name: darknet
-        memory: 1Gi
-        cpu: '1.0'
-        image: grycap/darknet
-        script: yolo.sh
+        name: darknet # nombre de la función
+        memory: 1Gi # cantidad de memoria
+        cpu: '1.0' # número de cpus
+        image: grycap/darknet # imagen utilizada
+        script: yolo.sh # script a ejecutar
         input:
-        - storage_provider: minio
-          path: darknet-workflow/input
+        - storage_provider: minio # proveedor de datos de entrada
+          path: darknet-workflow/input # ruta en el proveedor de datos
         output:
-        - storage_provider: s3.my-aws
-          path: scar-grayify-workflow/input
+        - storage_provider: s3.my-aws # proveedor de datos de salida
+          path: scar-grayify-workflow/input # ruta en el proveedor de datos
           suffix:
           - png
     aws:
     - lambda:
-        name: scar-grayify-workflow
-        init_script: grayify-image.sh
+        name: scar-grayify-workflow # nombre de la función
+        init_script: grayify-image.sh # script a ejecutar
         container:
-          image: grycap/imagemagick
+          image: grycap/imagemagick # imagen utilizada
         input:
-        - storage_provider: s3
-          path: scar-grayify-workflow/input
+        - storage_provider: s3 # proveedor de datos de entrada
+          path: scar-grayify-workflow/input # ruta en el proveedor de datos
         output:
-        - storage_provider: onedata.my-onedata
-          path: scar-grayify-workflow/output
+        - storage_provider: onedata.my-onedata  # proveedor de datos de salida
+          path: scar-grayify-workflow/output # ruta en el proveedor de datos
   
   storage_providers:
-    s3:
-      my-aws:
-        access_key: xxxxxxxxxxxxxxxx
-        secret_key: xxxxxxxxxxxxxxxx
-        region: us-east-1
-    onedata:
-      my-onedata:
+    s3: # proveedor de datos de tipo s3
+      my-aws: # nombre del proveedor de datos
+        access_key: xxxxxxxxxxxxxxxx # clave de acceso
+        secret_key: xxxxxxxxxxxxxxxx # clave de acceso privada
+        region: us-east-1 # región del bucket s3
+    onedata: # proveedor de datos de tipo onedata
+      my-onedata:  # nombre del proveedor de datos
         oneprovider_host: plg-cyfronet-01.datahub.egi.eu
-        token: xxxxxxxxxxxxx
-        space: my-space
+        token: xxxxxxxxxxxxx # token de autenticación
+        space: my-space # espacio de almacenamiento onedata
+  
   

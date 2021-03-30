@@ -6,6 +6,7 @@ import { ISidebarItemProps } from "./types";
 interface IOuterProps {
   background?: string;
   color?: string;
+  backgroundSize?: string;
 }
 const Outer = styled.div<IOuterProps>`
   min-height: 100px;
@@ -27,7 +28,7 @@ const Outer = styled.div<IOuterProps>`
     props.background &&
     css`
       background: url(${props.background}) no-repeat;
-      background-size: 96px;
+      background-size: ${props.backgroundSize || "96px"};
       background-position: center;
     `};
 `;
@@ -85,7 +86,7 @@ const Circle = styled.div<IOuterProps>`
     props.background &&
     css`
       background: url(${props.background}) no-repeat;
-      background-size: 96px;
+      background-size: ${props.backgroundSize || "96px"};
       background-position: center;
     `};
 `;
@@ -159,6 +160,8 @@ export const SidebarItem = ({
   const storage = ["s3", "onedata", "minio"];
   return storage.includes(type) ? (
     <Circle
+      style={{ paddingTop: "5rem" }}
+      backgroundSize={type === "s3" ? "96px" : "150px"}
       background={getImgBackground(type)}
       color={color.color}
       draggable={true}

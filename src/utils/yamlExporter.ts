@@ -197,7 +197,7 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
             }
 
             const lambdaEnvironment = copy.lambda?.environment;
-            if (lambdaEnvironment) {
+            if (lambdaEnvironment?.Variables) {
                 copy.lambda.environment = {
                     Variables: lambdaEnvironment.Variables.replace(" ", "")
                         .split(",")
@@ -211,9 +211,9 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                 };
             }
             const batchEnvironment = copy.batch?.environment;
-            if (batchEnvironment) {
+            if (batchEnvironment?.Variables) {
                 copy.batch.environment = {
-                    Variables: lambdaEnvironment.Variables.replace(" ", "")
+                    Variables: batchEnvironment.Variables.replace(" ", "")
                         .split(",")
                         .map((x: string) => {
                             const kvp = x.split("=");
@@ -226,7 +226,7 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
             }
             const containerEnvironment = copy.lambda?.container?.environment;
 
-            if (containerEnvironment) {
+            if (containerEnvironment?.Variables) {
                 copy.lambda.container.environment = {
                     Variables: containerEnvironment.Variables.replace(" ", "")
                         .split(",")
@@ -239,6 +239,13 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                         }),
                 };
             }
+            Object.keys(copy.lambda.environment).length === 0 && delete copy.lambda.environment;
+            Object.keys(copy.lambda.container.environment).length === 0 && delete copy.lambda.container.environment;
+            Object.keys(copy.batch.environment).length === 0 && delete copy.batch.environment;
+            Object.keys(copy.batch.compute_resources).length === 0 && delete copy.batch.compute_resources;
+            !copy.batch.compute_resources && !copy.batch.environment && delete copy.batch;
+
+
 
             return copy;
         });

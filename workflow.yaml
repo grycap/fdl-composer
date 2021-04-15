@@ -38,5 +38,10 @@ functions:
         oneprovider_host: plg-cyfronet-01.datahub.egi.eu
         token: xxxxxxxxxxxxx # token de autenticación
         space: my-space # espacio de almacenamiento onedata
-  
-  
+    minio:
+      my_minio: # nombre del proveedor de datos
+        endpoint: minio-endpoint # nombre del proveedor de datos
+        verify: true # opción de verificación
+        region: us-east-1 # región del bucket minio
+        access_key: xxxxxxxxxxxxxxx # clave de accesso
+        secret_key: xxxxxxxxxxxxxxx # clave de acceso privada

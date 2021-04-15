@@ -53,6 +53,9 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
           .then((newState) => {
             onOk({
               ...newState,
+              environment: formEnv.getFieldsValue(),
+              input: formInput.getFieldsValue(),
+              output: formOutput.getFieldsValue(),
             });
           })
           .catch((error) => console.log("Error", error));
@@ -139,7 +142,7 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
       <Form
         form={formInput}
         initialValues={defaultValue?.input}
-        name="Form aws lambda input"
+        name="Form oscar input"
       >
         <Form.Item name="suffix" label="Suffix">
           <Input
@@ -161,8 +164,8 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
       <Divider>Output</Divider>
       <Form
         form={formOutput}
-        initialValues={defaultValue?.lambda}
-        name="Form aws lambda output"
+        initialValues={defaultValue?.output}
+        name="Form oscar output"
       >
         <Form.Item name="suffix" label="Suffix">
           <Input

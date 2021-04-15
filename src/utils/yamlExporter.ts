@@ -98,7 +98,7 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
             copy.output = [output];
 
             const environment = copy.environment;
-            if (environment) {
+            if (environment?.Variables) {
                 copy.environment = {
                     Variables: environment.Variables.replace(" ", "")
                         .split(",")
@@ -111,6 +111,8 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                         }),
                 };
             }
+            Object.keys(copy.environment).length === 0 && delete copy.environment;
+
             return copy;
         });
 
@@ -241,6 +243,7 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
             }
             Object.keys(copy.lambda.environment).length === 0 && delete copy.lambda.environment;
             Object.keys(copy.lambda.container.environment).length === 0 && delete copy.lambda.container.environment;
+            Object.keys(copy.lambda.container).length === 0 && delete copy.lambda.container;
             Object.keys(copy.batch.environment).length === 0 && delete copy.batch.environment;
             Object.keys(copy.batch.compute_resources).length === 0 && delete copy.batch.compute_resources;
             !copy.batch.compute_resources && !copy.batch.environment && delete copy.batch;

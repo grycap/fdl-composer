@@ -7,6 +7,7 @@ import { initialState } from "./misc/chartScheme";
 import styled from "styled-components";
 import { Button, Layout, Menu, notification } from "antd";
 
+
 import {
   DownloadOutlined,
   ExportOutlined,
@@ -19,6 +20,7 @@ import { ModalS3Provider } from "./components/ModalS3Provider";
 import { ModalOneDataProvider } from "./components/ModalOneDataProvider";
 import { ModalMinioProvider } from "./components/ModalMinioProvider";
 import { yamlExporter } from "./utils/yamlExporter";
+import { showerror } from "./components/showError";
 
 const { Header } = Layout;
 const { SubMenu } = Menu;
@@ -46,7 +48,7 @@ export class App extends React.Component {
 
     var outputyaml=yamlExporter(nodeValues, linkValues);
     if(outputyaml !== undefined){
-      console.log(outputyaml);
+      showerror(outputyaml)
     }
     
     

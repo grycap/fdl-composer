@@ -5,8 +5,7 @@ import { saveAs } from "file-saver";
 
 
 
-function ErrorHandler(error) {
-    //window.alert(error)
+function ErrorHandler(error:any) {
     return error
 }
 

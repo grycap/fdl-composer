@@ -31,5 +31,5 @@ export const initialState: IChart & IVisible & IStorageProvider = {
   minioModalVisible: false,
   s3DefaultValue: undefined,
   oneDataDefaultValue: undefined,
-  minioDefaultValue: undefined
+  minioDefaultValue: undefined,
 }

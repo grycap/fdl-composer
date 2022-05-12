@@ -97,7 +97,16 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
             onKeyDown={(e) => e.stopPropagation()}
           ></Input>
         </Form.Item>
-        <Form.Item name="image" label="Image">
+        <Form.Item 
+          name="image" 
+          label="Image"
+          rules={[
+            {
+              required: true,
+              message: "Please input the image of the oscar function",
+            },
+          ]}
+        >
           <Input
             onClick={(e) => e.stopPropagation()}
             onMouseUp={(e) => e.stopPropagation()}
@@ -128,9 +137,11 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
         form={formEnv}
         initialValues={defaultValue?.environment}
         name="Form oscar environment"
+        
       >
         <Form.Item name="Variables" label="Environment variables">
           <Input
+            placeholder= 'Separate by "," and assign value by "="'
             onClick={(e) => e.stopPropagation()}
             onMouseUp={(e) => e.stopPropagation()}
             onMouseDown={(e) => e.stopPropagation()}

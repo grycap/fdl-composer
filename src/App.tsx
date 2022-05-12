@@ -25,6 +25,7 @@ const { SubMenu } = Menu;
 
 const StyledButton = styled(Button)`
   margin-right: 1rem;
+  margin-top: 1rem;
 `;
 
 export class App extends React.Component {
@@ -43,7 +44,12 @@ export class App extends React.Component {
     const nodeValues = Object.values(this.state.nodes);
     const linkValues = Object.values(this.state.links);
 
-    yamlExporter(nodeValues, linkValues);
+    var outputyaml=yamlExporter(nodeValues, linkValues);
+    if(outputyaml !== undefined){
+      console.log(outputyaml);
+    }
+    
+    
   }
 
   public exportState() {

@@ -31,6 +31,7 @@ export const SideNav: React.FC<ISidebarProps> = ({
       .map((sidebarItem, index) => (
         <Popover
           placement="top"
+          trigger="hover"
           key={`Popover_${index}`}
           title={`${sidebarItem.properties.name} options`}
           content={

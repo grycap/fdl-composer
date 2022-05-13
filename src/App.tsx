@@ -7,6 +7,7 @@ import { initialState } from "./misc/chartScheme";
 import styled from "styled-components";
 import { Button, Layout, Menu, notification } from "antd";
 
+
 import {
   DownloadOutlined,
   ExportOutlined,
@@ -19,12 +20,14 @@ import { ModalS3Provider } from "./components/ModalS3Provider";
 import { ModalOneDataProvider } from "./components/ModalOneDataProvider";
 import { ModalMinioProvider } from "./components/ModalMinioProvider";
 import { yamlExporter } from "./utils/yamlExporter";
+import { showerror } from "./components/showError";
 
 const { Header } = Layout;
 const { SubMenu } = Menu;
 
 const StyledButton = styled(Button)`
   margin-right: 1rem;
+  margin-top: 1rem;
 `;
 
 export class App extends React.Component {
@@ -43,7 +46,12 @@ export class App extends React.Component {
     const nodeValues = Object.values(this.state.nodes);
     const linkValues = Object.values(this.state.links);
 
-    yamlExporter(nodeValues, linkValues);
+    var outputyaml=yamlExporter(nodeValues, linkValues);
+    if(outputyaml !== undefined){
+      showerror(outputyaml)
+    }
+    
+    
   }
 
   public exportState() {
@@ -190,6 +198,8 @@ export class App extends React.Component {
       {
         ...actions,
         onNodeDoubleClick: () => {
+          console.log(this.state.selected);
+
           return { ...this.state, selected: {} };
         },
       },

@@ -1,8 +1,8 @@
+
 {
   "name": "workflow-builder",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://grycap.github.io/fdl-composer",
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
     "@mrblenny/react-flow-chart": "0.0.14",

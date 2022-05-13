@@ -2,6 +2,7 @@ import { YamlExport } from "../components/types";
 import yaml from "js-yaml";
 
 import { saveAs } from "file-saver";
+import { Label } from "../components/NodeInnerCustom";
 
 
 
@@ -121,6 +122,52 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                     };
                 }
                 Object.keys(copy.environment).length === 0 && delete copy.environment;
+
+                
+                Object.keys(copy.synchronous).length === 0 && delete copy.synchronous;
+                Object.keys(copy.log_level).length === 0 && delete copy.log_level;
+                copy.alpine === false && delete copy.alpine;
+
+
+                Object.keys(copy.annotations).length === 0 && delete copy.annotations;
+
+                const annotations =copy.annotations.Annotations ;
+                if (annotations) {
+                    copy.annotations = annotations.replace(" ", "")
+                            .split(",")
+                            .map((x: string) => {
+                                const kvp = x.split("=");
+                                console.log(kvp);
+                                
+                                return { [kvp[0].trim()]: kvp[1].trim() };
+                            })
+                            .reduce((a: any, b: any) => {
+                                return { ...a, ...b };
+                            })
+                    ;
+                }else delete copy.annotations
+                
+
+                Object.keys(copy.labels).length === 0 && delete copy.labels;
+
+                const labels =copy.labels.Labels ;
+                if (labels) {
+                    copy.labels = labels.replace(" ", "")
+                            .split(",")
+                            .map((x: string) => {
+                                const kvp = x.split("=");
+                                console.log(kvp);
+                                
+                                return { [kvp[0].trim()]: kvp[1].trim() };
+                            })
+                            .reduce((a: any, b: any) => {
+                                return { ...a, ...b };
+                            })
+                    ;
+                }else delete copy.labels
+
+
+
 
                 return copy;
             });

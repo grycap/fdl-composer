@@ -1,4 +1,4 @@
-import { Modal, Button, Space } from 'antd';
+import { Modal } from 'antd';
 
 export function showerror(error:any) {
   console.log(error);

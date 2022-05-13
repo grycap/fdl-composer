@@ -198,6 +198,8 @@ export class App extends React.Component {
       {
         ...actions,
         onNodeDoubleClick: () => {
+          console.log(this.state.selected);
+
           return { ...this.state, selected: {} };
         },
       },

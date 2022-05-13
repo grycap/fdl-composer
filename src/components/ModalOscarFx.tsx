@@ -1,7 +1,9 @@
 import { UploadOutlined } from "@ant-design/icons";
-import { Button, Divider, Form, Input, Modal, Upload } from "antd";
+import { Button, Divider, Form, Input, Modal, Upload, Col, Row,Checkbox, Select } from "antd";
 import React, { useEffect, useState } from "react";
 import { IModalFxProps } from "./types";
+
+const { Option } = Select;
 
 export const ModalOscarFx: React.FC<IModalFxProps> = ({
   visible,
@@ -13,9 +15,32 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
   const [formEnv] = Form.useForm();
   const [formInput] = Form.useForm();
   const [formOutput] = Form.useForm();
+  const [formSynchronous] = Form.useForm();
+  const [formAnnotations] = Form.useForm();
+  const [formLabels] = Form.useForm();
+
+
+  
   const [script, setScript] = useState("");
   const [scriptContent, setScriptContent] = useState("");
 
+  const [showOther, setShowOther] = useState(false);
+  const [alpine, setAlpine] = useState(false);
+  const [log_level, setLog_Level] = useState("");
+
+  function handlesetShowOther() {
+    setShowOther(!showOther)
+    //console.log(`selected ${value}`);
+  }
+
+  const onCheckboxChange = (e: { target: { checked: boolean } }) => {
+    setAlpine(e.target.checked);
+  };
+
+  function handleChangeSelect(value:any) {
+    setLog_Level(value)
+    //console.log(`selected ${value}`);
+  }
   const importScript = () => {
     const input = document.createElement("input");
     input.type = "file";
@@ -50,13 +75,15 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
       onOk={() => {
         form
           .validateFields()
-          .then((newState) => {
-            onOk({
-              ...newState,
+          .then((values) => {
+            const newState = { ...values, alpine: alpine,log_level:log_level ,
+              synchronous: formSynchronous.getFieldsValue(),
+              annotations:formAnnotations.getFieldsValue(),
+              labels:formLabels.getFieldsValue(),
               environment: formEnv.getFieldsValue(),
               input: formInput.getFieldsValue(),
-              output: formOutput.getFieldsValue(),
-            });
+              output: formOutput.getFieldsValue() } as any;
+            onOk(newState);
           })
           .catch((error) => console.log("Error", error));
       }}
@@ -131,7 +158,7 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
             onMouseDown={(e) => e.stopPropagation()}
             onKeyDown={(e) => e.stopPropagation()}
           />
-        </Form.Item>
+        </Form.Item> 
       </Form>
       <Form
         form={formEnv}
@@ -149,6 +176,7 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
           ></Input>
         </Form.Item>
       </Form>
+
       <Divider>Input</Divider>
       <Form
         form={formInput}
@@ -195,6 +223,158 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
           ></Input>
         </Form.Item>
       </Form>
+
+
+      {showOther
+        ? 
+        <div>
+        <Divider></Divider>
+
+        <Row style={{ marginBottom: "1rem" }}>
+          <Col span={6}>Less options:</Col>
+          <Col span={1}>
+            <Button  onClick={handlesetShowOther}>-</Button>
+          </Col>
+        </Row>
+
+
+          <Form
+          form={form}
+          initialValues={defaultValue}
+          name="other variables fot oscar"
+          >
+
+            
+            
+            <Form.Item
+              name="total_memory"
+              label="Total Memory"
+            >
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+              />
+            </Form.Item> 
+
+            <Form.Item
+              name="total_cpu"
+              label="Total CPU"
+            >
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+              />
+            </Form.Item> 
+
+
+        
+            <Row style={{ marginBottom: "1rem" }}>
+              <Col span={4}>Log Level:</Col>
+              <Col span={2}>
+              <Select defaultValue="INFO" style={{ width: 120 }} onChange={handleChangeSelect}>
+                <Option value="CRITICAL">CRITICAL</Option>
+                <Option value="ERROR">ERROR</Option>
+                <Option value="WARNING" >WARNING</Option>
+                <Option value="INFO">INFO</Option>
+                <Option value="DEBUG">DEBUG</Option>
+                <Option value="NOTSET">NOTSET</Option>
+              </Select>
+              </Col>
+            </Row>
+
+            <Row style={{ marginBottom: "1rem" }}>
+              <Col span={3}>Alpine:</Col>
+              <Col span={1}>
+                <Checkbox value={alpine} onChange={onCheckboxChange} />
+              </Col>
+            </Row>
+          </Form> 
+
+        <Form
+          form={formAnnotations}
+          initialValues={defaultValue}
+          name="other variables fot oscar"
+        >
+          <Form.Item name="Annotations" label="Annotations">
+              <Input
+                placeholder= 'Separate by "," and assign value by "="'
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+              ></Input>
+            </Form.Item>
+        </Form>
+
+        <Form
+
+          form={formLabels}
+          initialValues={defaultValue}
+          name="other variables fot oscar"
+        >
+
+          <Form.Item name="Labels" label="Labels">
+            <Input
+              placeholder= 'Separate by "," and assign value by "="'
+              onClick={(e) => e.stopPropagation()}
+              onMouseUp={(e) => e.stopPropagation()}
+              onMouseDown={(e) => e.stopPropagation()}
+              onKeyDown={(e) => e.stopPropagation()}
+            ></Input>
+          </Form.Item>
+        </Form>
+
+
+
+
+      <Form
+      form={formSynchronous}
+      initialValues={defaultValue}
+      name="Synchronous Form"
+      >     
+      <Divider>Synchronous</Divider>
+        <Form.Item
+          name="min_scale"
+          label="Min Scale"
+        >
+          <Input
+            onClick={(e) => e.stopPropagation()}
+            onMouseUp={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+          />
+        </Form.Item>
+        <Form.Item
+          name="max_scale"
+          label="Max Scale"
+        >
+          <Input
+            onClick={(e) => e.stopPropagation()}
+            onMouseUp={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+          />
+        </Form.Item>
+
+      </Form>       
+      </div>  
+        : 
+        <div>
+        <Divider></Divider>
+        
+        <Row style={{ marginBottom: "1rem" }}>
+          <Col span={6}>More options:</Col>
+          <Col span={1}>
+          <Button  onClick={handlesetShowOther}>+</Button>
+          </Col>
+        </Row>
+        </div>
+      }
+
     </Modal>
   );
 };

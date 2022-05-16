@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/fdl-composer/static/css/main.dd5b6b7c.chunk.css",
-    "main.js": "/fdl-composer/static/js/main.ad1856c8.chunk.js",
-    "main.js.map": "/fdl-composer/static/js/main.ad1856c8.chunk.js.map",
-    "runtime-main.js": "/fdl-composer/static/js/runtime-main.5a432ab6.js",
-    "runtime-main.js.map": "/fdl-composer/static/js/runtime-main.5a432ab6.js.map",
-    "static/css/2.af4e9669.chunk.css": "/fdl-composer/static/css/2.af4e9669.chunk.css",
-    "static/js/2.054b5772.chunk.js": "/fdl-composer/static/js/2.054b5772.chunk.js",
-    "static/js/2.054b5772.chunk.js.map": "/fdl-composer/static/js/2.054b5772.chunk.js.map",
-    "static/js/3.bb2acb9b.chunk.js": "/fdl-composer/static/js/3.bb2acb9b.chunk.js",
-    "static/js/3.bb2acb9b.chunk.js.map": "/fdl-composer/static/js/3.bb2acb9b.chunk.js.map",
-    "index.html": "/fdl-composer/index.html",
-    "static/css/2.af4e9669.chunk.css.map": "/fdl-composer/static/css/2.af4e9669.chunk.css.map",
-    "static/css/main.dd5b6b7c.chunk.css.map": "/fdl-composer/static/css/main.dd5b6b7c.chunk.css.map",
-    "static/js/2.054b5772.chunk.js.LICENSE.txt": "/fdl-composer/static/js/2.054b5772.chunk.js.LICENSE.txt"
+    "main.css": "/static/css/main.dd5b6b7c.chunk.css",
+    "main.js": "/static/js/main.ad1856c8.chunk.js",
+    "main.js.map": "/static/js/main.ad1856c8.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.f99a9090.js",
+    "runtime-main.js.map": "/static/js/runtime-main.f99a9090.js.map",
+    "static/css/2.af4e9669.chunk.css": "/static/css/2.af4e9669.chunk.css",
+    "static/js/2.75af8ef2.chunk.js": "/static/js/2.75af8ef2.chunk.js",
+    "static/js/2.75af8ef2.chunk.js.map": "/static/js/2.75af8ef2.chunk.js.map",
+    "static/js/3.bb2acb9b.chunk.js": "/static/js/3.bb2acb9b.chunk.js",
+    "static/js/3.bb2acb9b.chunk.js.map": "/static/js/3.bb2acb9b.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.af4e9669.chunk.css.map": "/static/css/2.af4e9669.chunk.css.map",
+    "static/css/main.dd5b6b7c.chunk.css.map": "/static/css/main.dd5b6b7c.chunk.css.map",
+    "static/js/2.75af8ef2.chunk.js.LICENSE.txt": "/static/js/2.75af8ef2.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.5a432ab6.js",
+    "static/js/runtime-main.f99a9090.js",
     "static/css/2.af4e9669.chunk.css",
-    "static/js/2.054b5772.chunk.js",
+    "static/js/2.75af8ef2.chunk.js",
     "static/css/main.dd5b6b7c.chunk.css",
     "static/js/main.ad1856c8.chunk.js"
   ]

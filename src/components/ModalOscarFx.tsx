@@ -27,6 +27,8 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
   const [showOther, setShowOther] = useState(false);
   const [alpine, setAlpine] = useState(false);
   const [log_level, setLog_Level] = useState("");
+  const [memoryFormat, setMemoryFormat] = useState("Gi");
+  const [memoryTotalFormat, setmemoryTotalFormat] = useState("Gi");
 
   function handlesetShowOther() {
     setShowOther(!showOther)
@@ -39,6 +41,15 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
 
   function handleChangeSelect(value:any) {
     setLog_Level(value)
+    //console.log(`selected ${value}`);
+  }
+  
+  function handleMemorySelect(value:any) {
+    setMemoryFormat(value)
+    //console.log(`selected ${value}`);
+  }
+  function handleMemoryTotalSelect(value:any) {
+    setmemoryTotalFormat(value)
     //console.log(`selected ${value}`);
   }
   const importScript = () => {
@@ -75,8 +86,10 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
       onOk={() => {
         form
           .validateFields()
-          .then((values) => {
+          .then((values) => {   
             const newState = { ...values, alpine: alpine,log_level:log_level ,
+              memoryFormat:memoryFormat,
+              memoryTotalFormat:memoryTotalFormat,
               synchronous: formSynchronous.getFieldsValue(),
               annotations:formAnnotations.getFieldsValue(),
               labels:formLabels.getFieldsValue(),
@@ -90,6 +103,20 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
     >
       <Form form={form} initialValues={defaultValue} name="Form_oscar_fx_modal">
         <Divider>Setup</Divider>
+
+        <Form.Item
+          name="cluster_name"
+          label="Cluster Name"
+        >
+          <Input
+            defaultValue="oscar-cluster"
+            onClick={(e) => e.stopPropagation()}
+            onMouseUp={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+          />
+        </Form.Item>
+
         <Form.Item
           name="name"
           label="Name"
@@ -108,14 +135,20 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
           />
         </Form.Item>
 
-        <Form.Item name="memory" label="Memory">
-          <Input
+        <Form.Item name="memory" label="Memory" style={{ width: 402 , display:"inline-flex"  }}>
+          <Input 
             onClick={(e) => e.stopPropagation()}
             onMouseUp={(e) => e.stopPropagation()}
             onMouseDown={(e) => e.stopPropagation()}
             onKeyDown={(e) => e.stopPropagation()}
           ></Input>
+
+          
         </Form.Item>
+        <Select defaultValue="Gi" style={{ width: 70, display:"inline-flex"  }} onChange={handleMemorySelect}>
+            <Option value="Mi">Mi</Option>                                                                                    
+            <Option value="Gi">Gi</Option>
+          </Select>
         <Form.Item name="cpu" label="Cpu">
           <Input
             onClick={(e) => e.stopPropagation()}
@@ -241,12 +274,12 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
           <Form
           form={form}
           initialValues={defaultValue}
-          name="other variables fot oscar"
+          name="other variables for oscar"
           >
 
             
             
-            <Form.Item
+            <Form.Item  style={{ width: 402, display:"inline-flex"  }}
               name="total_memory"
               label="Total Memory"
             >
@@ -257,7 +290,10 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
                 onKeyDown={(e) => e.stopPropagation()}
               />
             </Form.Item> 
-
+            <Select defaultValue="Gi" style={{ width: 70, display:"inline-flex"  }} onChange={handleMemoryTotalSelect}>
+            <Option value="Mi">Mi</Option>                                                                                    
+            <Option value="Gi">Gi</Option>
+          </Select>
             <Form.Item
               name="total_cpu"
               label="Total CPU"

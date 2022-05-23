@@ -2,7 +2,7 @@ import { YamlExport } from "../components/types";
 import yaml from "js-yaml";
 
 import { saveAs } from "file-saver";
-import { Label } from "../components/NodeInnerCustom";
+
 
 
 
@@ -121,15 +121,9 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                             }),
                     };
                 }
-                Object.keys(copy.environment).length === 0 && delete copy.environment;
-
                 
-                Object.keys(copy.synchronous).length === 0 && delete copy.synchronous;
-                Object.keys(copy.log_level).length === 0 && delete copy.log_level;
-                copy.alpine === false && delete copy.alpine;
-
-
-                Object.keys(copy.annotations).length === 0 && delete copy.annotations;
+                
+             
 
                 const annotations =copy.annotations.Annotations ;
                 if (annotations) {
@@ -145,10 +139,9 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                                 return { ...a, ...b };
                             })
                     ;
-                }else delete copy.annotations
+                }
                 
-
-                Object.keys(copy.labels).length === 0 && delete copy.labels;
+                
 
                 const labels =copy.labels.Labels ;
                 if (labels) {
@@ -164,9 +157,68 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                                 return { ...a, ...b };
                             })
                     ;
-                }else delete copy.labels
+                }
+                
+                if(copy.memory !== undefined && Object.keys(copy.memory).length !== 0){
+                    copy.memory = copy.memory+copy.memoryFormat
+                }
+                if(copy.total_memory !== undefined && Object.keys(copy.total_memory).length !== 0){
+                    copy.total_memory = copy.total_memory+copy.memoryTotalFormat
+                }
+                
+                //Delete of the empthy variables
+                if(copy.cluster_name === undefined || Object.keys(copy.cluster_name).length === 0){
+                    copy.cluster_name='oscar-cluster'
+                }
+                copy.memory !== undefined && Object.keys(copy.memory).length === 0 && delete copy.memory
+                delete copy.memoryFormat
+                copy.cpu !== undefined && Object.keys(copy.cpu).length === 0 && delete copy.cpu
 
+                if(copy.environment !== undefined && Object.keys(copy.environment).length === 0){
+                    delete copy.environment
+                }else if(copy.environment.Variables !== undefined && Object.keys(copy.environment.Variables).length === 0){
+                    delete copy.environment
+                }
 
+                copy.total_memory !== undefined && Object.keys(copy.total_memory).length === 0 && delete copy.total_memory
+                delete copy.memoryTotalFormat
+                copy.total_cpu !== undefined && Object.keys(copy.total_cpu).length === 0 && delete copy.total_cpu
+                
+                Object.keys(copy.log_level).length === 0 && delete copy.log_level;
+                copy.alpine === false && delete copy.alpine;
+
+                if(copy.annotations !== undefined && Object.keys(copy.annotations).length === 0){
+                    delete copy.annotations
+                }else if(copy.annotations.Annotations !== undefined && Object.keys(copy.annotations.Annotations).length === 0){
+                    delete copy.annotations
+                }
+
+                if(copy.labels !== undefined && Object.keys(copy.labels).length === 0){
+                    delete copy.labels
+                }else if(copy.labels.Labels !== undefined && Object.keys(copy.labels.Labels).length === 0){
+                    delete copy.labels
+                }
+
+                if(copy.synchronous !== undefined && Object.keys(copy.synchronous).length === 0 ){
+                    delete copy.synchronous       
+                }else{
+                    if(copy.synchronous.min_scale !== undefined && Object.keys(copy.synchronous.min_scale).length === 0){   
+                        delete copy.synchronous.min_scale           
+                    }
+                    if(copy.synchronous.max_scale !== undefined && Object.keys(copy.synchronous.max_scale).length === 0){
+                        delete copy.synchronous.max_scale           
+                    }
+                    if(copy.synchronous.min_scale === undefined && copy.synchronous.max_scale === undefined){
+                        delete copy.synchronous
+                    }
+                }
+
+                if(copy.input.length === 1 && copy.input[0].storage_provider === "undefined.undefined"){
+                    delete copy.input
+                }
+                if(copy.output.length === 1 && copy.output[0].storage_provider === "undefined.undefined"){
+                    delete copy.output
+                }
 
 
                 return copy;
@@ -312,6 +364,7 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
             .map((node) => node.properties)
             .reduce((a, b) => {
                 const copy = JSON.parse(JSON.stringify(b));
+                delete copy.name;
                 delete copy.path;
                 delete copy.output;
 
@@ -344,8 +397,11 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
         
         const result: YamlExport = {
             functions: {
-                oscar: oscarFxs.map((x) =>
-                    JSON.parse(`{ "${x.name}": ${JSON.stringify(x)} } `)
+                oscar: oscarFxs.map((x) =>{
+                    const clusterName=x.cluster_name
+                    delete x.cluster_name
+                    return JSON.parse(`{ "${clusterName}": ${JSON.stringify(x)} } `)
+                },{}
                 ),
                 aws: awsFxs,
             },
@@ -366,6 +422,16 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
             delete result.storage_providers.onedata;
         result.storage_providers.minio === {} &&
             delete result.storage_providers.minio;
+
+        if(Object.keys(result.functions.oscar).length === 0 ){
+            delete result.functions.oscar
+        }
+        if(Object.keys(result.functions.aws).length === 0 ){
+            delete result.functions.aws
+        }
+        if(Object.keys(result.storage_providers).length === 0 ){
+            delete result.storage_providers
+        }
 
         const output = yaml.dump(result);
         const blob = new Blob([output], {

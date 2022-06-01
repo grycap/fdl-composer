@@ -3,14 +3,9 @@ import yaml from "js-yaml";
 
 import { saveAs } from "file-saver";
 
-
-
-
 function ErrorHandler(error:any) {
     return error
 }
-
-
 
 export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
 
@@ -121,9 +116,6 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                             }),
                     };
                 }
-                
-                
-             
 
                 const annotations =copy.annotations.Annotations ;
                 if (annotations) {
@@ -140,8 +132,6 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                             })
                     ;
                 }
-                
-                
 
                 const labels =copy.labels.Labels ;
                 if (labels) {
@@ -174,7 +164,6 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                     copy.total_cpu !== undefined && Object.keys(copy.total_cpu).length === 0 && delete copy.total_cpu
                     delete copy.yunikorn_enable
                 } 
-                
                 
                 //Delete of the empthy variables
                 if(copy.cluster_name === undefined || Object.keys(copy.cluster_name).length === 0){

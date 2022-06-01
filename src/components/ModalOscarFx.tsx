@@ -1,6 +1,5 @@
-import { UploadOutlined } from "@ant-design/icons";
-import { Button, Divider, Form, Input, Modal, Upload, Col, Row,Checkbox, Select } from "antd";
-import React, { useEffect, useState } from "react";
+import { Button, Divider, Form, Input, Modal, Col, Row,Checkbox, Select } from "antd";
+import React, { useState } from "react";
 import { IModalFxProps } from "./types";
 
 const { Option } = Select;

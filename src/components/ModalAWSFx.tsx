@@ -9,7 +9,7 @@ import {
   Divider,
   Select,
 } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { IModalFxProps } from "./types";
 
 export const ModalAWSFx: React.FC<IModalFxProps> = ({

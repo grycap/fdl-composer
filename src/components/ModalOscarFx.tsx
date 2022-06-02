@@ -1,6 +1,5 @@
-import { UploadOutlined } from "@ant-design/icons";
-import { Button, Divider, Form, Input, Modal, Upload, Col, Row,Checkbox, Select } from "antd";
-import React, { useEffect, useState } from "react";
+import { Button, Divider, Form, Input, Modal, Col, Row,Checkbox, Select } from "antd";
+import React, { useState } from "react";
 import { IModalFxProps } from "./types";
 
 const { Option } = Select;
@@ -25,6 +24,7 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
   const [scriptContent, setScriptContent] = useState("");
 
   const [showOther, setShowOther] = useState(false);
+  const [yunikorn_enable, setYunikorn_enable] = useState(false);
   const [alpine, setAlpine] = useState(false);
   const [log_level, setLog_Level] = useState("");
   const [memoryFormat, setMemoryFormat] = useState("Gi");
@@ -35,8 +35,11 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
     //console.log(`selected ${value}`);
   }
 
-  const onCheckboxChange = (e: { target: { checked: boolean } }) => {
+  const onCheckboxChangeAlpine = (e: { target: { checked: boolean } }) => {
     setAlpine(e.target.checked);
+  };
+  const onCheckboxChangeYunikorn = (e: { target: { checked: boolean } }) => {
+    setYunikorn_enable(e.target.checked);
   };
 
   function handleChangeSelect(value:any) {
@@ -78,7 +81,7 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
 
   return (
     <Modal
-      title={`Oscar function ${defaultValue?.name || ""}`}
+      title={`OSCAR service ${defaultValue?.name || ""}`}
       visible={visible}
       onCancel={() => {
         onCancel();
@@ -87,7 +90,9 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
         form
           .validateFields()
           .then((values) => {   
-            const newState = { ...values, alpine: alpine,log_level:log_level ,
+            const newState = { ...values, alpine: alpine,
+              log_level:log_level ,
+              yunikorn_enable:yunikorn_enable,
               memoryFormat:memoryFormat,
               memoryTotalFormat:memoryTotalFormat,
               synchronous: formSynchronous.getFieldsValue(),
@@ -276,9 +281,16 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
           initialValues={defaultValue}
           name="other variables for oscar"
           >
+            <Row style={{ marginBottom: "1rem" }}>
+              <Col span={3}>Yunikorn: </Col>
+              <Col span={1}>
+                <Checkbox value={yunikorn_enable} onChange={onCheckboxChangeYunikorn} />
+              </Col>
+            </Row>
 
-            
-            
+          {yunikorn_enable
+          ? 
+            <div>
             <Form.Item  style={{ width: 402, display:"inline-flex"  }}
               name="total_memory"
               label="Total Memory"
@@ -305,7 +317,8 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
                 onKeyDown={(e) => e.stopPropagation()}
               />
             </Form.Item> 
-
+            </div>
+          :<div></div>}
 
         
             <Row style={{ marginBottom: "1rem" }}>
@@ -325,7 +338,7 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
             <Row style={{ marginBottom: "1rem" }}>
               <Col span={3}>Alpine:</Col>
               <Col span={1}>
-                <Checkbox value={alpine} onChange={onCheckboxChange} />
+                <Checkbox value={alpine} onChange={onCheckboxChangeAlpine} />
               </Col>
             </Row>
           </Form> 

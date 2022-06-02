@@ -1,6 +1,5 @@
-import { UploadOutlined } from "@ant-design/icons";
 import { INodeInnerDefaultProps } from "@mrblenny/react-flow-chart";
-import { Button, Checkbox, Divider, Modal, Tabs } from "antd";
+import { Modal } from "antd";
 import React from "react";
 import styled, { css } from "styled-components";
 import { ModalAWSFx } from "./ModalAWSFx";

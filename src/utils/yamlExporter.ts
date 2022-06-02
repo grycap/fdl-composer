@@ -3,14 +3,9 @@ import yaml from "js-yaml";
 
 import { saveAs } from "file-saver";
 
-
-
-
 function ErrorHandler(error:any) {
     return error
 }
-
-
 
 export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
 
@@ -121,9 +116,6 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                             }),
                     };
                 }
-                
-                
-             
 
                 const annotations =copy.annotations.Annotations ;
                 if (annotations) {
@@ -140,8 +132,6 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                             })
                     ;
                 }
-                
-                
 
                 const labels =copy.labels.Labels ;
                 if (labels) {
@@ -162,9 +152,18 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                 if(copy.memory !== undefined && Object.keys(copy.memory).length !== 0){
                     copy.memory = copy.memory+copy.memoryFormat
                 }
-                if(copy.total_memory !== undefined && Object.keys(copy.total_memory).length !== 0){
-                    copy.total_memory = copy.total_memory+copy.memoryTotalFormat
-                }
+
+                if(copy.yunikorn_enable ===true ){
+                    if( copy.total_memory !== undefined && Object.keys(copy.total_memory).length !== 0){
+                        copy.total_memory = copy.total_memory+copy.memoryTotalFormat
+                    }
+                    copy.total_memory !== undefined && Object.keys(copy.total_memory).length === 0 && delete copy.total_memory
+                    copy.total_cpu !== undefined && Object.keys(copy.total_cpu).length === 0 && delete copy.total_cpu
+                }else{
+                    copy.total_memory !== undefined && Object.keys(copy.total_memory).length === 0 && delete copy.total_memory
+                    copy.total_cpu !== undefined && Object.keys(copy.total_cpu).length === 0 && delete copy.total_cpu
+                    delete copy.yunikorn_enable
+                } 
                 
                 //Delete of the empthy variables
                 if(copy.cluster_name === undefined || Object.keys(copy.cluster_name).length === 0){
@@ -178,11 +177,8 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                     delete copy.environment
                 }else if(copy.environment.Variables !== undefined && Object.keys(copy.environment.Variables).length === 0){
                     delete copy.environment
-                }
-
-                copy.total_memory !== undefined && Object.keys(copy.total_memory).length === 0 && delete copy.total_memory
+                }               
                 delete copy.memoryTotalFormat
-                copy.total_cpu !== undefined && Object.keys(copy.total_cpu).length === 0 && delete copy.total_cpu
                 
                 Object.keys(copy.log_level).length === 0 && delete copy.log_level;
                 copy.alpine === false && delete copy.alpine;

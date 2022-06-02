@@ -81,7 +81,7 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
 
   return (
     <Modal
-      title={`Oscar function ${defaultValue?.name || ""}`}
+      title={`OSCAR service ${defaultValue?.name || ""}`}
       visible={visible}
       onCancel={() => {
         onCancel();

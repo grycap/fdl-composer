@@ -75,9 +75,9 @@ export class Foot extends React.Component {
             <a href="https://github.com/grycap/" target="_blank" rel="noreferrer" title="Github"> <BsGithub style={IconStyle}/> </a>
             <a href="https://hub.docker.com/orgs/grycap" target="_blank" rel="noreferrer" title="DockerHub"> <GrDocker style={IconStyle}/> </a>
             <a href="https://www.researchgate.net/lab/GRyCAP-Ignacio-Blanquer" target="_blank" rel="noreferrer" title="ResearchGate"> <FaResearchgate style={IconStyle}/> </a>
-            <a href="https://imdocs.readthedocs.io" target="_blank" rel="noreferrer" title="Documentation"> <GoBook style={IconStyle}/></a>
-            <a href="/im-dashboard/static/terms.html" target="_blank" rel="noreferrer" title="Terms of Service"> <ImNewspaper style={IconStyle}/></a>
-            <a href="http://ftpgrycap.i3m.upv.es/IMPrivacyPolicy.pdf" target="_blank" rel="noreferrer" title="Privacy Policy"> <MdOutlinePrivacyTip style={IconStyle}/></a>
+            <a href="https://docs.oscar.grycap.net/" target="_blank" rel="noreferrer" title="Documentation"> <GoBook style={IconStyle}/></a>
+            <a href="https://docs.oscar.grycap.net/license/" target="_blank" rel="noreferrer" title="OSCAR Licence"> <ImNewspaper style={IconStyle}/></a>
+            <a href="https://github.com/grycap/fdl-composer/blob/main/LICENSE" target="_blank" rel="noreferrer" title="FDL-Composer Licence"> <MdOutlinePrivacyTip style={IconStyle}/></a>
           </IconStyleBlock>
         </Col>
       </Row>

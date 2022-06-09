@@ -107,7 +107,7 @@ export const NodeInnerCustom = ({
             title={node.properties?.name || node.type}
             visible={visible}
             onOk={() => {
-              node.properties = currentProperties;
+              node.properties.path = currentProperties.path;
               setVisible(false);
             }}
             onCancel={() => setVisible(false)}

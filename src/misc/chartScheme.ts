@@ -12,6 +12,7 @@ export interface IStorageProvider {
   s3DefaultValue: any;
   oneDataDefaultValue: any;
   minioDefaultValue: any;
+  templateModalVisible: boolean,
 }
 
 export const initialState: IChart & IVisible & IStorageProvider = {
@@ -32,4 +33,5 @@ export const initialState: IChart & IVisible & IStorageProvider = {
   s3DefaultValue: undefined,
   oneDataDefaultValue: undefined,
   minioDefaultValue: undefined,
+  templateModalVisible: false,
 }

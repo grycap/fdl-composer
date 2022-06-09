@@ -13,12 +13,14 @@ import {
   ExportOutlined,
   SettingOutlined,
   UploadOutlined,
+  FileDoneOutlined,
 } from "@ant-design/icons";
 import { saveAs } from "file-saver";
 import { NodeInnerCustom } from "./components/NodeInnerCustom";
 import { ModalS3Provider } from "./components/ModalS3Provider";
 import { ModalOneDataProvider } from "./components/ModalOneDataProvider";
 import { ModalMinioProvider } from "./components/ModalMinioProvider";
+import { ModalTemplate } from "./components/ModalTemplate";
 import { yamlExporter } from "./utils/yamlExporter";
 import { showerror } from "./components/showError";
 
@@ -40,6 +42,7 @@ export class App extends React.Component {
     super(props);
     this.removeStorageProvider = this.removeStorageProvider.bind(this);
     this.editStorageProvider = this.editStorageProvider.bind(this);
+    this.importFileState = this.importFileState.bind(this);
   }
 
   public exportToYaml() {
@@ -62,6 +65,9 @@ export class App extends React.Component {
     saveAs(blob, "state.json");
   }
 
+  public importFileState(file:any) {
+    this.setState(file);
+  }
   public importState() {
     const input = document.createElement("input");
     input.type = "file";
@@ -141,7 +147,6 @@ export class App extends React.Component {
     const index = this.state.storageProviders.findIndex(
       (x) => x.type === type && sidebarItemProps.name === x.properties?.name
     );
-    console.log(index);
 
     const oldValues = [...this.state.storageProviders];
     index !== -1 && oldValues.splice(index, 1);
@@ -182,12 +187,21 @@ export class App extends React.Component {
         properties: sidebarItemProps,
       },
     ];
+     const nodes = this.state.nodes;
+      Object.keys(nodes).forEach(key => {
+        if(nodes[key].type === type &&  nodes[key].properties.name === this.state.minioDefaultValue?.name){
+          nodes[key].properties=sidebarItemProps
+        }
+      });
     this.setState({
       ...this.state,
       storageProviders: storageProviders,
       s3ModalVisible: false,
       oneDataModalVisible: false,
       minioModalVisible: false,
+      minioDefaultValue: undefined,
+      s3DefaultValue: undefined,
+      OneDataDefaultVisible: undefined,
     });
   }
 
@@ -256,6 +270,22 @@ export class App extends React.Component {
               this.addOrUpdateStorageProvider("minio", sidebarItemProps);
             }}
           />
+          <ModalTemplate
+            //defaultValue={this.state.templateModalVisible}
+            //removeStorageProvider={this.removeStorageProvider}
+            visible={this.state.templateModalVisible}
+            onCancel={() =>
+              this.setState({
+                ...this.state,
+                //minioDefaultValue: undefined,
+                templateModalVisible: false,
+              })
+            }
+            onOk={() => {
+              
+            }}
+            importFileState={this.importFileState}
+          />
           <Header>
             <Menu theme="dark" mode="horizontal">
               <StyledButton
@@ -280,6 +310,15 @@ export class App extends React.Component {
                 }}
               >
                 Export yaml
+              </StyledButton>
+              <StyledButton
+                ghost
+                icon={<FileDoneOutlined />}
+                onClick={() => {
+                  this.setState({ ...this.state, templateModalVisible: true});
+                }}
+              >
+                Templates
               </StyledButton>
               <SubMenu
                 key="SubMenu"

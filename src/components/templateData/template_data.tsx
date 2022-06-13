@@ -15,7 +15,7 @@ export const template_data=[{
   {
     "key": 3,
     "name": "mask-detector",
-    "description":"Two OSCAR service and three MinIo buckets",
+    "description":"Two OSCAR services and three MinIo buckets",
     "file":path+"mask-detector.json"
   },
   {
@@ -51,7 +51,7 @@ export const template_data=[{
   {
     "key": 9,
     "name": "video-process",
-    "description":"Two OSCAR service and three MinIo buckets",
+    "description":"Two OSCAR services and three MinIo buckets",
     "file":path+"video-process.json"
   }
 ]

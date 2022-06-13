@@ -34,7 +34,7 @@ top:-25px;
   img{
     width: 4%;
     height: 4%;
-    margin:10px;
+    margin:20px;
   }
 `;
 
@@ -55,19 +55,14 @@ export class Foot extends React.Component {
     return (
       <FooterStyle>  
       <Row>
-        <Col md={10} > 
+        <Col md={11} > 
           <FirstBlock>
             2020 <a href="https://www.grycap.upv.es/" target="_blank" rel="noreferrer">GRyCAP</a><br/>
           </FirstBlock>
         </Col>
-        <Col md={9}>
+        <Col md={8}>
           <ImageStyle>
-              <a href="https://www.indigo-datacloud.eu/" target="_blank" rel="noreferrer"><img src="https://appsgrycap.i3m.upv.es:31443/im-dashboard/static/images/indigo_logo.png" alt="indigo"/></a>
-              <a href="https://deep-hybrid-datacloud.eu/" target="_blank" rel="noreferrer"><img src="https://appsgrycap.i3m.upv.es:31443/im-dashboard/static/images/logo_deep.png" alt="deep"/></a>
-              <a href="https://www.eosc-hub.eu/" target="_blank" rel="noreferrer"><img src="https://appsgrycap.i3m.upv.es:31443/im-dashboard/static/images/eosc-hub_logo.png" alt="eosc-hub"/></a>
-              <a href="https://www.eosc-synergy.eu/" target="_blank" rel="noreferrer"><img src="https://appsgrycap.i3m.upv.es:31443/im-dashboard/static/images/eosc-synergy_logo.png" alt="eosc-synergy"/></a>
               <a href="https://ai-sprint-project.eu/" target="_blank" rel="noreferrer"><img src="https://appsgrycap.i3m.upv.es:31443/im-dashboard/static/images/ai-sprint_logo.png" alt="ai-sprint"/></a>
-              <a href="https://www.egi.eu/projects/egi-ace/" target="_blank" rel="noreferrer"><img src="https://appsgrycap.i3m.upv.es:31443/im-dashboard/static/images/logo-egi-ace.png" alt="egi"/></a>
           </ImageStyle>   
         </Col>
         <Col md={5}>

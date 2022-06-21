@@ -57,7 +57,7 @@ export class Foot extends React.Component {
       <Row>
         <Col md={11} > 
           <FirstBlock>
-            2020 <a href="https://www.grycap.upv.es/" target="_blank" rel="noreferrer">GRyCAP</a><br/>
+            2022 <a href="https://www.grycap.upv.es/" target="_blank" rel="noreferrer">GRyCAP</a><br/>
           </FirstBlock>
         </Col>
         <Col md={8}>

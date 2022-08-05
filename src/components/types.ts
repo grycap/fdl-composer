@@ -57,3 +57,10 @@ export interface YamlExport {
     functions: any;
     storage_providers: any;
 }
+
+export interface IModalTemplateProps {
+    visible: boolean;
+    onOk: (properties: any) => void;
+    onCancel: () => void;
+    importFileState: (file:any) => void;
+}

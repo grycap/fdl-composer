@@ -15,6 +15,8 @@ export const ModalMinioProvider: React.FC<IModalStorageProviderProps> = ({
   useEffect(() => {
     if (defaultValue) {
       form.setFieldsValue(defaultValue);
+    }else{
+      form.resetFields();
     }
   }, [defaultValue, visible, form]);
 

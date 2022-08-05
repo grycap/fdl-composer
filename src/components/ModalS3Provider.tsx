@@ -13,6 +13,8 @@ export const ModalS3Provider: React.FC<IModalStorageProviderProps> = ({
   useEffect(() => {
     if (defaultValue) {
       form.setFieldsValue(defaultValue);
+    }else{
+      form.resetFields();
     }
   }, [defaultValue, visible, form]);
 

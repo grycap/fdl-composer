@@ -13,7 +13,7 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
         const storages = nodeValues.filter(
             (x) => x.type === "s3" || x.type === "onedata" || x.type === "minio"
         );
-
+        
         const oscarFxs = nodeValues
             .filter((x: any) => x.type === "oscar-fx")
             .map((node) => {
@@ -98,7 +98,7 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                 else {
                     output = { path: outputNode?.properties.path, storage_provider: `${outputNode?.type}.${outputNode?.properties.name}` }
                 }
-                console.log(output);
+                //console.log(output);
 
                 copy.output = [output];
 
@@ -123,8 +123,6 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                             .split(",")
                             .map((x: string) => {
                                 const kvp = x.split("=");
-                                console.log(kvp);
-                                
                                 return { [kvp[0].trim()]: kvp[1].trim() };
                             })
                             .reduce((a: any, b: any) => {
@@ -139,8 +137,6 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                             .split(",")
                             .map((x: string) => {
                                 const kvp = x.split("=");
-                                console.log(kvp);
-                                
                                 return { [kvp[0].trim()]: kvp[1].trim() };
                             })
                             .reduce((a: any, b: any) => {
@@ -164,6 +160,40 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                     copy.total_cpu !== undefined && Object.keys(copy.total_cpu).length === 0 && delete copy.total_cpu
                     delete copy.yunikorn_enable
                 } 
+                if(copy?.replica && Object.keys(copy.replica).length !== 0){
+                    copy.replica.type=copy.replica_type
+                    delete copy.replica_type
+                    if(copy.replica.type === "NO REPLICA" ){
+                        delete copy.replica
+                    }else if(copy.replica.type === "oscar" ){
+                        
+                    }else if(copy.replica.type === "endpoint" ){
+
+                    }
+                    if(copy.replica?.type === "endpoint" || copy.replica?.type === "oscar"){
+                        if(Object.keys(copy.replica.headers).length !== 0){
+                            const headers =copy.replica.headers ;
+                            if (headers) {
+                                copy.headers = headers.replace(" ", "")
+                                        .split(",")
+                                        .map((x: string) => {
+                                            const kvp = x.split("=");                                            
+                                            return { [kvp[0].trim()]: kvp[1].trim() };
+                                        })
+                                        .reduce((a: any, b: any) => {
+                                            return { ...a, ...b };
+                                        })
+                                ;
+                            }
+                        }
+                    }
+                }else{
+                    delete copy.replica_type
+                    delete copy.replica
+                }
+
+             
+
                 
                 //Delete of the empthy variables
                 if(copy.cluster_name === undefined || Object.keys(copy.cluster_name).length === 0){
@@ -179,7 +209,6 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                     delete copy.environment
                 }               
                 delete copy.memoryTotalFormat
-                
                 Object.keys(copy.log_level).length === 0 && delete copy.log_level;
                 copy.alpine === false && delete copy.alpine;
 
@@ -215,7 +244,6 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                 if(copy.output.length === 1 && copy.output[0].storage_provider === "undefined.undefined"){
                     delete copy.output
                 }
-
 
                 return copy;
             });

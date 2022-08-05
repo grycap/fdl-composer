@@ -1,4 +1,4 @@
-import { Button, Divider, Form, Input, Modal, Col, Row,Checkbox, Select } from "antd";
+import { Button, Divider, Form, Input,InputNumber, Modal, Col, Row,Checkbox, Select } from "antd";
 import React, { useState } from "react";
 import { IModalFxProps } from "./types";
 
@@ -17,6 +17,7 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
   const [formSynchronous] = Form.useForm();
   const [formAnnotations] = Form.useForm();
   const [formLabels] = Form.useForm();
+  const [formReplica] = Form.useForm();
 
 
   
@@ -24,11 +25,12 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
   const [scriptContent, setScriptContent] = useState("");
 
   const [showOther, setShowOther] = useState(false);
-  const [yunikorn_enable, setYunikorn_enable] = useState(false);
+  const [yunikorn_enable, setYunikorn_enable] = useState( defaultValue?.yunikorn_enable|| false);
   const [alpine, setAlpine] = useState(false);
-  const [log_level, setLog_Level] = useState("");
-  const [memoryFormat, setMemoryFormat] = useState("Gi");
-  const [memoryTotalFormat, setmemoryTotalFormat] = useState("Gi");
+  const [log_level, setLog_Level] = useState( defaultValue?.log_level||"INFO");
+  const [type, setReplica] = useState(defaultValue?.type || "NO REPLICA");
+  const [memoryFormat, setMemoryFormat] = useState(defaultValue?.memoryFormat || "Gi");
+  const [memoryTotalFormat, setmemoryTotalFormat] = useState( defaultValue?.memoryTotalFormat || "Gi");
 
   function handlesetShowOther() {
     setShowOther(!showOther)
@@ -44,6 +46,10 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
 
   function handleChangeSelect(value:any) {
     setLog_Level(value)
+    //console.log(`selected ${value}`);
+  }
+  function handleChangeReplica(value:any) {
+    setReplica(value)
     //console.log(`selected ${value}`);
   }
   
@@ -89,8 +95,9 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
       onOk={() => {
         form
           .validateFields()
-          .then((values) => {   
-            const newState = { ...values, alpine: alpine,
+          .then((values) => {  
+            const newState = { ...values, 
+              alpine: alpine,
               log_level:log_level ,
               yunikorn_enable:yunikorn_enable,
               memoryFormat:memoryFormat,
@@ -100,7 +107,10 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
               labels:formLabels.getFieldsValue(),
               environment: formEnv.getFieldsValue(),
               input: formInput.getFieldsValue(),
-              output: formOutput.getFieldsValue() } as any;
+              output: formOutput.getFieldsValue(),
+              replica_type:type,
+              replica: formReplica.getFieldsValue()
+               } as any;
             onOk(newState);
           })
           .catch((error) => console.log("Error", error));
@@ -324,7 +334,7 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
             <Row style={{ marginBottom: "1rem" }}>
               <Col span={4}>Log Level:</Col>
               <Col span={2}>
-              <Select defaultValue="INFO" style={{ width: 120 }} onChange={handleChangeSelect}>
+              <Select defaultValue={defaultValue?.log_level || "INFO"} style={{ width: 120 }} onChange={handleChangeSelect}>
                 <Option value="CRITICAL">CRITICAL</Option>
                 <Option value="ERROR">ERROR</Option>
                 <Option value="WARNING" >WARNING</Option>
@@ -346,7 +356,7 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
         <Form
           form={formAnnotations}
           initialValues={defaultValue}
-          name="other variables fot oscar"
+          name="other variables for oscar"
         >
           <Form.Item name="Annotations" label="Annotations">
               <Input
@@ -363,7 +373,7 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
 
           form={formLabels}
           initialValues={defaultValue}
-          name="other variables fot oscar"
+          name="other variables for oscar"
         >
 
           <Form.Item name="Labels" label="Labels">
@@ -377,8 +387,106 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
           </Form.Item>
         </Form>
 
+      
+        <Form
+          form={formReplica}
+          initialValues={defaultValue}
+          name="other variables for oscar"
+          >
+            <Row style={{ marginBottom: "1rem" }}>
+              <Col span={4}>Replica:</Col>
+              <Col span={4}>
+              <Select defaultValue={defaultValue?.type || "NO REPLICA"} style={{ width: 150 }} onChange={handleChangeReplica}>
+                <Option value="NO REPLICA">NO REPLICA</Option>
+                <Option value="oscar">OSCAR</Option>
+                <Option value="endpoint" >ENDPOINT</Option>
+              </Select>
+              </Col>
+            </Row>
+
+          {type === "oscar" &&
+            <div>
+            <Form.Item 
+              name="cluster_id"
+              label="Cluster ID"
+            >
+              <Input defaultValue={defaultValue?.replicaOptions?.cluster_id}
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+              />
+            </Form.Item> 
+            <Form.Item
+              name="service_name"
+              label="Service Name"
+            > 
+              <Input defaultValue={defaultValue?.replicaOptions?.service_name}
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+              />
+            </Form.Item> 
+            </div>
+          }
 
 
+          {type === "endpoint" &&
+            <div>
+            <Form.Item 
+              name="url"
+              label="URL"
+            >
+              <Input defaultValue={defaultValue?.replicaOptions?.url}
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+              />
+            </Form.Item> 
+            <Form.Item
+              name="ssl_verify"
+              label="SSL Verify"
+            >
+              <Input defaultValue={defaultValue?.replicaOptions?.ssl_verify}
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+              />
+            </Form.Item> 
+            </div>
+          }
+
+          {(type === "endpoint" || type === "oscar") &&
+            <div>
+            <Form.Item 
+              name="priority"
+              label="Priority"
+            >
+              <InputNumber defaultValue={defaultValue?.replicaOptions?.priority || 0}
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+              />
+            </Form.Item> 
+            <Form.Item
+              name="headers"
+              label="Headers"
+            >
+              <Input  defaultValue={defaultValue?.replicaOptions?.headers}
+                placeholder= 'Separate by "," and assign value by "="'
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+              />
+            </Form.Item> 
+            </div>
+          }
+          </Form> 
 
       <Form
       form={formSynchronous}

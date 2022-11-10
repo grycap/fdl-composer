@@ -166,15 +166,15 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                     if(copy.replica.type === "NO REPLICA" ){
                         delete copy.replica
                     }else if(copy.replica.type === "oscar" ){
-                        
+                        //delete copy.replica
                     }else if(copy.replica.type === "endpoint" ){
-
+                        //delete copy.replica
                     }
                     if(copy.replica?.type === "endpoint" || copy.replica?.type === "oscar"){
-                        if(Object.keys(copy.replica.headers).length !== 0){
+                        if(copy.replica?.headers){
                             const headers =copy.replica.headers ;
                             if (headers) {
-                                copy.headers = headers.replace(" ", "")
+                                copy.replica.headers = headers.replace(" ", "")
                                         .split(",")
                                         .map((x: string) => {
                                             const kvp = x.split("=");                                            
@@ -243,6 +243,10 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                 }
                 if(copy.output.length === 1 && copy.output[0].storage_provider === "undefined.undefined"){
                     delete copy.output
+                }
+
+                if(copy.enable_gpu === false ){
+                    delete copy.enable_gpu
                 }
 
                 return copy;
@@ -441,11 +445,9 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
             result["storage_providers"].minio = minio;
         }
 
-        result.storage_providers.s3 === {} && delete result.storage_providers.s3;
-        result.storage_providers.onedata === {} &&
-            delete result.storage_providers.onedata;
-        result.storage_providers.minio === {} &&
-            delete result.storage_providers.minio;
+        result.storage_providers.s3 === '{}' && delete result.storage_providers.s3;
+        result.storage_providers.onedata === '{}' && delete result.storage_providers.onedata;
+        result.storage_providers.minio === '{}' && delete result.storage_providers.minio;
 
         if(Object.keys(result.functions.oscar).length === 0 ){
             delete result.functions.oscar

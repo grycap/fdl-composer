@@ -88,6 +88,7 @@ export class App extends React.Component {
                 "The file selected does not match a proper file structure",
             });
           } else {
+            console.log(fileContentObj)
             this.setState(fileContentObj);
           }
         }
@@ -339,7 +340,7 @@ export class App extends React.Component {
                     this.setState({ ...this.state, minioModalVisible: true });
                   }}
                 >
-                  New Minio
+                  New MinIO
                 </Menu.Item>
                 <Menu.Item
                   key="storage:onedata"
@@ -347,7 +348,7 @@ export class App extends React.Component {
                     this.setState({ ...this.state, oneDataModalVisible: true });
                   }}
                 >
-                  New One data
+                  New Onedata
                 </Menu.Item>
               </SubMenu>
             </Menu>

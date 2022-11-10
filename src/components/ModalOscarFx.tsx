@@ -1,4 +1,4 @@
-import { Button, Divider, Form, Input,InputNumber, Modal, Col, Row,Checkbox, Select } from "antd";
+import { Divider, Form, Input,InputNumber, Modal, Col, Row,Checkbox, Select, Tabs } from "antd";
 import React, { useState } from "react";
 import { IModalFxProps } from "./types";
 
@@ -21,24 +21,25 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
 
 
   
-  const [script, setScript] = useState("");
-  const [scriptContent, setScriptContent] = useState("");
+  //const [script, setScript] = useState("");
+  //const [scriptContent, setScriptContent] = useState("");
 
-  const [showOther, setShowOther] = useState(false);
-  const [yunikorn_enable, setYunikorn_enable] = useState( defaultValue?.yunikorn_enable|| false);
-  const [alpine, setAlpine] = useState(false);
-  const [log_level, setLog_Level] = useState( defaultValue?.log_level||"INFO");
-  const [type, setReplica] = useState(defaultValue?.type || "NO REPLICA");
+  const [yunikorn_enable, setYunikorn_enable] = useState( defaultValue?.yunikorn_enable || false);
+  const [alpine, setAlpine] = useState(defaultValue?.alpine ||  false);
+  const [enable_gpu, setGPU] = useState(defaultValue?.enable_gpu ||  false);
+  const [log_level, setLog_Level] = useState( defaultValue?.log_level || "INFO");
+  const [replica_type, setReplica] = useState(defaultValue?.replica_type || "NO REPLICA");
   const [memoryFormat, setMemoryFormat] = useState(defaultValue?.memoryFormat || "Gi");
   const [memoryTotalFormat, setmemoryTotalFormat] = useState( defaultValue?.memoryTotalFormat || "Gi");
 
-  function handlesetShowOther() {
-    setShowOther(!showOther)
-    //console.log(`selected ${value}`);
-  }
+
 
   const onCheckboxChangeAlpine = (e: { target: { checked: boolean } }) => {
     setAlpine(e.target.checked);
+  };
+
+  const onCheckboxChangeGPU = (e: { target: { checked: boolean } }) => {
+    setGPU(e.target.checked);
   };
   const onCheckboxChangeYunikorn = (e: { target: { checked: boolean } }) => {
     setYunikorn_enable(e.target.checked);
@@ -61,7 +62,7 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
     setmemoryTotalFormat(value)
     //console.log(`selected ${value}`);
   }
-  const importScript = () => {
+  /*const importScript = () => {
     const input = document.createElement("input");
     input.type = "file";
     input.accept = ".json";
@@ -83,7 +84,7 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
       fr.readAsText(input.files![0]);
     };
     input.click();
-  };
+  };*/
 
   return (
     <Modal
@@ -98,6 +99,7 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
           .then((values) => {  
             const newState = { ...values, 
               alpine: alpine,
+              enable_gpu:enable_gpu,
               log_level:log_level ,
               yunikorn_enable:yunikorn_enable,
               memoryFormat:memoryFormat,
@@ -108,7 +110,7 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
               environment: formEnv.getFieldsValue(),
               input: formInput.getFieldsValue(),
               output: formOutput.getFieldsValue(),
-              replica_type:type,
+              replica_type:replica_type,
               replica: formReplica.getFieldsValue()
                } as any;
             onOk(newState);
@@ -116,9 +118,9 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
           .catch((error) => console.log("Error", error));
       }}
     >
-      <Form form={form} initialValues={defaultValue} name="Form_oscar_fx_modal">
-        <Divider>Setup</Divider>
-
+    <Tabs defaultActiveKey="main">
+    <Tabs.TabPane tab="Setup" key="main">
+    <Form form={form} initialValues={defaultValue} name="Form_oscar_fx_modal">
         <Form.Item
           name="cluster_name"
           label="Cluster Name"
@@ -158,7 +160,6 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
             onKeyDown={(e) => e.stopPropagation()}
           ></Input>
 
-          
         </Form.Item>
         <Select defaultValue="Gi" style={{ width: 70, display:"inline-flex"  }} onChange={handleMemorySelect}>
             <Option value="Mi">Mi</Option>                                                                                    
@@ -224,8 +225,22 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
           ></Input>
         </Form.Item>
       </Form>
-
-      <Divider>Input</Divider>
+      <Row style={{ marginBottom: "1rem" }}>
+              <Col span={4}>Log Level:</Col>
+              <Col span={2}>
+              <Select defaultValue={defaultValue?.log_level || "INFO"} style={{ width: 120 }} onChange={handleChangeSelect}>
+                <Option value="CRITICAL">CRITICAL</Option>
+                <Option value="ERROR">ERROR</Option>
+                <Option value="WARNING" >WARNING</Option>
+                <Option value="INFO">INFO</Option>
+                <Option value="DEBUG">DEBUG</Option>
+                <Option value="NOTSET">NOTSET</Option>
+              </Select>
+              </Col>
+            </Row>
+    </Tabs.TabPane>
+    <Tabs.TabPane tab="Suffix/Prefix" key="2">
+    <Divider>Input</Divider>
       <Form
         form={formInput}
         initialValues={defaultValue?.input}
@@ -272,83 +287,24 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
         </Form.Item>
       </Form>
 
+    </Tabs.TabPane>
 
-      {showOther
-        ? 
-        <div>
-        <Divider></Divider>
-
-        <Row style={{ marginBottom: "1rem" }}>
-          <Col span={6}>Less options:</Col>
-          <Col span={1}>
-            <Button  onClick={handlesetShowOther}>-</Button>
-          </Col>
-        </Row>
-
-
-          <Form
+    <Tabs.TabPane tab="Other options" key="3">
+    <Form
           form={form}
           initialValues={defaultValue}
           name="other variables for oscar"
           >
             <Row style={{ marginBottom: "1rem" }}>
-              <Col span={3}>Yunikorn: </Col>
-              <Col span={1}>
-                <Checkbox value={yunikorn_enable} onChange={onCheckboxChangeYunikorn} />
-              </Col>
-            </Row>
-
-          {yunikorn_enable
-          ? 
-            <div>
-            <Form.Item  style={{ width: 402, display:"inline-flex"  }}
-              name="total_memory"
-              label="Total Memory"
-            >
-              <Input
-                onClick={(e) => e.stopPropagation()}
-                onMouseUp={(e) => e.stopPropagation()}
-                onMouseDown={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-              />
-            </Form.Item> 
-            <Select defaultValue="Gi" style={{ width: 70, display:"inline-flex"  }} onChange={handleMemoryTotalSelect}>
-            <Option value="Mi">Mi</Option>                                                                                    
-            <Option value="Gi">Gi</Option>
-          </Select>
-            <Form.Item
-              name="total_cpu"
-              label="Total CPU"
-            >
-              <Input
-                onClick={(e) => e.stopPropagation()}
-                onMouseUp={(e) => e.stopPropagation()}
-                onMouseDown={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-              />
-            </Form.Item> 
-            </div>
-          :<div></div>}
-
-        
-            <Row style={{ marginBottom: "1rem" }}>
-              <Col span={4}>Log Level:</Col>
-              <Col span={2}>
-              <Select defaultValue={defaultValue?.log_level || "INFO"} style={{ width: 120 }} onChange={handleChangeSelect}>
-                <Option value="CRITICAL">CRITICAL</Option>
-                <Option value="ERROR">ERROR</Option>
-                <Option value="WARNING" >WARNING</Option>
-                <Option value="INFO">INFO</Option>
-                <Option value="DEBUG">DEBUG</Option>
-                <Option value="NOTSET">NOTSET</Option>
-              </Select>
-              </Col>
-            </Row>
-
-            <Row style={{ marginBottom: "1rem" }}>
               <Col span={3}>Alpine:</Col>
               <Col span={1}>
-                <Checkbox value={alpine} onChange={onCheckboxChangeAlpine} />
+                <Checkbox checked={alpine} value={alpine} onChange={onCheckboxChangeAlpine} />
+              </Col>
+            </Row>
+            <Row style={{ marginBottom: "1rem" }}>
+              <Col span={3}>GPU:</Col>
+              <Col span={1}>
+                <Checkbox checked={enable_gpu} value={enable_gpu} onChange={onCheckboxChangeGPU} />
               </Col>
             </Row>
           </Form> 
@@ -387,107 +343,6 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
           </Form.Item>
         </Form>
 
-      
-        <Form
-          form={formReplica}
-          initialValues={defaultValue}
-          name="other variables for oscar"
-          >
-            <Row style={{ marginBottom: "1rem" }}>
-              <Col span={4}>Replica:</Col>
-              <Col span={4}>
-              <Select defaultValue={defaultValue?.type || "NO REPLICA"} style={{ width: 150 }} onChange={handleChangeReplica}>
-                <Option value="NO REPLICA">NO REPLICA</Option>
-                <Option value="oscar">OSCAR</Option>
-                <Option value="endpoint" >ENDPOINT</Option>
-              </Select>
-              </Col>
-            </Row>
-
-          {type === "oscar" &&
-            <div>
-            <Form.Item 
-              name="cluster_id"
-              label="Cluster ID"
-            >
-              <Input defaultValue={defaultValue?.replicaOptions?.cluster_id}
-                onClick={(e) => e.stopPropagation()}
-                onMouseUp={(e) => e.stopPropagation()}
-                onMouseDown={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-              />
-            </Form.Item> 
-            <Form.Item
-              name="service_name"
-              label="Service Name"
-            > 
-              <Input defaultValue={defaultValue?.replicaOptions?.service_name}
-                onClick={(e) => e.stopPropagation()}
-                onMouseUp={(e) => e.stopPropagation()}
-                onMouseDown={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-              />
-            </Form.Item> 
-            </div>
-          }
-
-
-          {type === "endpoint" &&
-            <div>
-            <Form.Item 
-              name="url"
-              label="URL"
-            >
-              <Input defaultValue={defaultValue?.replicaOptions?.url}
-                onClick={(e) => e.stopPropagation()}
-                onMouseUp={(e) => e.stopPropagation()}
-                onMouseDown={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-              />
-            </Form.Item> 
-            <Form.Item
-              name="ssl_verify"
-              label="SSL Verify"
-            >
-              <Input defaultValue={defaultValue?.replicaOptions?.ssl_verify}
-                onClick={(e) => e.stopPropagation()}
-                onMouseUp={(e) => e.stopPropagation()}
-                onMouseDown={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-              />
-            </Form.Item> 
-            </div>
-          }
-
-          {(type === "endpoint" || type === "oscar") &&
-            <div>
-            <Form.Item 
-              name="priority"
-              label="Priority"
-            >
-              <InputNumber defaultValue={defaultValue?.replicaOptions?.priority || 0}
-                onClick={(e) => e.stopPropagation()}
-                onMouseUp={(e) => e.stopPropagation()}
-                onMouseDown={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-              />
-            </Form.Item> 
-            <Form.Item
-              name="headers"
-              label="Headers"
-            >
-              <Input  defaultValue={defaultValue?.replicaOptions?.headers}
-                placeholder= 'Separate by "," and assign value by "="'
-                onClick={(e) => e.stopPropagation()}
-                onMouseUp={(e) => e.stopPropagation()}
-                onMouseDown={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-              />
-            </Form.Item> 
-            </div>
-          }
-          </Form> 
-
       <Form
       form={formSynchronous}
       initialValues={defaultValue}
@@ -518,20 +373,156 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
         </Form.Item>
 
       </Form>       
-      </div>  
-        : 
-        <div>
-        <Divider></Divider>
-        
-        <Row style={{ marginBottom: "1rem" }}>
-          <Col span={6}>More options:</Col>
-          <Col span={1}>
-          <Button  onClick={handlesetShowOther}>+</Button>
-          </Col>
-        </Row>
-        </div>
-      }
+    </Tabs.TabPane>
 
+    <Tabs.TabPane tab="Replica" key="4">
+    <Form
+          form={formReplica}
+          initialValues={defaultValue}
+          name="other variables for oscar"
+          >
+            <Row style={{ marginBottom: "1rem" }}>
+              <Col span={4}>Replica:</Col>
+              <Col span={4}>
+              <Select defaultValue={defaultValue?.replica_type || "NO REPLICA"} style={{ width: 150 }} onChange={handleChangeReplica}>
+                <Option value="NO REPLICA">NO REPLICA</Option>
+                <Option value="oscar">OSCAR</Option>
+                <Option value="endpoint" >ENDPOINT</Option>
+              </Select>
+              </Col>
+            </Row>
+
+          {replica_type === "oscar" &&
+            <div>
+            <Form.Item 
+              name="cluster_id"
+              label="Cluster ID"
+            >
+              <Input defaultValue={defaultValue?.replica?.cluster_id}
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+              />
+            </Form.Item> 
+            <Form.Item
+              name="service_name"
+              label="Service Name"
+            > 
+              <Input defaultValue={defaultValue?.replica?.service_name}
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+              />
+            </Form.Item> 
+            </div>
+          }
+          {replica_type === "endpoint" &&
+            <div>
+            <Form.Item 
+              name="url"
+              label="URL"
+            >
+              <Input defaultValue={defaultValue?.replica?.url}
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+              />
+            </Form.Item> 
+            <Form.Item
+              name="ssl_verify"
+              label="SSL Verify"
+            >
+              <Input defaultValue={defaultValue?.replica?.ssl_verify}
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+              />
+            </Form.Item> 
+            </div>
+          }
+
+          {(replica_type === "endpoint" || replica_type === "oscar") &&
+            <div>
+            <Form.Item 
+              name="priority"
+              label="Priority"
+            >
+              <InputNumber defaultValue={defaultValue?.replica?.priority || 0}
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+              />
+            </Form.Item> 
+            <Form.Item
+              name="headers"
+              label="Headers"
+            >
+              <Input  defaultValue={defaultValue?.replica?.headers}
+                placeholder= 'Separate by "," and assign value by "="'
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+              />
+            </Form.Item> 
+            </div>
+          }
+        </Form> 
+    </Tabs.TabPane>
+    <Tabs.TabPane tab="Yunikorn" key="5">
+    <Form
+          form={form}
+          initialValues={defaultValue}
+          name="other variables for oscar"
+          >
+    <Row style={{ marginBottom: "1rem" }}>
+              <Col span={3}>Yunikorn: </Col>
+              <Col span={1}>
+                <Checkbox checked={yunikorn_enable} value={yunikorn_enable} onChange={onCheckboxChangeYunikorn} />
+              </Col>
+            </Row>
+
+          {yunikorn_enable
+          ? 
+            <div>
+            <Form.Item  style={{ width: 402, display:"inline-flex"  }}
+              name="total_memory"
+              label="Total Memory"
+            >
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+              />
+            </Form.Item> 
+            <Select defaultValue="Gi" style={{ width: 70, display:"inline-flex"  }} onChange={handleMemoryTotalSelect}>
+            <Option value="Mi">Mi</Option>                                                                                    
+            <Option value="Gi">Gi</Option>
+          </Select>
+            <Form.Item
+              name="total_cpu"
+              label="Total CPU"
+            >
+              <Input
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+              />
+            </Form.Item> 
+            
+            </div>
+          :<div></div>}
+      </Form>
+    </Tabs.TabPane>
+
+  </Tabs>
     </Modal>
   );
 };

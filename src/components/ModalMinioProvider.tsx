@@ -53,7 +53,7 @@ export const ModalMinioProvider: React.FC<IModalStorageProviderProps> = ({
           .catch((error) => console.log("Error", error));
       }}
     >
-      <Form form={form} initialValues={defaultValue} name="Form minio modal">
+      <Form form={form} initialValues={defaultValue} name="Form MinIO modal">
         <Form.Item
           name="name"
           label="Name"

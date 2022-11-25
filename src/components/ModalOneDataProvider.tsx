@@ -20,7 +20,7 @@ export const ModalOneDataProvider: React.FC<IModalStorageProviderProps> = ({
 
   return (
     <Modal
-      title={`OneData Storage Provider ${defaultValue?.name || ""}`}
+      title={`Onedata Storage Provider ${defaultValue?.name || ""}`}
       visible={visible}
       onCancel={() => {
         onCancel();
@@ -41,7 +41,7 @@ export const ModalOneDataProvider: React.FC<IModalStorageProviderProps> = ({
           .catch((error) => console.log("Error", error));
       }}
     >
-      <Form form={form} initialValues={defaultValue} name="Form s3 modal">
+      <Form form={form} initialValues={defaultValue} name="Form Onedata modal">
         <Form.Item
           name="name"
           label="Name"

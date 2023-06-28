@@ -69,7 +69,7 @@ export const NodeInnerCustom = ({
     any | undefined
   >(node.properties || {});
 
-  const importScript = () => {
+  /*const importScript = () => {
     const input = document.createElement("input");
     input.type = "file";
     input.accept = ".json";
@@ -89,13 +89,14 @@ export const NodeInnerCustom = ({
       fr.readAsText(input.files![0]);
     };
     input.click();
-  };
+  };*/
 
   const color = getColor(node.type);
   switch (node.type) {
     case "s3":
     case "onedata":
     case "minio":
+    case "dCache":
       return (
         <Circle
           {...otherProps}
@@ -184,7 +185,7 @@ export const NodeInnerCustom = ({
 
           <div>{getIcon(node.type)}</div>
           <div
-            style={{ fontSize: "1.5rem", fontWeight: 700, color: "white" }}
+            style={{ fontSize: "1.5rem", fontWeight: 700, color: color.color }}
           >{`${node.properties?.lambda.name || ""}`}</div>
         </Outer>
       );

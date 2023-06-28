@@ -11,9 +11,13 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
 
     try{
         const storages = nodeValues.filter(
-            (x) => x.type === "s3" || x.type === "onedata" || x.type === "minio"
+            (x) => x.type === "s3" || x.type === "onedata" || x.type === "minio" || x.type === "dCache"
         );
-        
+        /*storages.forEach((element, index) => {
+            if(storages[index].type==="dCache"){
+                storages[index].type = "webdav";
+            }
+        });*/
         const oscarFxs = nodeValues
             .filter((x: any) => x.type === "oscar-fx")
             .map((node) => {
@@ -52,7 +56,9 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                 let input = copy.input;
                 if (input) {
                     input.path = inputNode?.properties.path;
-                    input.storage_provider = `${inputNode?.type}.${inputNode?.properties.name}`;
+                    console.log(inputNode)
+                    
+                    input.storage_provider = `${inputNode?.type==="dCache" ? "webdav" : inputNode?.type   }.${inputNode?.properties.name}`;
 
                     if (input.prefix) {
                         input.prefix = input.prefix.replace(" ", "").split(",");
@@ -421,7 +427,15 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
 
                 return { ...a, [b.name]: copy };
             }, {});
-
+        const dcache = nodeValues
+            .filter((x: any) => x.type === "dCache")
+            .map((node) => node.properties)
+            .reduce((a, b) => {
+                const copy = JSON.parse(JSON.stringify(b));
+                delete copy.name;
+                delete copy.path;
+                return { ...a, [b.name]: copy };
+            }, {});
         
         const result: YamlExport = {
             functions: {
@@ -444,7 +458,9 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
         if (Object.keys(minio).length !== 0) {
             result["storage_providers"].minio = minio;
         }
-
+        if (Object.keys(dcache).length !== 0) {
+            result["storage_providers"].webdav = dcache;
+        }
         result.storage_providers.s3 === '{}' && delete result.storage_providers.s3;
         result.storage_providers.onedata === '{}' && delete result.storage_providers.onedata;
         result.storage_providers.minio === '{}' && delete result.storage_providers.minio;

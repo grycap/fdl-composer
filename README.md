@@ -8,6 +8,10 @@ Drag&Drop items from the sidebar to the canvas and connect them.
 
 In the project directory, you can run:
 
+### Install the dependencies
+
+`npm install --legacy-peer-deps`
+
 ### `npm start`
 
 Runs the app in the development mode.\

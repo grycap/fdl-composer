@@ -20,6 +20,7 @@ import { NodeInnerCustom } from "./components/NodeInnerCustom";
 import { ModalS3Provider } from "./components/ModalS3Provider";
 import { ModalOneDataProvider } from "./components/ModalOneDataProvider";
 import { ModalMinioProvider } from "./components/ModalMinioProvider";
+import { ModaldCacheProvider } from "./components/ModaldCacheProvider";
 import { ModalTemplate } from "./components/ModalTemplate";
 import { yamlExporter } from "./utils/yamlExporter";
 import { showerror } from "./components/showError";
@@ -128,6 +129,13 @@ export class App extends React.Component {
           minioModalVisible: true,
         });
         break;
+      case "dCache":
+        this.setState({
+          ...this.state,
+          dCacheModalVisible: true,
+          dCacheDefaultValue: storageProvider?.properties,
+        });
+        break;
     }
   }
 
@@ -200,7 +208,9 @@ export class App extends React.Component {
       s3ModalVisible: false,
       oneDataModalVisible: false,
       minioModalVisible: false,
+      dCacheModalVisible: false,
       minioDefaultValue: undefined,
+      dCacheDefaultValue: undefined,
       s3DefaultValue: undefined,
       OneDataDefaultVisible: undefined,
     });
@@ -269,6 +279,21 @@ export class App extends React.Component {
             }
             onOk={(sidebarItemProps) => {
               this.addOrUpdateStorageProvider("minio", sidebarItemProps);
+            }}
+          />
+          <ModaldCacheProvider
+            defaultValue={this.state.dCacheDefaultValue}
+            removeStorageProvider={this.removeStorageProvider}
+            visible={this.state.dCacheModalVisible}
+            onCancel={() =>
+              this.setState({
+                ...this.state,
+                dCacheDefaultValue: undefined,
+                dCacheModalVisible: false,
+              })
+            }
+            onOk={(sidebarItemProps) => {
+              this.addOrUpdateStorageProvider("dCache", sidebarItemProps);
             }}
           />
           <ModalTemplate
@@ -349,6 +374,14 @@ export class App extends React.Component {
                   }}
                 >
                   New Onedata
+                </Menu.Item>
+                <Menu.Item
+                  key="storage:dcache"
+                  onClick={() => {
+                    this.setState({ ...this.state, dCacheModalVisible: true });
+                  }}
+                >
+                  New dCache
                 </Menu.Item>
               </SubMenu>
             </Menu>

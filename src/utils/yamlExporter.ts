@@ -197,8 +197,20 @@ export const yamlExporter = (nodeValues: any[], linkValues: any[]) => {
                     delete copy.replica_type
                     delete copy.replica
                 }
-
-             
+                //Expose options
+                if (copy.expose.port === undefined || copy.expose.port === null){
+                    delete copy.expose
+                }else{
+                    if(copy.expose.min_scale === undefined || copy.expose.min_scale === null ){
+                        delete copy.expose.min_scale
+                    }
+                    if(copy.expose.max_scale === undefined || copy.expose.max_scale === null ){
+                        delete copy.expose.max_scale
+                    }
+                    if(copy.expose.cpu_threshold === undefined || copy.expose.cpu_threshold === null){
+                        delete copy.expose.cpu_threshold
+                    }
+                }
 
                 
                 //Delete of the empthy variables

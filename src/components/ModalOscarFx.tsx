@@ -18,6 +18,7 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
   const [formAnnotations] = Form.useForm();
   const [formLabels] = Form.useForm();
   const [formReplica] = Form.useForm();
+  const [formExpose] = Form.useForm();
 
 
   
@@ -111,13 +112,14 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
               input: formInput.getFieldsValue(),
               output: formOutput.getFieldsValue(),
               replica_type:replica_type,
-              replica: formReplica.getFieldsValue()
+              replica: formReplica.getFieldsValue(),
+              expose: formExpose.getFieldsValue()
                } as any;
             onOk(newState);
           })
           .catch((error) => console.log("Error", error));
       }}
-    >
+      width="50%" > 
     <Tabs defaultActiveKey="main">
     <Tabs.TabPane tab="Setup" key="main">
     <Form form={form} initialValues={defaultValue} name="Form_oscar_fx_modal">
@@ -152,8 +154,8 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
           />
         </Form.Item>
 
-        <Form.Item name="memory" label="Memory" style={{ width: 402 , display:"inline-flex"  }}>
-          <Input 
+        <Form.Item name="memory" label="Memory" style={{ width: "80%" , display:"inline-block"  }}>
+          <Input  
             onClick={(e) => e.stopPropagation()}
             onMouseUp={(e) => e.stopPropagation()}
             onMouseDown={(e) => e.stopPropagation()}
@@ -161,7 +163,7 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
           ></Input>
 
         </Form.Item>
-        <Select defaultValue="Gi" style={{ width: 70, display:"inline-flex"  }} onChange={handleMemorySelect}>
+        <Select defaultValue="Gi" style={{ width: "10%", display:"inline-flex", float:"right"  }} onChange={handleMemorySelect}>
             <Option value="Mi">Mi</Option>                                                                                    
             <Option value="Gi">Gi</Option>
           </Select>
@@ -490,7 +492,7 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
           {yunikorn_enable
           ? 
             <div>
-            <Form.Item  style={{ width: 402, display:"inline-flex"  }}
+            <Form.Item   style={{ width: "80%" , display:"inline-block"  }}
               name="total_memory"
               label="Total Memory"
             >
@@ -501,7 +503,7 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
                 onKeyDown={(e) => e.stopPropagation()}
               />
             </Form.Item> 
-            <Select defaultValue="Gi" style={{ width: 70, display:"inline-flex"  }} onChange={handleMemoryTotalSelect}>
+            <Select defaultValue="Gi"  style={{ width: "10%", display:"inline-flex", float:"right"  }} onChange={handleMemoryTotalSelect}>
             <Option value="Mi">Mi</Option>                                                                                    
             <Option value="Gi">Gi</Option>
           </Select>
@@ -520,6 +522,42 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
             </div>
           :<div></div>}
       </Form>
+    </Tabs.TabPane>
+    <Tabs.TabPane tab="Expose" key="6">
+    <Form form={formExpose} initialValues={defaultValue} name="exposel">
+      <Form.Item name="min_scale" label="Min Scale" style={{width: "45%" , display:"inline-block"}}>
+              <InputNumber  style={{width: "100%" }}
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+              />
+      </Form.Item>
+      <Form.Item name="max_scale" label="Max Scale" style={{width: "45%" , display:"inline-block", float:"right"}}>
+              <InputNumber  style={{width: "100%" }} 
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+              />
+      </Form.Item>
+      <Form.Item name="port" label="Port" >
+              <InputNumber  style={{width: "100%" }} 
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+              />
+      </Form.Item>
+      <Form.Item name="cpu_threshold" label="CPU ThresHold">
+              <InputNumber  style={{width: "100%" }} 
+                onClick={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+              />
+      </Form.Item>
+    </Form>
     </Tabs.TabPane>
 
   </Tabs>

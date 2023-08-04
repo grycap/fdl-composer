@@ -3,6 +3,72 @@ import * as React from "react";
 import styled, { css } from "styled-components";
 import { ISidebarItemProps } from "./types";
 
+
+/*
+Image -- background
+size image
+backgroundColor -- background
+font color --- color
+*/
+
+function getProps(type){
+
+  switch (type) {
+    case "oscar-fx":
+      return {
+        image:"https://github.com/grycap/oscar/blob/master/docs/images/oscar3.png?raw=true",
+        size:"96px",
+        backgroundColor:"#fff",
+        fontColor:"black",
+        altTxt:"OSCAR service"
+        //background: "#fff",
+        //color: "black",
+      };
+    case "aws-fx":
+      return {
+        image:"https://d1.awsstatic.com/Digital%20Marketing/House/PAC/2up/PAC-Q4_House-Ads_Lambda_2up.62dc7e19b7b2e0a2c06821594c31f1ce00a6bdda.png",
+        size:"32px",
+        backgroundColor:"#080301",
+        fontColor:"white",
+        altTxt:"AWS Lambda Logo"
+
+      };
+    case "s3":
+      return {
+        image:"https://servmask.com/img/products/s3.png",
+        size:"48px",
+        backgroundColor:"#ebe4c0",
+        fontColor:"black",
+        altTxt:"S3 logo"
+      };
+    case "onedata":
+      return {
+        image:"https://www.ebi.ac.uk/about/clusters/technical-services/wp-content/uploads/2019/11/onedata-logo.png",
+        size:"24px",
+        backgroundColor:"#c2d4ad",
+        fontColor:"black",
+        altTxt:"ONE DATA logo"
+      };
+    case "minio":
+      return {
+        image:"https://suarapapua.com/wp-content/plugins/ilab-media-tools-premium/public/img/wizard-icon-minio.png",
+        size:"36px",
+        backgroundColor:"#c47878",
+        fontColor:"black",
+        altTxt:"MinIO logo"
+      };
+    case "dCache":
+      return {
+        image:"https://www.dcache.org/img/dCache-logo.svg",
+        size:"36px",
+        backgroundColor:"#c47878",
+        fontColor:"black",
+        altTxt:"dCache logo"
+      };
+  }
+}
+
+
 interface IOuterProps {
   background?: string;
   color?: string;
@@ -34,7 +100,13 @@ const Outer = styled.div<IOuterProps>`
 `;
 
 export const getColor = (type: string) => {
-  switch (type) {
+  const nodeProps=getProps(type)
+
+  return{
+    background: nodeProps?.backgroundColor,
+    color: nodeProps?.fontColor,
+  }
+  /*switch (type) {
     case "oscar-fx":
       return {
         background: "#fff",
@@ -60,12 +132,17 @@ export const getColor = (type: string) => {
         background: "#c47878",
         color: "black",
       };
+    case "dCache":
+      return {
+        background: "#c47878",
+        color: "black",
+      };
     default:
       return {
         background: "#FFF",
         color: "black",
       };
-  }
+  }*/
 };
 const Circle = styled.div<IOuterProps>`
   font-weight: 700;
@@ -92,7 +169,13 @@ const Circle = styled.div<IOuterProps>`
 `;
 
 export const getIcon = (type: string) => {
-  switch (type) {
+  const nodeProps=getProps(type)
+  if(type === "oscar-fx"){
+    return(<img alt={nodeProps?.altTxt} src={nodeProps?.image} width={nodeProps?.size}  />)
+  }else{
+    return(<img  alt={nodeProps?.altTxt} src={nodeProps?.image} height={nodeProps?.size} />)
+  }
+  /*switch (type) {
     case "oscar-fx":
       return (
         <img
@@ -120,50 +203,46 @@ export const getIcon = (type: string) => {
     case "onedata":
       return (
         <img
-          alt="aws logo"
-          src="https://www.ebi.ac.uk/about/technology/wp-content/uploads/2019/10/onedata-logo.png"
+          alt="ONE DATA logo"
+          src="https://www.ebi.ac.uk/about/clusters/technical-services/wp-content/uploads/2019/11/onedata-logo.png"
           height="24px"
         />
       );
     case "minio":
       return (
         <img
-          alt="aws logo"
+          alt="MinIO logo"
           src="https://suarapapua.com/wp-content/plugins/ilab-media-tools-premium/public/img/wizard-icon-minio.png"
           height="36px"
         />
       );
-  }
+    case "dCache":
+      return (
+        <img
+          alt="dCache logo"
+          src="https://www.dcache.org/img/dCache-logo.svg"
+          height="36px"
+        />
+      );
+  }*/
 };
 
-export const getImgBackground = (type: string) => {
-  switch (type) {
-    case "oscar-fx":
-      return "https://github.com/grycap/oscar/blob/master/docs/images/oscar3.png?raw=true";
-    case "aws-fx":
-      return "https://d1.awsstatic.com/Digital%20Marketing/House/PAC/2up/PAC-Q4_House-Ads_Lambda_2up.62dc7e19b7b2e0a2c06821594c31f1ce00a6bdda.png";
-    case "s3":
-      return "https://servmask.com/img/products/s3.png";
-    case "onedata":
-      return "https://www.ebi.ac.uk/about/technology/wp-content/uploads/2019/10/onedata-logo.png";
-    case "minio":
-      return "https://suarapapua.com/wp-content/plugins/ilab-media-tools-premium/public/img/wizard-icon-minio.png";
-  }
-};
+
 export const SidebarItem = ({
   type,
   ports,
   properties,
   ...rest
 }: ISidebarItemProps) => {
-  const color = getColor(type);
-  const storage = ["s3", "onedata", "minio"];
+  //const color = getColor(type);
+  const nodeProps= getProps(type)
+  const storage = ["s3", "onedata", "minio","dCache"];
   return storage.includes(type) ? (
     <Circle
       style={{ paddingTop: "5rem" }}
       backgroundSize={type === "s3" ? "96px" : "150px"}
-      background={getImgBackground(type)}
-      color={color.color}
+      background={nodeProps?.image}
+      color="black"
       draggable={true}
       onDragStart={(event) => {
         event.dataTransfer.setData(
@@ -177,8 +256,8 @@ export const SidebarItem = ({
     </Circle>
   ) : (
     <Outer
-      background={getImgBackground(type)}
-      color={color.color}
+      background={nodeProps?.image}
+      color={nodeProps?.backgroundColor}
       draggable={true}
       onDragStart={(event) => {
         event.dataTransfer.setData(

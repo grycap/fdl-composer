@@ -384,9 +384,11 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
           name="other variables for oscar"
           >
             <Row style={{ marginBottom: "1rem" }}>
-              <Col span={4}>Replica:</Col>
-              <Col span={4}>
-              <Select defaultValue={defaultValue?.replica_type || "NO REPLICA"} style={{ width: 150 }} onChange={handleChangeReplica}>
+              <div className="ant-col ant-form-item-label">
+                <label >Replica</label>
+              </div>
+              <Col style={{ width: "90%" }}>
+              <Select defaultValue={defaultValue?.replica_type || "NO REPLICA"} style={{ width: "100%" }} onChange={handleChangeReplica}>
                 <Option value="NO REPLICA">NO REPLICA</Option>
                 <Option value="oscar">OSCAR</Option>
                 <Option value="endpoint" >ENDPOINT</Option>
@@ -482,12 +484,12 @@ export const ModalOscarFx: React.FC<IModalFxProps> = ({
           initialValues={defaultValue}
           name="other variables for oscar"
           >
-    <Row style={{ marginBottom: "1rem" }}>
-              <Col span={3}>Yunikorn: </Col>
-              <Col span={1}>
-                <Checkbox checked={yunikorn_enable} value={yunikorn_enable} onChange={onCheckboxChangeYunikorn} />
-              </Col>
-            </Row>
+        <Row style={{ marginBottom: "1rem" }}>
+          <div className="ant-col ant-form-item-label">
+            <label >Yunikorn</label>
+          </div>
+            <Checkbox style={{marginTop:"5px"}} checked={yunikorn_enable} value={yunikorn_enable} onChange={onCheckboxChangeYunikorn} />
+        </Row>
 
           {yunikorn_enable
           ? 
